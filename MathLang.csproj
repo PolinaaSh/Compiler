@@ -51,7 +51,7 @@
     <Compile Include="Scope.cs" />
     <Compile Include="SemanticChecker.cs" />
     <Compile Include="InfoAboutScope.cs" />
-    <Compile Include="TreeAdapterSSKA.cs" />
+    <Compile Include="TreeAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Input.txt" />
