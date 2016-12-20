@@ -47,9 +47,11 @@ namespace MathLang
                             for (int k = 0; k < node.GetChild(i).ChildCount; k++)
                             {
                                 NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "var"));
-                                //splitedNode.AddChild(new TreeSs(new TokenSs(MathLangLexer.IDENT, typeVar)));
+                                NodeData identName = (NodeData)node.GetChild(i).GetChild(k);
+                                node.GetChild(i).DeleteChild(k);
                                 splitedNode.AddChild(node.GetChild(i));
-                                splitedNode.AddChild(node.GetChild(i).GetChild(k));
+                                //splitedNode.AddChild(node.GetChild(i).GetChild(k));
+                                splitedNode.AddChild(identName);
                                 listSplitedVar.Add(splitedNode);
                                 splitedNode.check = true;
                             }

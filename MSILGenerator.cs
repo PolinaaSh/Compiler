@@ -68,6 +68,10 @@ namespace MathLang
             switch (node.Type)
             {
                 case MathLangLexer.PROGRAM:
+                  /*  for (int i = 0; i < node.ChildCount; i++)
+                        Gen((NodeData)node.GetChild(i), sb);
+                    break;
+                case MathLangLexer.BEGIN:*/
                 case MathLangLexer.BLOCK:
                 case MathLangLexer.SCOPEBLOCK:
                     for (int i = 0; i < node.ChildCount; i++)
@@ -77,6 +81,18 @@ namespace MathLang
                 case MathLangLexer.VAR:
                     if (node.GetChild(1).Type == MathLangLexer.ASSIGN)
                         Gen((NodeData)node.GetChild(1), sb);
+                    break;
+                case MathLangLexer.BEGIN:
+                    sb.Append("  .method public static void main");
+                    sb.Append("() cil managed {\n");
+                    sb.Append("    .entrypoint\n");
+                    //sb.Append("    .locals init (\n");
+                   // GenLocalVars(node, sb);
+                    //sb[sb.Length - 2] = ' ';
+                    //sb.Append("    )\n");
+                    Gen((NodeData)node.GetChild(4), sb);
+                    sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
+                    sb.Append("  }\n");
                     break;
 
                 case MathLangLexer.FUNC:
