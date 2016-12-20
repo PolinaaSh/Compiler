@@ -60,11 +60,11 @@ namespace MathLang
                     break;
                 case MathLangLexer.NUMBER:
                     bool isFloat = node.Text.Contains(".");
-                    node.TypeData = isFloat ? DataType.Float : DataType.Int;
+                    node.TypeData = isFloat ? DataType.Real : DataType.Integer;
                     return;
                 case MathLangLexer.TRUE:
                 case MathLangLexer.FALSE:
-                    node.TypeData = DataType.Bool;
+                    node.TypeData = DataType.Boolean;
                     return;
             }
 
@@ -150,10 +150,10 @@ namespace MathLang
 
                         if (!IsEqualDataType(paramDecl.GetChild(1), paramCall.GetChild(0)))
                         {
-                            if (IsEqualDataType(paramDecl.GetChild(1), DataType.Float) && IsEqualDataType(paramCall.GetChild(0), DataType.Int))
+                            if (IsEqualDataType(paramDecl.GetChild(1), DataType.Real) && IsEqualDataType(paramCall.GetChild(0), DataType.Integer))
                             {
                                 // я могу конвертировать инт в флоат.
-                                ConvertTo(paramCall.GetChild(0).Cast(), DataType.Float);
+                                ConvertTo(paramCall.GetChild(0).Cast(), DataType.Real);
                             }
                             else
                             {
@@ -182,13 +182,13 @@ namespace MathLang
 
                         if (first != secont)
                         {
-                            if (first == DataType.Int)
-                                ConvertTo(node.GetChild(0).Cast(), DataType.Float);
+                            if (first == DataType.Integer)
+                                ConvertTo(node.GetChild(0).Cast(), DataType.Real);
                             else
-                                ConvertTo(node.GetChild(1).Cast(), DataType.Float);
+                                ConvertTo(node.GetChild(1).Cast(), DataType.Real);
 
                             // теперь это точно флоат.
-                            node.TypeData = DataType.Float;
+                            node.TypeData = DataType.Real;
                         }
                         else
                         {
@@ -237,16 +237,16 @@ namespace MathLang
                         if (first != secont)
                         {
                             // я могу конвертировать инт в флоат?
-                            if (first == DataType.Float && secont == DataType.Int)
-                                ConvertTo(node.GetChild(1).Cast(), DataType.Float);
-                            else if (first == DataType.Int && secont == DataType.Float)
-                                ConvertTo(node.GetChild(0).Cast(), DataType.Float);
+                            if (first == DataType.Real && secont == DataType.Integer)
+                                ConvertTo(node.GetChild(1).Cast(), DataType.Real);
+                            else if (first == DataType.Integer && secont == DataType.Real)
+                                ConvertTo(node.GetChild(0).Cast(), DataType.Real);
                             else
                             {
                                 throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", first, secont));
                             }
                         }
-                        node.TypeData = DataType.Bool;
+                        node.TypeData = DataType.Boolean;
                     }
                     #endregion
                     return;
@@ -263,11 +263,11 @@ namespace MathLang
 
                         if (first != second)
                         {
-                            if (first == DataType.Float && second == DataType.Int)
+                            if (first == DataType.Real && second == DataType.Integer)
                             {
                                 // я могу конвертировать инт в флоат.
-                                ConvertTo(node.GetChild(1).Cast(), DataType.Float);
-                                node.TypeData = DataType.Float;
+                                ConvertTo(node.GetChild(1).Cast(), DataType.Real);
+                                node.TypeData = DataType.Real;
                             }
                             else
                             {
@@ -290,7 +290,7 @@ namespace MathLang
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScopeVar);
 
-                        if (node.GetChild(0).TypeData() != DataType.Bool)
+                        if (node.GetChild(0).TypeData() != DataType.Boolean)
                             throw new ApplicationException(string.Format("SSKA. In while condition type is {0}", node.GetChild(0).TypeData()));
                     }
                     #endregion
@@ -303,7 +303,7 @@ namespace MathLang
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScopeVar);
 
-                        if (node.GetChild(1).TypeData() != DataType.Bool)
+                        if (node.GetChild(1).TypeData() != DataType.Boolean)
                             throw new ApplicationException(string.Format("SSKA. In do while condition type is {0}", node.GetChild(1).TypeData()));
                     }
                     #endregion
@@ -316,7 +316,7 @@ namespace MathLang
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScopeVar);
 
-                        if (node.GetChild(0).TypeData() != DataType.Bool)
+                        if (node.GetChild(0).TypeData() != DataType.Boolean)
                             throw new ApplicationException(string.Format("SSKA. In if condition type is {0}", node.GetChild(0).TypeData()));
                     }
                     #endregion
@@ -329,7 +329,7 @@ namespace MathLang
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScopeVar);
 
-                        if (node.GetChild(1).ChildCount != 0 && node.GetChild(1).GetChild(0).TypeData() != DataType.Bool)
+                        if (node.GetChild(1).ChildCount != 0 && node.GetChild(1).GetChild(0).TypeData() != DataType.Boolean)
                             throw new ApplicationException(string.Format("SSKA. In for condition type is {0}", node.GetChild(1).GetChild(0).TypeData()));
                     }
                     #endregion
@@ -408,16 +408,16 @@ namespace MathLang
         {
             string dataType;
             bool isArray;
-            if (nodeVar.GetChild(0).Type == MathLangLexer.ARRAY_TYPE)
+           /* if (nodeVar.GetChild(0).Type == MathLangLexer.ARRAY_TYPE)
             {
                 isArray = true;
                 dataType = nodeVar.GetChild(0).GetChild(0).Text;
             }
             else
-            {
+            {*/
                 isArray = false;
                 dataType = nodeVar.GetChild(0).Text;
-            }
+            //}
 
             IdentDescription ident = scope.GetContainVarRecursive(nodeVarIdent.Text);
             if (ident != null && ident.TypeIdent != IdentType.Global)
@@ -461,17 +461,17 @@ namespace MathLang
             convert.AddChild(node);
             convert.AddChild(castToType);
         }
-        private DataType ParseDataType(string name)
+        public DataType ParseDataType(string name)
         {
             switch (name)
             {
                 case "real":
                     return DataType.Real;
-                case "bool":
-                    return DataType.Bool;
+                case "boolean":
+                    return DataType.Boolean;
                 case "void":
                     return DataType.Void;
-                case "Integer":
+                case "integer":
                     return DataType.Integer;
                 default:
                     throw new ApplicationException(string.Format("SSKA. Unknown type {0}", name));
@@ -491,11 +491,11 @@ namespace MathLang
         }
         private bool IsNumber(DataType type)
         {
-            return type == DataType.Int || type == DataType.Float;
+            return type == DataType.Integer || type == DataType.Real;
         }
         private void CheckAsNumbrer(DataType number, NodeData node)
         {
-            if (number != DataType.Float && number != DataType.Int)
+            if (number != DataType.Real && number != DataType.Integer)
                 throw new ApplicationException(string.Format("Operand invalid type for operation {0}, line = {1}, pos = {2}", node.Text, node.Line, node.TokenStartIndex));
         }
     }

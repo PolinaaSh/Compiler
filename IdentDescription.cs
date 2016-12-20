@@ -13,9 +13,9 @@ namespace MathLang
     public enum DataType
     {
         Void,
-        Int,
+        Integer,
         Real,
-        Bool
+        Boolean
     }
 
     public class IdentDescription
