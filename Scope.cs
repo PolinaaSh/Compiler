@@ -11,7 +11,7 @@ namespace MathLang
     {
         private Scope parent;
         private Dictionary<string, IdentDescription> dicIdents;
-        private IdentDescription function;
+       /// private IdentDescription function;
         private TypeScope typeScope;
         private int indexatorLocal;
         private int indexatorGlobal;
@@ -57,6 +57,9 @@ namespace MathLang
                 case IdentType.Function:
                     result = GetIndexGlobal();
                     break;
+                case IdentType.Procedure:
+                    result = GetIndexGlobal();
+                    break;
                 default:
                     throw new ApplicationException("Out of range");
             }
@@ -74,7 +77,7 @@ namespace MathLang
         {
             return typeScope == TypeScope.Local ? indexatorParam++ : parent.GetIndexParam();
         }
-        public IdentDescription Function
+      /*  public IdentDescription Function
         {
             get
             {
@@ -84,6 +87,6 @@ namespace MathLang
                     return function;
             }
             set { function = value; }
-        }
+        }*/
     }
 }

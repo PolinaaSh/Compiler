@@ -15,7 +15,8 @@ namespace MathLang
         Void,
         Integer,
         Real,
-        Boolean
+        Boolean,
+        Char
     }
 
     public class IdentDescription

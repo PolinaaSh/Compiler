@@ -1,13 +1,8 @@
-const k=15;
-var a,i:integer;
+var a:integer;
          r:real;
 begin
 a:=5;
-for i:= 1 to 10 do
-a:=a+i;
-repeat a:=a-1;
-until (a>10) 
-i:=a div 10;
+print a;
 end.
 
 

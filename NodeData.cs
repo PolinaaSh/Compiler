@@ -10,6 +10,7 @@ namespace MathLang
     public class NodeData : CommonTree
     {
         private DataType dataType;
+        public bool check;
 
         public NodeData()
             : base()

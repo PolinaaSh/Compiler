@@ -117,6 +117,7 @@ index_: IDENT|NUMBER
 
 simpleExpr:
   IDENT ASSIGN^ term
+| PRINT^ term
 |( IDENT '[' index_']' ASSIGN group)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) group)
 | call
 ;

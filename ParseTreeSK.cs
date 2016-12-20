@@ -39,23 +39,28 @@ namespace MathLang
             {
                 case MathLangLexer.VAR:
                     List<NodeData> listSplitedVar = new List<NodeData>();
-
-                    string typeVar = node.GetChild(0).Text;
-                    for (int i = 1; i < node.ChildCount; i++)
+                    if (!node.check)
                     {
-                        NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "VAR"));
-                        //splitedNode.AddChild(new TreeSs(new TokenSs(MathLangLexer.IDENT, typeVar)));
-                        splitedNode.AddChild(node.GetChild(0));
-                        splitedNode.AddChild(node.GetChild(i));
+                        for (int i = 0; i < node.ChildCount; i++)
+                        {
+                            string typeVar = node.GetChild(i).Text;
+                            for (int k = 0; k < node.GetChild(i).ChildCount; k++)
+                            {
+                                NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "var"));
+                                //splitedNode.AddChild(new TreeSs(new TokenSs(MathLangLexer.IDENT, typeVar)));
+                                splitedNode.AddChild(node.GetChild(i));
+                                splitedNode.AddChild(node.GetChild(i).GetChild(k));
+                                listSplitedVar.Add(splitedNode);
+                                splitedNode.check = true;
+                            }
+                        }
+                        // запихнуть маркеры
 
-                        listSplitedVar.Add(splitedNode);
+                        NodeData tree = new NodeData();
+                        foreach (NodeData n in listSplitedVar)
+                            tree.AddChild(n);
+                        node.Parent.ReplaceChildren(node.ChildIndex, node.ChildIndex, tree);
                     }
-                    // запихнуть маркеры
-
-                    NodeData tree = new NodeData();
-                    foreach (NodeData n in listSplitedVar)
-                        tree.AddChild(n);
-                    node.Parent.ReplaceChildren(node.ChildIndex, node.ChildIndex, tree);
 
                     break;
                 case MathLangLexer.NUMBER:
@@ -65,6 +70,9 @@ namespace MathLang
                 case MathLangLexer.TRUE:
                 case MathLangLexer.FALSE:
                     node.TypeData = DataType.Boolean;
+                    return;
+                case MathLangLexer.CONST_:
+
                     return;
             }
 
@@ -111,7 +119,7 @@ namespace MathLang
                         else
                             nodeVarIdent = node.GetChild(1).GetChild(0);
 
-                        IdentType it = IdentType.Local;
+                        IdentType it = node.Parent.Text.Equals("PROGRAM")?IdentType.Global:IdentType.Local;
 
                         RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it);
                     }
@@ -446,7 +454,7 @@ namespace MathLang
                 );
             scope.RegisterIdent(nodeVarIdent.Text, newIdentFun);
 
-            newScope.Function = newIdentFun;
+           // newScope.Function = newIdentFun;
 
             return newScope;
         }
