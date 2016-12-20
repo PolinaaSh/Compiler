@@ -49,6 +49,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="SemanticChecker.cs" />
+    <Compile Include="InfoAboutScope.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Input.txt" />
