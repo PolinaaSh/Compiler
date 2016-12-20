@@ -45,6 +45,7 @@
     <Compile Include="IntepreterException.cs" />
     <Compile Include="MathAstNode.cs" />
     <Compile Include="MathLangIntepreter.cs" />
+    <Compile Include="MSILGenerator.cs" />
     <Compile Include="NodeData.cs" />
     <Compile Include="ParseTreeSK.cs" />
     <Compile Include="Program.cs" />
