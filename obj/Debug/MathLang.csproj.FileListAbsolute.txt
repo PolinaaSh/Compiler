@@ -1,0 +1,60 @@
+I:\Теория компиляторов\Методичка\Samples\MathExprExtTree_Antlr\bin\Debug\MathLang.exe
+I:\Теория компиляторов\Методичка\Samples\MathExprExtTree_Antlr\bin\Debug\MathLang.pdb
+I:\Теория компиляторов\Методичка\Samples\MathExprExtTree_Antlr\bin\Debug\Antlr3.Runtime.dll
+I:\Теория компиляторов\Методичка\Samples\MathExprExtTree_Antlr\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+I:\Теория компиляторов\Методичка\Samples\MathExprExtTree_Antlr\obj\Debug\MathLang.exe
+I:\Теория компиляторов\Методичка\Samples\MathExprExtTree_Antlr\obj\Debug\MathLang.pdb
+F:\Теория компиляторов\Методичка\Samples\MathLangTree_Antlr\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+F:\Теория компиляторов\Методичка\Samples\MathLangTree_Antlr\obj\Debug\MathLang.exe
+F:\Теория компиляторов\Методичка\Samples\MathLangTree_Antlr\bin\Debug\MathLang.exe
+F:\Теория компиляторов\Методичка\Samples\MathLangTree_Antlr\bin\Debug\MathLang.pdb
+F:\Теория компиляторов\Методичка\Samples\MathLangTree_Antlr\bin\Debug\Antlr3.Runtime.dll
+F:\Теория компиляторов\Методичка\Samples\MathLangTree_Antlr\obj\Debug\MathLang.pdb
+L:\Лекции\3 Курс\Теория компиляторов\Samples\MathLangTree_Antlr\obj\Debug\MathLang.exe
+L:\Лекции\3 Курс\Теория компиляторов\Samples\MathLangTree_Antlr\obj\Debug\MathLang.pdb
+L:\Лекции\3 Курс\Теория компиляторов\Samples\MathLangTree_Antlr\bin\Debug\MathLang.exe
+L:\Лекции\3 Курс\Теория компиляторов\Samples\MathLangTree_Antlr\bin\Debug\MathLang.pdb
+L:\Лекции\3 Курс\Теория компиляторов\Samples\MathLangTree_Antlr\bin\Debug\Antlr3.Runtime.dll
+L:\Лекции\3 Курс\Теория компиляторов\Samples\MathLangTree_Antlr\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Полина\Desktop\MathLangTree_Antlr\bin\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr\bin\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Полина\Desktop\MathLangTree_Antlr\obj\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr\obj\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+D:\Универ\3 курс\Компиляторы\MathLangTree_Antlr\obj\Debug\MathLang.exe
+D:\Универ\3 курс\Компиляторы\MathLangTree_Antlr\obj\Debug\MathLang.pdb
+D:\Универ\3 курс\Компиляторы\MathLangTree_Antlr\bin\Debug\MathLang.exe
+D:\Универ\3 курс\Компиляторы\MathLangTree_Antlr\bin\Debug\MathLang.pdb
+D:\Универ\3 курс\Компиляторы\MathLangTree_Antlr\bin\Debug\Antlr3.Runtime.dll
+D:\Универ\3 курс\Компиляторы\MathLangTree_Antlr\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+C:\Users\Полина\Desktop\MathLangTree_Antlr нумерация\obj\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr нумерация\obj\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr нумерация\bin\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr нумерация\bin\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr нумерация\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Полина\Desktop\MathLangTree_Antlr нумерация\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+C:\Users\Полина\Desktop\MathLangTree_Antlr номера\obj\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr номера\obj\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr номера\bin\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr номера\bin\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr номера\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Полина\Desktop\MathLangTree_Antlr номера\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+D:\Универ\Компиляторы\MathLangTree_Antlr номера\obj\Debug\MathLang.exe
+D:\Универ\Компиляторы\MathLangTree_Antlr номера\obj\Debug\MathLang.pdb
+D:\Универ\Компиляторы\MathLangTree_Antlr номера\bin\Debug\MathLang.exe
+D:\Универ\Компиляторы\MathLangTree_Antlr номера\bin\Debug\MathLang.pdb
+D:\Универ\Компиляторы\MathLangTree_Antlr номера\bin\Debug\Antlr3.Runtime.dll
+D:\Универ\Компиляторы\MathLangTree_Antlr номера\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+D:\Универ\Компиляторы\MathLangTree_Antlr номера ++\obj\Debug\MathLang.exe
+D:\Универ\Компиляторы\MathLangTree_Antlr номера ++\obj\Debug\MathLang.pdb
+D:\Универ\Компиляторы\MathLangTree_Antlr номера ++\bin\Debug\MathLang.exe
+D:\Универ\Компиляторы\MathLangTree_Antlr номера ++\bin\Debug\MathLang.pdb
+D:\Универ\Компиляторы\MathLangTree_Antlr номера ++\bin\Debug\Antlr3.Runtime.dll
+D:\Универ\Компиляторы\MathLangTree_Antlr номера ++\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
+C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\obj\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\obj\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\bin\Debug\MathLang.exe
+C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\bin\Debug\MathLang.pdb
+C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
