@@ -5,23 +5,23 @@ using System.Text;
 
 namespace MathLang
 {
-    public enum IdentType
+    /*public enum IdentType
     {
         Global,
         Local,
         Param,
         Function,
         Procedure
-    }
+    }*/
 
-    public enum DataType
+   /* public enum DataType
     {
         Void,
         Integer,
         Real,
         Boolean,
         Char
-    }
+    }*/
 
     public class Ident
     {

@@ -13,6 +13,7 @@ tokens {
   AND     = 'and'	   ;
   OR      = 'or '      ;
   UNKNOWN              ;
+  SCOPEBLOCK           ;
   BLOCK                ;
   PROGRAM			   ;
   CONVERT              ;

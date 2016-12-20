@@ -46,10 +46,12 @@
     <Compile Include="MathAstNode.cs" />
     <Compile Include="MathLangIntepreter.cs" />
     <Compile Include="NodeData.cs" />
+    <Compile Include="ParseTreeSK.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="SemanticChecker.cs" />
     <Compile Include="InfoAboutScope.cs" />
+    <Compile Include="TreeAdapterSSKA.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Input.txt" />

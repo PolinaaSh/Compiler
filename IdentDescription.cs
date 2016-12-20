@@ -7,13 +7,14 @@ namespace MathLang
         Global,
         Local,
         Param,
-        Function
+        Function,
+        Procedure
     }
     public enum DataType
     {
         Void,
         Int,
-        Float,
+        Real,
         Bool
     }
 
