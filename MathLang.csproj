@@ -40,10 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AstNodePrinter.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="IdentDescription.cs" />
     <Compile Include="IntepreterException.cs" />
     <Compile Include="MathAstNode.cs" />
     <Compile Include="MathLangIntepreter.cs" />
+    <Compile Include="NodeData.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Scope.cs" />
     <Compile Include="SemanticChecker.cs" />
   </ItemGroup>
   <ItemGroup>
