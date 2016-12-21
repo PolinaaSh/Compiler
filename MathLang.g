@@ -185,8 +185,12 @@ exprList:
 )
 ;
 
+main_:
+BEGIN^ exprList* END! '.'!
+;
+
 program: ( func_decl* proc_decl*)
-|(const_* vars+  pro=(func_decl|proc_decl)* vars* BEGIN exprList* END! '.'!)
+|(const_* vars+  (func_decl|proc_decl)* vars* main_)
 ;
 
 result: program EOF -> ^(PROGRAM program);

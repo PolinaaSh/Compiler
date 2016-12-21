@@ -11,7 +11,8 @@ namespace MathLang
 
         public static string ToMsilType(String type)
         {
-            if (type == "int") return "int32";
+            if (type == "integer") return "int32";
+            else if (type == "real") return "double";
             else return type;
         }
 
@@ -41,7 +42,8 @@ namespace MathLang
             return ((InfoAboutScope)node.GetChild(0)).Ident.IndexVar;
         }
 
-        private static void GenLocalVars(NodeData node, StringBuilder sb)
+        private static void 
+            GenLocalVars(NodeData node, StringBuilder sb)
         {
             if (node.Type == MathLangLexer.VAR)
             {
@@ -68,10 +70,16 @@ namespace MathLang
             switch (node.Type)
             {
                 case MathLangLexer.PROGRAM:
-                  /*  for (int i = 0; i < node.ChildCount; i++)
+                    sb.Append("    .locals init (\n");
+                    GenLocalVars((NodeData)node, sb);
+                    sb[sb.Length - 2] = ' ';
+                    sb.Append("    )\n");
+                    for (int i = 0; i < node.ChildCount; i++)
+                    {
+                        if (node.GetChild(i).Text != "var" && node.GetChild(i).Text != "const")
                         Gen((NodeData)node.GetChild(i), sb);
+                    }
                     break;
-                case MathLangLexer.BEGIN:*/
                 case MathLangLexer.BLOCK:
                 case MathLangLexer.SCOPEBLOCK:
                     for (int i = 0; i < node.ChildCount; i++)
@@ -79,18 +87,17 @@ namespace MathLang
                     break;
 
                 case MathLangLexer.VAR:
-                    if (node.GetChild(1).Type == MathLangLexer.ASSIGN)
-                        Gen((NodeData)node.GetChild(1), sb);
+                    sb.Append("    .locals init (\n");
+                    GenLocalVars((NodeData)node.Parent, sb);
+                    sb[sb.Length - 2] = ' ';
+                    sb.Append("    )\n");
                     break;
                 case MathLangLexer.BEGIN:
                     sb.Append("  .method public static void main");
                     sb.Append("() cil managed {\n");
                     sb.Append("    .entrypoint\n");
-                    //sb.Append("    .locals init (\n");
-                   // GenLocalVars(node, sb);
-                    //sb[sb.Length - 2] = ' ';
-                    //sb.Append("    )\n");
-                    Gen((NodeData)node.GetChild(4), sb);
+                    for (int i = 0; i < node.ChildCount; i++)
+                        Gen((NodeData)node.GetChild(i), sb);
                     sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
                     sb.Append("  }\n");
                     break;

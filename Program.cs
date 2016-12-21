@@ -24,11 +24,11 @@ namespace MathLang
                 parser.TreeAdaptor = new TreeAdapterSSKA();
                 NodeData program = (NodeData)parser.execute().Tree;
                 Scope globalScope = new ParseTreeSk().Run(program);
-                AstNodePrinter.Print(program);
+               AstNodePrinter.Print(program);
                 Console.WriteLine();
                 //MathLangIntepreter.Execute(program);
                 Console.WriteLine(MSILGenerator.Gen(program));
-                Console.WriteLine();
+                Console.ReadLine();
             }
             catch (Exception e)
             {
