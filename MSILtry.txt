@@ -5,17 +5,17 @@
 
 .class public Program
 {
-  .method public static void main() cil managed {
-
-    .entrypoint
-
     .locals init (
 
       [0] int32,
 
-      [1] int32 
+      [1] int32
+ 
+   )
 
-    )
+  .method public static void main() cil managed {
+
+    .entrypoint
 
     L_000000: ldc.i4 5
 

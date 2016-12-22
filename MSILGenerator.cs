@@ -71,7 +71,7 @@ namespace MathLang
             switch (node.Type)
             {
                 case MathLangLexer.PROGRAM:
-                     sb.Append("  .method public static void main");
+                    sb.Append("  .method public static void main");
                     sb.Append("() cil managed {\n");
                     sb.Append("    .entrypoint\n");
                     sb.Append("    .locals init (\n");
@@ -115,7 +115,8 @@ namespace MathLang
                     for (int i = 0; i < node.ChildCount; i++)
                         Gen((NodeData)node.GetChild(i), sb);
                     sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
-                    sb.Append("  }\n");*/
+                    sb.Append("  }\n}\n");
+                    System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());*/
                     break;
 
                 case MathLangLexer.FUNC:
@@ -156,6 +157,7 @@ namespace MathLang
                     break;
 
                 case MathLangLexer.LE:
+                case MathLangLexer.LT:
                     Gen((NodeData)node.GetChild(0), sb);
                     Gen((NodeData)node.GetChild(1), sb);
                     sb.Append(string.Format("    L_{0:D6}: clt\n", lineNum++));
