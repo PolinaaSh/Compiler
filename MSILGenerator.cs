@@ -13,7 +13,7 @@ namespace MathLang
         public static string ToMsilType(String type)
         {
             if (type == "integer") return "int32";
-            else if (type == "real") return "float";
+            else if (type == "real") return "float32";
             else return type;
         }
 
@@ -24,10 +24,12 @@ namespace MathLang
 .assembly program
 {
 }
-
-.class public Program
+.class public auto ansi beforefieldinit FL_Program
+       extends [mscorlib]System.Object
 {
 ");
+            //.class public Program
+
             MSILGenerator generator = new MSILGenerator();
             generator.Gen(program, sb);
             sb.Append(@"
@@ -50,15 +52,44 @@ namespace MathLang
             {
                 string type = ToMsilType(node.GetChild(0).Text);
                 int num;
-                if (node.GetChild(1).Type == MathLangLexer.ASSIGN)
+                /*if (node.GetChild(1).Type == MathLangLexer.ASSIGN)
                     num = GetVarNum((NodeData)node.GetChild(1).GetChild(0));
-                else
+                else*/
                     num = GetVarNum((NodeData)node.GetChild(1));
                 sb.Append(string.Format("      [{0}] {1},\n", num, type));
             }
             else
                 for (int i = 0; i < node.ChildCount; i++)
                     GenLocalVars((NodeData)node.GetChild(i), sb);
+        }
+        private static void GenGlobalVars(NodeData node, StringBuilder sb)
+        {
+            if (node.Type == MathLangLexer.VAR)
+            {
+                string type = ToMsilType(node.GetChild(0).Text);
+               // int num;
+               /* if (node.GetChild(1).Type == MathLangLexer.ASSIGN)
+                    num = GetVarNum((NodeData)node.GetChild(1).GetChild(0));
+                else*/
+                    //num = GetVarNum((NodeData)node.GetChild(1));
+                    sb.Append(string.Format("  .field public static {0} {1}\n", type,node.GetChild(1).Text));
+            }
+            else
+                for (int i = 0; i < node.ChildCount; i++)
+                    GenGlobalVars((NodeData)node.GetChild(i), sb);
+        }
+        private static void GenGlobalConst(NodeData node, StringBuilder sb)
+        {
+            if (node.Type == MathLangLexer.CONST_)
+            {
+                string type = ToMsilType(node.GetChild(0).Text);
+                int num;
+                num = GetVarNum((NodeData)node.GetChild(1));
+                sb.Append(string.Format("    .field public static [{0}] {1},\n", type, num));
+                sb.Append(string.Format("    .method private hidebysig specialname rtspecialname static void .cctor() cil managed {.maxstack 8 \n"));
+                sb.Append(String.Format("    IL_0000: ldc.i4.{0}\n ",num));
+                sb.Append(String.Format("    IL_0001: stsfld int32 commands.Program::a\n }\n "));
+            }
         }
 
         private void Gen(NodeData node, StringBuilder sb)
@@ -71,7 +102,7 @@ namespace MathLang
             switch (node.Type)
             {
                 case MathLangLexer.PROGRAM:
-                    sb.Append("  .method public static void main");
+                    /*sb.Append("  .method public static void main");
                     sb.Append("() cil managed {\n");
                     sb.Append("    .entrypoint\n");
                     sb.Append("    .locals init (\n");
@@ -84,15 +115,17 @@ namespace MathLang
                     sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
                     sb.Append("  }\n");
                     System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());
-                   /* sb.Append("    .locals init (\n");
-                    GenLocalVars((NodeData)node, sb);
-                    sb[sb.Length - 2] = ' ';
-                    sb.Append("    )\n");
-                    for (int i = 0; i < node.ChildCount; i++)
+                   /**/
+                   // sb.Append("    .field private static ");
+                      for (int i = 0; i < node.ChildCount; i++)
                     {
-                        if (node.GetChild(i).Text != "var" && node.GetChild(i).Text != "const")
+                        if (node.GetChild(i).Text == "var" || node.GetChild(i).Text == "const")
+                        {
+                            GenGlobalVars((NodeData)node.GetChild(i), sb);
+                        }
+                        else
                         Gen((NodeData)node.GetChild(i), sb);
-                    }*/
+                    }
                     break;
                 case MathLangLexer.BLOCK:
                 case MathLangLexer.SCOPEBLOCK:
@@ -101,22 +134,22 @@ namespace MathLang
                     break;
 
                 case MathLangLexer.VAR:
-                  /*  sb.Append("    .locals init (\n");
+                    sb.Append("    .locals init (\n");
                     GenLocalVars((NodeData)node.Parent, sb);
                     sb[sb.Length - 2] = ' ';
-                    sb.Append("    )\n");*/
+                    sb.Append("    )\n");
                     break;
                 case MathLangLexer.BEGIN:
-                    for (int i = 0; i < node.ChildCount; i++)
+                    /*for (int i = 0; i < node.ChildCount; i++)
                         Gen((NodeData)node.GetChild(i), sb);
-                    /*sb.Append("  .method public static void main");
+                    /**/sb.Append("  .method public static void main");
                     sb.Append("() cil managed {\n");
                     sb.Append("    .entrypoint\n");
                     for (int i = 0; i < node.ChildCount; i++)
                         Gen((NodeData)node.GetChild(i), sb);
                     sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
                     sb.Append("  }\n}\n");
-                    System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());*/
+                    System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());
                     break;
 
                 case MathLangLexer.FUNC:
@@ -142,12 +175,24 @@ namespace MathLang
                     break;
 
                 case MathLangLexer.IDENT:
-                    sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node)));
+                    if(node.GetChild(0).Text.Contains("Local"))
+                        sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node)));
+                    else if (node.GetChild(0).Text.Contains("Global"))
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: ldfld      int32 Program::{1}\n", lineNum++, node.Text/*GetVarNum(node)*/));
+                        //sb.Append(string.Format("    L_{0:D6}: ldarg.0\n"),lineNum++);
+                    }
                     break;
 
                 case MathLangLexer.ASSIGN:
                     Gen((NodeData)node.GetChild(1), sb);
-                    sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0))));
+                    if (node.GetChild(0).GetChild(0).Text.Contains("Local"))
+                        sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0))));
+                    else if (node.GetChild(0).GetChild(0).Text.Contains("Global"))
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: stfld      int32 Program::{1}\n", lineNum++,node.Text/* GetVarNum(node)*/));
+                    }
+                   
                     break;
 
                 case MathLangLexer.ADD:
@@ -156,11 +201,18 @@ namespace MathLang
                     sb.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
                     break;
 
-                case MathLangLexer.LE:
                 case MathLangLexer.LT:
                     Gen((NodeData)node.GetChild(0), sb);
                     Gen((NodeData)node.GetChild(1), sb);
                     sb.Append(string.Format("    L_{0:D6}: clt\n", lineNum++));
+                    break;
+                case MathLangLexer.LE:
+                    Gen((NodeData)node.GetChild(0), sb);
+                    Gen((NodeData)node.GetChild(1), sb);
+                    sb.Append(string.Format("    L_{0:D6}: cgt\n", lineNum++));
+                    sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 0));
+                    sb.Append(string.Format("    L_{0:D6}: ceq\n", lineNum++));
+  
                     break;
 
                 case MathLangLexer.PRINT:
@@ -177,7 +229,11 @@ namespace MathLang
                     Gen((NodeData)node.GetChild(2), sb0);
 
                     sb0.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
-                    sb0.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+                    if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local"))
+                        sb0.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+                    else
+                        sb0.Append(string.Format("    L_{0:D6}: ldfld      int32 Program::{1}\n", lineNum++, (NodeData)node.GetChild(0).GetChild(0)));
+                   
                     sb0.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
                     sb0.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
 
