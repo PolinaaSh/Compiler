@@ -47,11 +47,9 @@ namespace MathLang
                             for (int k = 0; k < node.GetChild(i).ChildCount; k++)
                             {
                                 NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "var"));
-                                NodeData identName = (NodeData)node.GetChild(i).GetChild(k);
-                                node.GetChild(i).DeleteChild(k);
-                                splitedNode.AddChild(node.GetChild(i));
-                                //splitedNode.AddChild(node.GetChild(i).GetChild(k));
-                                splitedNode.AddChild(identName);
+                                NodeData type = new NodeData(new TokenSs(MathLangLexer.INT, String.Format("{0}",typeVar)));
+                                splitedNode.AddChild(type);
+                                splitedNode.AddChild(node.GetChild(i).GetChild(k));
                                 listSplitedVar.Add(splitedNode);
                                 splitedNode.check = true;
                             }
@@ -60,7 +58,7 @@ namespace MathLang
 
                         NodeData tree = new NodeData();
                         foreach (NodeData n in listSplitedVar)
-                            tree.AddChild(n);
+                             tree.AddChild(n);
                         node.Parent.ReplaceChildren(node.ChildIndex, node.ChildIndex, tree);
                     }
 
@@ -74,7 +72,27 @@ namespace MathLang
                     node.TypeData = DataType.Boolean;
                     return;
                 case MathLangLexer.CONST_:
+                    List<NodeData> listVar = new List<NodeData>();
+                    if (!node.check)
+                    {
+                        for (int i = 0; i < node.ChildCount; i++)
+                        {
+                            string typeVar = ParseConstType(node.GetChild(i).Text);
+                            
+                                NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.CONST_, "const"));
+                                NodeData type = new NodeData(new TokenSs(MathLangLexer.INT, String.Format("{0}", typeVar)));
+                                splitedNode.AddChild(type);
+                                splitedNode.AddChild(node.GetChild(i));
+                                listVar.Add(splitedNode);
+                                splitedNode.check = true;
+                        }
+                        // запихнуть маркеры
 
+                        NodeData tree = new NodeData();
+                        foreach (NodeData n in listVar)
+                            tree.AddChild(n);
+                        node.Parent.ReplaceChildren(node.ChildIndex, node.ChildIndex, tree);
+                    }
                     return;
             }
 
@@ -177,7 +195,7 @@ namespace MathLang
                 case MathLangLexer.ADD:
                 case MathLangLexer.SUB:
                 case MathLangLexer.MUL:
-                case MathLangLexer.DIV:
+                case MathLangLexer.DIVIDE:
                     #region mathOperation
                     {
                         // Проверяю используемые переменные и определяю их тип.
@@ -339,7 +357,7 @@ namespace MathLang
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScopeVar);
 
-                        if (node.GetChild(1).ChildCount != 0 && node.GetChild(1).GetChild(0).TypeData() != DataType.Boolean)
+                        if (node.GetChild(1).ChildCount != 0 && node.GetChild(1)./*GetChild(0).*/TypeData() != DataType.Boolean)
                             throw new ApplicationException(string.Format("SSKA. In for condition type is {0}", node.GetChild(1).GetChild(0).TypeData()));
                     }
                     #endregion
@@ -507,6 +525,21 @@ namespace MathLang
         {
             if (number != DataType.Real && number != DataType.Integer)
                 throw new ApplicationException(string.Format("Operand invalid type for operation {0}, line = {1}, pos = {2}", node.Text, node.Line, node.TokenStartIndex));
+        }
+        private string ParseConstType(string text)
+        {
+            if (text == "true" || text == "false")
+                return "boolean";
+            else if (text.Contains("."))
+                return "real";
+            else if (text.Length == 1 && !Char.IsLetterOrDigit(text[0]))
+                return "char";
+            else if (!text.Contains("."))
+                return "integer";
+            else
+            {
+                throw new ApplicationException("Unknown datatype!");
+            }
         }
     }
 }

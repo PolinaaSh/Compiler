@@ -124,7 +124,7 @@ simpleExpr:
 
 groupExpr:
   IF^ '('! term ')'! THEN! exprList (ELSIF term THEN exprList)* (ELSE exprList)?
-| FOR^ IDENT ASSIGN! term (TO|DOWNTO)! term DO! exprList
+|( FOR IDENT ASSIGN t1=term TO t2=term DO exprList)->^(FOR ^(ASSIGN IDENT $t1) ^(LE IDENT $t2) exprList)
 | WHILE^ '('!term')'! DO! exprList
 | REPEAT^ exprList+ UNTIL! term
 | BEGIN exprList+ END  -> ^(BLOCK exprList+)

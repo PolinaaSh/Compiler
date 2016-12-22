@@ -7,12 +7,13 @@ namespace MathLang
 {
     class MSILGenerator
     {
+
         private int lineNum = 0;
 
         public static string ToMsilType(String type)
         {
             if (type == "integer") return "int32";
-            else if (type == "real") return "double";
+            else if (type == "real") return "float";
             else return type;
         }
 
@@ -70,7 +71,20 @@ namespace MathLang
             switch (node.Type)
             {
                 case MathLangLexer.PROGRAM:
+                     sb.Append("  .method public static void main");
+                    sb.Append("() cil managed {\n");
+                    sb.Append("    .entrypoint\n");
                     sb.Append("    .locals init (\n");
+                    GenLocalVars((NodeData)node, sb);
+                    sb[sb.Length - 2] = ' ';
+                    sb.Append("    )\n");
+                    for (int i = 0; i < node.ChildCount; i++)
+                        if (node.GetChild(i).Text!="var")
+                        Gen((NodeData)node.GetChild(i), sb);
+                    sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
+                    sb.Append("  }\n");
+                    System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());
+                   /* sb.Append("    .locals init (\n");
                     GenLocalVars((NodeData)node, sb);
                     sb[sb.Length - 2] = ' ';
                     sb.Append("    )\n");
@@ -78,7 +92,7 @@ namespace MathLang
                     {
                         if (node.GetChild(i).Text != "var" && node.GetChild(i).Text != "const")
                         Gen((NodeData)node.GetChild(i), sb);
-                    }
+                    }*/
                     break;
                 case MathLangLexer.BLOCK:
                 case MathLangLexer.SCOPEBLOCK:
@@ -87,19 +101,21 @@ namespace MathLang
                     break;
 
                 case MathLangLexer.VAR:
-                    sb.Append("    .locals init (\n");
+                  /*  sb.Append("    .locals init (\n");
                     GenLocalVars((NodeData)node.Parent, sb);
                     sb[sb.Length - 2] = ' ';
-                    sb.Append("    )\n");
+                    sb.Append("    )\n");*/
                     break;
                 case MathLangLexer.BEGIN:
-                    sb.Append("  .method public static void main");
+                    for (int i = 0; i < node.ChildCount; i++)
+                        Gen((NodeData)node.GetChild(i), sb);
+                    /*sb.Append("  .method public static void main");
                     sb.Append("() cil managed {\n");
                     sb.Append("    .entrypoint\n");
                     for (int i = 0; i < node.ChildCount; i++)
                         Gen((NodeData)node.GetChild(i), sb);
                     sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
-                    sb.Append("  }\n");
+                    sb.Append("  }\n");*/
                     break;
 
                 case MathLangLexer.FUNC:
@@ -139,7 +155,7 @@ namespace MathLang
                     sb.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
                     break;
 
-                case MathLangLexer.LT:
+                case MathLangLexer.LE:
                     Gen((NodeData)node.GetChild(0), sb);
                     Gen((NodeData)node.GetChild(1), sb);
                     sb.Append(string.Format("    L_{0:D6}: clt\n", lineNum++));
@@ -156,8 +172,13 @@ namespace MathLang
                     Gen((NodeData)node.GetChild(1), sb);
                     int line2 = lineNum++;
                     sb0 = new StringBuilder();
-                    Gen((NodeData)node.GetChild(3), sb0);
                     Gen((NodeData)node.GetChild(2), sb0);
+
+                    sb0.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
+                    sb0.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+                    sb0.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
+                    sb0.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+
                     sb0.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineNum++, line1));
                     sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", line2, lineNum));
                     sb.Append(sb0);
