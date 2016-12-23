@@ -11,19 +11,26 @@
     .entrypoint
     L_000000: ldc.i4 5
     L_000001: stsfld      int32 Program::a
-    L_000002: ldc.i4 2
+    L_000002: ldc.i4 6
     L_000003: stsfld      int32 Program::i
     L_000004: ldsfld      int32 Program::i
-    L_000005: ldc.i4 6
+    L_000005: ldc.i4 2
     L_000006: clt
     L_000007: brfalse L_000013
     L_000008: ldsfld      int32 Program::a
     L_000009: ldsfld      int32 Program::i
     L_000010: add
     L_000011: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000012: br L_000015
+    L_000012: br L_000022
     L_000013: ldsfld      int32 Program::i
-    L_000014: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000015: ret
+    L_000014: ldc.i4 8
+    L_000015: clt
+    L_000016: brfalse L_000020
+    L_000017: ldsfld      int32 Program::a
+    L_000018: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000019: br L_000022
+    L_000020: ldsfld      int32 Program::i
+    L_000021: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000022: ret
   }
 }

@@ -9,6 +9,7 @@ namespace MathLang
     {
 
         private int lineNum = 0;
+       // private StringBuilder sb0;
 
         public static string ToMsilType(String type)
         {
@@ -148,12 +149,14 @@ namespace MathLang
                     break;
 
                 case MathLangLexer.ELSIF:
+                    GenElsif(node, sb);
+                    break;
                 case MathLangLexer.IF:
                     GenIf(node, sb);
                     break;
 
                 case MathLangLexer.ELSE:
-                    Gen((NodeData)node.GetChild(0), sb);
+                    GenElse(node, sb);
                     break;
 
                 case MathLangLexer.FOR:
@@ -276,30 +279,49 @@ namespace MathLang
         }
         public void GenIf(NodeData node, StringBuilder sb)
         {
+            StringBuilder sb0 = new StringBuilder();
+            Gen((NodeData)node.GetChild(0), sb);
+            int lineBr = lineNum++;
+            Gen((NodeData)node.GetChild(1), sb0);
+            sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", lineBr, lineNum + 1));
+            sb.Append(sb0);
+            sb0 = null;
+            sb0 = new StringBuilder();
+            lineBr = lineNum++;
+            if(node.ChildCount>2)
+                Gen((NodeData)node.GetChild(2), sb0);
+            sb.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineBr, lineNum));
+            sb.Append(sb0);
+            sb0 = null;
+        }
+        public void GenElsif(NodeData node, StringBuilder sb)
+        {
             Gen((NodeData)node.GetChild(0), sb);
             int lineBr = lineNum++;
             StringBuilder sb0 = new StringBuilder();
             Gen((NodeData)node.GetChild(1), sb0);
             sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", lineBr, lineNum + 1));
             sb.Append(sb0);
-            sb0 = null;
-            if (node.ChildCount == 3 && node.GetChild(2).Text == "else")
-            {
-                lineBr = lineNum++;
-                sb0 = new StringBuilder();
-                Gen((NodeData)node.GetChild(2), sb0);
-                sb.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineBr, lineNum));
-                sb.Append(sb0);
-            }
+            sb0 = new StringBuilder();
+            lineBr = lineNum++;
+            if (node.ChildIndex + 1 < node.Parent.ChildCount)
+                Gen((NodeData)node.Parent.GetChild(node.ChildIndex + 1), sb0);
+            sb.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineBr, lineNum));
+            sb.Append(sb0);
+        }
+        public void GenElse(NodeData node, StringBuilder sb)
+        {
+            StringBuilder sb0 = new StringBuilder();
+            Gen((NodeData)node.GetChild(0), sb0);
+            sb.Append(sb0);
         }
         public void GenFor(NodeData node, StringBuilder sb)
         {
-            StringBuilder sb0= new StringBuilder();
             Gen((NodeData)node.GetChild(0), sb);
             int line1 = lineNum;
             Gen((NodeData)node.GetChild(1), sb);
             int line2 = lineNum++;
-            sb0 = new StringBuilder();
+            StringBuilder sb0 = new StringBuilder();
             Gen((NodeData)node.GetChild(2), sb0);
             sb0.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
 
