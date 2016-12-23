@@ -4,8 +4,6 @@ a:=5;
 i:=2;
 if i<6 then
 print a+i;
-elsif i>8 then
-print a;
 else
 print i;
 end.

@@ -149,16 +149,7 @@ namespace MathLang
 
                 case MathLangLexer.ELSIF:
                 case MathLangLexer.IF:
-                    Gen((NodeData)node.GetChild(0),sb);
-                    int lineBr = lineNum++;
-                    sb0 = new StringBuilder();
-                    Gen((NodeData)node.GetChild(1), sb0);
-                    sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n",lineBr,lineNum));
-                    sb.Append(sb0);
-                    sb0 = null;
-                    if (node.Text == "if")
-                        for (int i = 2; i < node.ChildCount; i++)
-                            Gen((NodeData)node.GetChild(i),sb);
+                    GenIf(node, sb);
                     break;
 
                 case MathLangLexer.ELSE:
@@ -285,7 +276,21 @@ namespace MathLang
         }
         public void GenIf(NodeData node, StringBuilder sb)
         {
-
+            Gen((NodeData)node.GetChild(0), sb);
+            int lineBr = lineNum++;
+            StringBuilder sb0 = new StringBuilder();
+            Gen((NodeData)node.GetChild(1), sb0);
+            sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", lineBr, lineNum + 1));
+            sb.Append(sb0);
+            sb0 = null;
+            if (node.ChildCount == 3 && node.GetChild(2).Text == "else")
+            {
+                lineBr = lineNum++;
+                sb0 = new StringBuilder();
+                Gen((NodeData)node.GetChild(2), sb0);
+                sb.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineBr, lineNum));
+                sb.Append(sb0);
+            }
         }
         public void GenFor(NodeData node, StringBuilder sb)
         {
