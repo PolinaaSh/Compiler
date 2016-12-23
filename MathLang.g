@@ -123,7 +123,7 @@ simpleExpr:
 ;
 
 groupExpr:
-  IF^ '('! term ')'! THEN! exprList (ELSIF term THEN exprList)* (ELSE exprList)?
+ ( IF '(' t1=term ')' THEN lst=exprList (ELSIF t2=term THEN lst2=exprList)* (ELSE lst3=exprList)?)->^(IF $t1 $lst (^(ELSIF $t2 $lst2))* (^(ELSE $lst3))?)
 |( FOR IDENT ASSIGN t1=term TO t2=term DO exprList)->^(FOR ^(ASSIGN IDENT $t1) ^(LE IDENT $t2) exprList)
 | WHILE^ '('!term')'! DO! exprList
 | REPEAT^ exprList+ UNTIL! term

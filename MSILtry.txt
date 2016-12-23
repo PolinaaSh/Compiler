@@ -7,31 +7,28 @@
 {
   .field public static int32 a
   .field public static int32 i
-  .method public static void main() cil managed {
+  .method public hidebysig static void main() cil managed {
     .entrypoint
     L_000000: ldc.i4 5
     L_000001: stsfld      int32 Program::a
-    L_000002: ldc.i4 1
+    L_000002: ldc.i4 2
     L_000003: stsfld      int32 Program::i
     L_000004: ldsfld      int32 Program::i
-    L_000005: ldc.i4 10
-    L_000006: cgt
-    L_000007: ldc.i4 0
-    L_000008: ceq
-    L_000009: brfalse L_000023
-    L_000010: ldsfld      int32 Program::i
-    L_000011: ldc.i4 6
-    L_000012: clt
-    L_000013: brfalse L_000018
-    L_000014: ldsfld      int32 Program::a
-    L_000015: ldsfld      int32 Program::i
-    L_000016: add
+    L_000005: ldc.i4 6
+    L_000006: clt
+    L_000007: brfalse L_000012
+    L_000008: ldsfld      int32 Program::a
+    L_000009: ldsfld      int32 Program::i
+    L_000010: add
+    L_000011: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000012: ldsfld      int32 Program::i
+    L_000013: ldc.i4 8
+    L_000014: cgt
+    L_000015: brfalse L_000018
+    L_000016: ldsfld      int32 Program::a
     L_000017: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000018: ldc.i4 1
-    L_000019: ldsfld      int32 Program::i
-    L_000020: add
-    L_000021: stsfld      int32 Program::i
-    L_000022: br L_000004
-    L_000023: ret
+    L_000018: ldsfld      int32 Program::i
+    L_000019: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000020: ret
   }
 }

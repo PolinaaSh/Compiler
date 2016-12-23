@@ -196,6 +196,8 @@ namespace MathLang
                 case MathLangLexer.SUB:
                 case MathLangLexer.MUL:
                 case MathLangLexer.DIVIDE:
+                case MathLangLexer.MOD:
+                case MathLangLexer.DIV:
                     #region mathOperation
                     {
                         // Проверяю используемые переменные и определяю их тип.
