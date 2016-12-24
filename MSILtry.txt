@@ -7,32 +7,30 @@
 {
   .field public static int32 a
   .field public static int32 i
+  .method public static integer H ( int32 b ) cil managed {
+    .locals init (
+      [0] int32,
+      [1] int32 
+     
+    )
+    L_000000: ldloc 0
+    L_000001: ldloc 0
+    L_000002: mul
+    L_000003: stloc 1
+    L_000004: ret
+  }
   .method public hidebysig static void main() cil managed {
     .entrypoint
-    L_000000: ldc.i4 5
-    L_000001: stsfld      int32 Program::a
-    L_000002: ldc.i4 6
-    L_000003: stsfld      int32 Program::i
-    L_000004: ldsfld      int32 Program::i
-    L_000005: ldc.i4 2
-    L_000006: clt
-    L_000007: brfalse L_000013
-    L_000008: ldsfld      int32 Program::a
+    L_000005: ldc.i4 5
+    L_000006: stsfld      int32 Program::a
+    L_000007: ldc.i4 7
+    L_000008: stsfld      int32 Program::i
     L_000009: ldsfld      int32 Program::i
-    L_000010: add
-    L_000011: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000012: br L_000015
-    L_000013: ldsfld      int32 Program::i
+    L_000010: ldsfld      int32 Program::a
+    L_000011: rem
+    L_000012: stsfld      int32 Program::a
+    L_000013: ldsfld      int32 Program::a
     L_000014: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000015: ldsfld      int32 Program::i
-    L_000016: ldc.i4 8
-    L_000017: clt
-    L_000018: brfalse L_000024
-    L_000019: ldsfld      int32 Program::i
-    L_000020: ldc.i4 2
-    L_000021: add
-    L_000022: stsfld      int32 Program::i
-    L_000023: br L_000015
-    L_000024: ret
+    L_000015: ret
   }
 }

@@ -11,7 +11,7 @@ namespace MathLang
     {
         private Scope parent;
         private Dictionary<string, IdentDescription> dicIdents;
-       /// private IdentDescription function;
+        private IdentDescription function;
         private TypeScope typeScope;
         private int indexatorLocal;
         private int indexatorGlobal;
@@ -71,13 +71,13 @@ namespace MathLang
         }
         public int GetIndexLocal()
         {
-            return typeScope == TypeScope.Local ? indexatorLocal++ : parent.GetIndexLocal();
+            return indexatorLocal++;
         }
         public int GetIndexParam()
         {
-            return typeScope == TypeScope.Local ? indexatorParam++ : parent.GetIndexParam();
+            return indexatorParam++ ;
         }
-      /*  public IdentDescription Function
+        public IdentDescription Function
         {
             get
             {
@@ -87,6 +87,6 @@ namespace MathLang
                     return function;
             }
             set { function = value; }
-        }*/
+        }
     }
 }

@@ -1,13 +1,17 @@
 var a,i:integer;
+
+function H(b,n:integer):integer;
+var k,s:integer;
+begin
+s:=b*b;
+end;
+
 begin
 a:=5;
-i:=6;
-if i<2 then
-print a+i;
-else
-print i;
-repeat i:=i+2;
- until i<8;
+i:=7;
+a:= i mod a;
+print a;
+H(a,i);
 end.
 
 
