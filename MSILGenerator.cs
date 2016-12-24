@@ -125,8 +125,28 @@ namespace MathLang
                     GenAssign(node, sb);                   
                     break;
 
+                case MathLangLexer.EQUALS:
+                    GenAssign(node, sb);
+                    break;
+
+                case MathLangLexer.NEQUALS:
+                    GenAssign(node, sb);
+                    break;
+
                 case MathLangLexer.ADD:
                     GenAdd(node, sb);
+                    break;
+
+                case MathLangLexer.SUB:
+                    GenSub(node, sb);
+                    break;
+
+                case MathLangLexer.MUL:
+                    GenMul(node, sb);
+                    break;
+
+                case MathLangLexer.DIVIDE:
+                    GenDivide(node, sb);
                     break;
 
                 case MathLangLexer.LT:
@@ -161,6 +181,14 @@ namespace MathLang
 
                 case MathLangLexer.FOR:
                     GenFor(node,sb);
+                    break;
+
+                case MathLangLexer.WHILE:
+                    GenWhile(node, sb);
+                    break;
+
+                case MathLangLexer.REPEAT:
+                    GenRepeat(node, sb);
                     break;
 
                 default:
@@ -243,12 +271,41 @@ namespace MathLang
                 sb.Append(string.Format("    L_{0:D6}: stsfld      int32 Program::{1}\n", lineNum++, node.GetChild(0).Text/* GetVarNum(node)*/));
             }
         }
+        public void GenEquals(NodeData node, StringBuilder sb)
+        {
+            Gen((NodeData)node.GetChild(0), sb);
+            Gen((NodeData)node.GetChild(1), sb);
+            sb.Append(string.Format("    L_{0:D6}: ceq\n", lineNum++));
+        }
+        public void GenNequals(NodeData node, StringBuilder sb)
+        {
+            Gen((NodeData)node.GetChild(0), sb);
+            Gen((NodeData)node.GetChild(1), sb);
+        }
         public void GenAdd(NodeData node, StringBuilder sb)
         {
             Gen((NodeData)node.GetChild(0), sb);
             Gen((NodeData)node.GetChild(1), sb);
             sb.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
         }
+        public void GenSub(NodeData node, StringBuilder sb)
+        {
+            Gen((NodeData)node.GetChild(0), sb);
+            Gen((NodeData)node.GetChild(1), sb);
+            sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
+        }
+        public void GenMul(NodeData node, StringBuilder sb)
+         {
+             Gen((NodeData)node.GetChild(0), sb);
+             Gen((NodeData)node.GetChild(1), sb);
+             sb.Append(string.Format("    L_{0:D6}: mul\n", lineNum++));
+         }
+        public void GenDivide(NodeData node, StringBuilder sb)
+         {
+             Gen((NodeData)node.GetChild(0), sb);
+             Gen((NodeData)node.GetChild(1), sb);
+             sb.Append(string.Format("    L_{0:D6}: div\n", lineNum++));
+         }
         public void GenLess(NodeData node, StringBuilder sb)
         {
             Gen((NodeData)node.GetChild(0), sb);
@@ -341,6 +398,28 @@ namespace MathLang
             sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", line2, lineNum));
             sb.Append(sb0);
             sb0 = null;
+        }
+        public void GenWhile(NodeData node, StringBuilder sb)
+        {
+            int line1 = lineNum;
+            Gen((NodeData)node.GetChild(0),sb);
+            StringBuilder sb0 = new StringBuilder();
+            Gen((NodeData)node.GetChild(1), sb0);
+            int line2 = lineNum++;
+            sb0.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineNum++, line1));
+            sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", line2, lineNum));
+            sb.Append(sb0);
+        }
+        public void GenRepeat(NodeData node, StringBuilder sb)
+        {
+            int line1 = lineNum;
+            Gen((NodeData)node.GetChild(1), sb);
+            int line2 = lineNum++;
+            StringBuilder sb0 = new StringBuilder();
+            Gen((NodeData)node.GetChild(0), sb0); 
+            sb0.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineNum++, line1));
+            sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", line2, lineNum));
+            sb.Append(sb0);
         }
         public void GenPrint(NodeData node, StringBuilder sb)
         {

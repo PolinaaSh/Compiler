@@ -4,10 +4,10 @@ a:=5;
 i:=6;
 if i<2 then
 print a+i;
-elsif i<8 then
-print a;
 else
 print i;
+repeat i:=i+2;
+ until i<8;
 end.
 
 

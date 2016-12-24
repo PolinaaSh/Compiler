@@ -21,16 +21,18 @@
     L_000009: ldsfld      int32 Program::i
     L_000010: add
     L_000011: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000012: br L_000022
+    L_000012: br L_000015
     L_000013: ldsfld      int32 Program::i
-    L_000014: ldc.i4 8
-    L_000015: clt
-    L_000016: brfalse L_000020
-    L_000017: ldsfld      int32 Program::a
-    L_000018: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000019: br L_000022
-    L_000020: ldsfld      int32 Program::i
-    L_000021: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000022: ret
+    L_000014: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000015: ldsfld      int32 Program::i
+    L_000016: ldc.i4 8
+    L_000017: clt
+    L_000018: brfalse L_000024
+    L_000019: ldsfld      int32 Program::i
+    L_000020: ldc.i4 2
+    L_000021: add
+    L_000022: stsfld      int32 Program::i
+    L_000023: br L_000015
+    L_000024: ret
   }
 }
