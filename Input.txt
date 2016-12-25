@@ -1,9 +1,10 @@
 var a,i:integer;
+    r:real;
 
-function H(b,n:integer):integer;
-var k,s:integer;
+function H():integer;
+var s:integer;
 begin
-s:=b*b;
+H:=2*2;
 end;
 
 begin
@@ -11,7 +12,7 @@ a:=5;
 i:=7;
 a:= i mod a;
 print a;
-H(a,i);
+H();
 end.
 
 

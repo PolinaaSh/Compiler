@@ -254,26 +254,48 @@ namespace MathLang
         public void GenFunc(NodeData node, StringBuilder sb)
         {
             sb.Append("  .method public static");
-            sb.Append(string.Format(" {0}", node.GetChild(0).Text));//возвр значение
+            sb.Append(string.Format(" {0}", ToMsilType(node.GetChild(0).Text)));//возвр значение
             sb.Append(string.Format(" {0}", node.GetChild(1).Text));//имя
             GenParams(node.GetChild(2).Cast(),sb);//параметры
             sb.Append(" cil managed {\n");
             if (node.GetChild(3).Text == "var" || node.GetChild(3).Text == "const")
             {
                 Gen((NodeData)node.GetChild(3), sb);
-                sb[sb.Length - 2] = ' ';
+                sb.Append(string.Format(" [{0}] {1}\n", 1, ToMsilType(node.GetChild(0).Text)));
+                //sb[sb.Length - 2] = ' ';
                 sb.Append("    )\n");
+                
                 Gen((NodeData)node.GetChild(node.ChildCount-1), sb);
             }
             else
                 Gen((NodeData)node.GetChild(3), sb);
+            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,1));
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n");
+            lineNum = 0;
         }
         public void GenCall(NodeData node, StringBuilder sb)
         {
-            sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine(int32)\n", lineNum++));
-        }
+            string returnType = ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower());
+            string funName = ToMsilType(node.GetChild(0).Text);
+            StringBuilder sb0 = new StringBuilder();
+
+            sb0.Append(string.Format("("));
+            for (int i = 0; i < node.GetChild(1).ChildCount; i++)
+            {
+                string type = ToMsilType(node.GetChild(1).GetChild(i).Cast().TypeData.ToString().ToLower());
+                sb0.Append(string.Format("{0},", type));
+                if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local") || node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Param"))
+                    sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node.GetChild(1).GetChild(i).Cast())));
+                else
+                    sb.Append(string.Format("    L_{0:D6}: ldsfld      {1} Program::{2}\n", lineNum++, ToMsilType(node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Cast().TypeData.ToString().ToLower()), node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Text));
+            }
+            if (node.GetChild(1).ChildCount >0)
+            sb0[sb0.Length - 1] = ' ';
+            sb0.Append(")\n");
+            sb.Append(string.Format("    L_{0:D6}: call        {1} Program::{2}", lineNum++,returnType,funName));
+            sb.Append(sb0);
+         }
         public void GenParams(NodeData node, StringBuilder sb)
         {
             sb.Append(string.Format(" ( "));
