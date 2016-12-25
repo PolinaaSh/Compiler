@@ -313,8 +313,14 @@ namespace MathLang
                             FillVars(node.GetChild(i).Cast(), scope);
 
                         DataType first = node.GetChild(0).Cast().TypeData;
-                        DataType second = node.GetChild(1).Cast().TypeData;
-
+                        DataType second ;//= node.GetChild(1).Cast().TypeData;
+                        if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Procedure"))
+                            throw new ApplicationException(string.Format("Assign to procedure {0}",node.GetChild(1).GetChild(0).Text));
+                        else if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Function"))
+                            second = node.GetChild(1).GetChild(0).Cast().TypeData;
+                        else 
+                            second = node.GetChild(1).Cast().TypeData;
+                            
                         if (first != second)
                         {
                             if (first == DataType.Real && second == DataType.Integer)

@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2016-12-23 21:48:37
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2016-12-25 17:46:24
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -102,8 +102,8 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				false, false, false, false, false, false, false, false, true, true, 
 				false, false, false, false, false, false, false, false, false, false, 
 				false, false, true, false, false, false, false, false, false, false, 
-				false, true, true, false, false, false, false, false, true, false, false, 
-				false, , , , , , , , , , , , , 
+				false, false, true, true, false, false, false, false, false, true, false, 
+				false, false, , , , , , , , , , , , , 
 			};
 	#else
 		private static readonly bool[] decisionCanBacktrack = new bool[0];
@@ -1579,7 +1579,41 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				{
 				case ASSIGN:
 					{
-					alt8=1;
+					int LA8_3 = input.LA(3);
+
+					if ((LA8_3==IDENT))
+					{
+						int LA8_6 = input.LA(4);
+
+						if ((LA8_6==59))
+						{
+							alt8=4;
+						}
+						else if (((LA8_6>=AND && LA8_6<=OR)||(LA8_6>=DIV && LA8_6<=MOD)||(LA8_6>=ADD && LA8_6<=DIVIDE)||(LA8_6>=GE && LA8_6<=LT)||LA8_6==61||LA8_6==63))
+						{
+							alt8=1;
+						}
+						else
+						{
+							if (state.backtracking>0) {state.failed=true; return retval;}
+							NoViableAltException nvae = new NoViableAltException("", 8, 6, input);
+
+							DebugRecognitionException(nvae);
+							throw nvae;
+						}
+					}
+					else if (((LA8_3>=TRUE && LA8_3<=FALSE)||LA8_3==NUMBER||LA8_3==59))
+					{
+						alt8=1;
+					}
+					else
+					{
+						if (state.backtracking>0) {state.failed=true; return retval;}
+						NoViableAltException nvae = new NoViableAltException("", 8, 3, input);
+
+						DebugRecognitionException(nvae);
+						throw nvae;
+					}
 					}
 					break;
 				case 61:
@@ -1710,7 +1744,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: ASSIGN, index_, IDENT, group
+				// elements: group, index_, IDENT, ASSIGN
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -2106,7 +2140,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: ELSIF, IF, lst3, t1, lst, ELSE, lst2, t2
+				// elements: IF, t2, ELSIF, lst3, lst, ELSE, lst2, t1
 				// token labels: 
 				// rule labels: lst3, t2, retval, t1, lst2, lst
 				// token list labels: 
@@ -2137,7 +2171,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					adaptor.AddChild(root_1, stream_lst.NextTree());
 					DebugLocation(126, 115);
 					// MathLang.g:126:115: ( ^( ELSIF $t2 $lst2) )*
-					while ( stream_ELSIF.HasNext||stream_lst2.HasNext||stream_t2.HasNext )
+					while ( stream_t2.HasNext||stream_ELSIF.HasNext||stream_lst2.HasNext )
 					{
 						DebugLocation(126, 116);
 						// MathLang.g:126:116: ^( ELSIF $t2 $lst2)
@@ -2155,9 +2189,9 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						}
 
 					}
+					stream_t2.Reset();
 					stream_ELSIF.Reset();
 					stream_lst2.Reset();
-					stream_t2.Reset();
 					DebugLocation(126, 137);
 					// MathLang.g:126:137: ( ^( ELSE $lst3) )?
 					if ( stream_lst3.HasNext||stream_ELSE.HasNext )
@@ -2244,7 +2278,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: t2, ASSIGN, FOR, IDENT, IDENT, t1, exprList
+				// elements: IDENT, IDENT, t2, exprList, ASSIGN, FOR, t1
 				// token labels: 
 				// rule labels: t2, retval, t1
 				// token list labels: 
@@ -3194,7 +3228,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: ARRAY, group, IDENT, type
+				// elements: type, ARRAY, IDENT, group
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -3992,7 +4026,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: type_decl, type, IDENT, FUNC
+			// elements: FUNC, type_decl, IDENT, type
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4267,7 +4301,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: type_decl, IDENT, param_var, PROC
+			// elements: PROC, param_var, type_decl, IDENT
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4716,7 +4750,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_call();
 
 	// $ANTLR start "call"
-	// MathLang.g:178:1: call : IDENT '(' params_ ')' -> ^( CALL IDENT params_ ) ;
+	// MathLang.g:178:1: call : ( IDENT '(' params_ ')' -> ^( CALL IDENT params_ ) | (i1= IDENT ASSIGN i2= IDENT '(' params_ ')' ) -> ^( ASSIGN $i1 ^( CALL $i2 params_ ) ) );
 	[GrammarRule("call")]
 	private MathLangParser.call_return call()
 	{
@@ -4728,84 +4762,227 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
+		IToken i1=null;
+		IToken i2=null;
 		IToken IDENT138=null;
 		IToken char_literal139=null;
 		IToken char_literal141=null;
+		IToken ASSIGN142=null;
+		IToken char_literal143=null;
+		IToken char_literal145=null;
 		MathLangParser.params__return params_140 = default(MathLangParser.params__return);
+		MathLangParser.params__return params_144 = default(MathLangParser.params__return);
 
+		object i1_tree=null;
+		object i2_tree=null;
 		object IDENT138_tree=null;
 		object char_literal139_tree=null;
 		object char_literal141_tree=null;
+		object ASSIGN142_tree=null;
+		object char_literal143_tree=null;
+		object char_literal145_tree=null;
 		RewriteRuleITokenStream stream_IDENT=new RewriteRuleITokenStream(adaptor,"token IDENT");
 		RewriteRuleITokenStream stream_59=new RewriteRuleITokenStream(adaptor,"token 59");
 		RewriteRuleITokenStream stream_60=new RewriteRuleITokenStream(adaptor,"token 60");
+		RewriteRuleITokenStream stream_ASSIGN=new RewriteRuleITokenStream(adaptor,"token ASSIGN");
 		RewriteRuleSubtreeStream stream_params_=new RewriteRuleSubtreeStream(adaptor,"rule params_");
 		try { DebugEnterRule(GrammarFileName, "call");
 		DebugLocation(178, 0);
 		try
 		{
-			// MathLang.g:178:5: ( IDENT '(' params_ ')' -> ^( CALL IDENT params_ ) )
-			DebugEnterAlt(1);
-			// MathLang.g:179:1: IDENT '(' params_ ')'
+			// MathLang.g:178:5: ( IDENT '(' params_ ')' -> ^( CALL IDENT params_ ) | (i1= IDENT ASSIGN i2= IDENT '(' params_ ')' ) -> ^( ASSIGN $i1 ^( CALL $i2 params_ ) ) )
+			int alt32=2;
+			try { DebugEnterDecision(32, decisionCanBacktrack[32]);
+			int LA32_0 = input.LA(1);
+
+			if ((LA32_0==IDENT))
 			{
-			DebugLocation(179, 1);
-			IDENT138=(IToken)Match(input,IDENT,Follow._IDENT_in_call1854); if (state.failed) return retval; 
-			if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT138);
+				int LA32_1 = input.LA(2);
 
-			DebugLocation(179, 7);
-			char_literal139=(IToken)Match(input,59,Follow._59_in_call1856); if (state.failed) return retval; 
-			if ( state.backtracking == 0 ) stream_59.Add(char_literal139);
-
-			DebugLocation(179, 11);
-			PushFollow(Follow._params__in_call1858);
-			params_140=params_();
-			PopFollow();
-			if (state.failed) return retval;
-			if ( state.backtracking == 0 ) stream_params_.Add(params_140.Tree);
-			DebugLocation(179, 19);
-			char_literal141=(IToken)Match(input,60,Follow._60_in_call1860); if (state.failed) return retval; 
-			if ( state.backtracking == 0 ) stream_60.Add(char_literal141);
-
-
-
-			{
-			// AST REWRITE
-			// elements: IDENT, params_
-			// token labels: 
-			// rule labels: retval
-			// token list labels: 
-			// rule list labels: 
-			// wildcard labels: 
-			if ( state.backtracking == 0 ) {
-			retval.Tree = root_0;
-			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
-
-			root_0 = (object)adaptor.Nil();
-			// 179:23: -> ^( CALL IDENT params_ )
-			{
-				DebugLocation(179, 26);
-				// MathLang.g:179:26: ^( CALL IDENT params_ )
+				if ((LA32_1==59))
 				{
-				object root_1 = (object)adaptor.Nil();
-				DebugLocation(179, 28);
-				root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(CALL, "CALL"), root_1);
+					alt32=1;
+				}
+				else if ((LA32_1==ASSIGN))
+				{
+					alt32=2;
+				}
+				else
+				{
+					if (state.backtracking>0) {state.failed=true; return retval;}
+					NoViableAltException nvae = new NoViableAltException("", 32, 1, input);
 
-				DebugLocation(179, 33);
-				adaptor.AddChild(root_1, stream_IDENT.NextNode());
-				DebugLocation(179, 39);
-				adaptor.AddChild(root_1, stream_params_.NextTree());
+					DebugRecognitionException(nvae);
+					throw nvae;
+				}
+			}
+			else
+			{
+				if (state.backtracking>0) {state.failed=true; return retval;}
+				NoViableAltException nvae = new NoViableAltException("", 32, 0, input);
 
-				adaptor.AddChild(root_0, root_1);
+				DebugRecognitionException(nvae);
+				throw nvae;
+			}
+			} finally { DebugExitDecision(32); }
+			switch (alt32)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// MathLang.g:179:1: IDENT '(' params_ ')'
+				{
+				DebugLocation(179, 1);
+				IDENT138=(IToken)Match(input,IDENT,Follow._IDENT_in_call1854); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT138);
+
+				DebugLocation(179, 7);
+				char_literal139=(IToken)Match(input,59,Follow._59_in_call1856); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_59.Add(char_literal139);
+
+				DebugLocation(179, 11);
+				PushFollow(Follow._params__in_call1858);
+				params_140=params_();
+				PopFollow();
+				if (state.failed) return retval;
+				if ( state.backtracking == 0 ) stream_params_.Add(params_140.Tree);
+				DebugLocation(179, 19);
+				char_literal141=(IToken)Match(input,60,Follow._60_in_call1860); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_60.Add(char_literal141);
+
+
+
+				{
+				// AST REWRITE
+				// elements: IDENT, params_
+				// token labels: 
+				// rule labels: retval
+				// token list labels: 
+				// rule list labels: 
+				// wildcard labels: 
+				if ( state.backtracking == 0 ) {
+				retval.Tree = root_0;
+				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
+
+				root_0 = (object)adaptor.Nil();
+				// 179:23: -> ^( CALL IDENT params_ )
+				{
+					DebugLocation(179, 26);
+					// MathLang.g:179:26: ^( CALL IDENT params_ )
+					{
+					object root_1 = (object)adaptor.Nil();
+					DebugLocation(179, 28);
+					root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(CALL, "CALL"), root_1);
+
+					DebugLocation(179, 33);
+					adaptor.AddChild(root_1, stream_IDENT.NextNode());
+					DebugLocation(179, 39);
+					adaptor.AddChild(root_1, stream_params_.NextTree());
+
+					adaptor.AddChild(root_0, root_1);
+					}
+
 				}
 
-			}
+				retval.Tree = root_0;
+				}
+				}
 
-			retval.Tree = root_0;
-			}
-			}
+				}
+				break;
+			case 2:
+				DebugEnterAlt(2);
+				// MathLang.g:180:3: (i1= IDENT ASSIGN i2= IDENT '(' params_ ')' )
+				{
+				DebugLocation(180, 3);
+				// MathLang.g:180:3: (i1= IDENT ASSIGN i2= IDENT '(' params_ ')' )
+				DebugEnterAlt(1);
+				// MathLang.g:180:4: i1= IDENT ASSIGN i2= IDENT '(' params_ ')'
+				{
+				DebugLocation(180, 6);
+				i1=(IToken)Match(input,IDENT,Follow._IDENT_in_call1877); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_IDENT.Add(i1);
+
+				DebugLocation(180, 13);
+				ASSIGN142=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_call1879); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_ASSIGN.Add(ASSIGN142);
+
+				DebugLocation(180, 22);
+				i2=(IToken)Match(input,IDENT,Follow._IDENT_in_call1883); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_IDENT.Add(i2);
+
+				DebugLocation(180, 29);
+				char_literal143=(IToken)Match(input,59,Follow._59_in_call1885); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_59.Add(char_literal143);
+
+				DebugLocation(180, 33);
+				PushFollow(Follow._params__in_call1887);
+				params_144=params_();
+				PopFollow();
+				if (state.failed) return retval;
+				if ( state.backtracking == 0 ) stream_params_.Add(params_144.Tree);
+				DebugLocation(180, 41);
+				char_literal145=(IToken)Match(input,60,Follow._60_in_call1889); if (state.failed) return retval; 
+				if ( state.backtracking == 0 ) stream_60.Add(char_literal145);
+
+
+				}
+
+
+
+				{
+				// AST REWRITE
+				// elements: params_, ASSIGN, i1, i2
+				// token labels: i2, i1
+				// rule labels: retval
+				// token list labels: 
+				// rule list labels: 
+				// wildcard labels: 
+				if ( state.backtracking == 0 ) {
+				retval.Tree = root_0;
+				RewriteRuleITokenStream stream_i2=new RewriteRuleITokenStream(adaptor,"token i2",i2);
+				RewriteRuleITokenStream stream_i1=new RewriteRuleITokenStream(adaptor,"token i1",i1);
+				RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
+
+				root_0 = (object)adaptor.Nil();
+				// 180:46: -> ^( ASSIGN $i1 ^( CALL $i2 params_ ) )
+				{
+					DebugLocation(180, 48);
+					// MathLang.g:180:48: ^( ASSIGN $i1 ^( CALL $i2 params_ ) )
+					{
+					object root_1 = (object)adaptor.Nil();
+					DebugLocation(180, 50);
+					root_1 = (object)adaptor.BecomeRoot(stream_ASSIGN.NextNode(), root_1);
+
+					DebugLocation(180, 57);
+					adaptor.AddChild(root_1, stream_i1.NextNode());
+					DebugLocation(180, 61);
+					// MathLang.g:180:61: ^( CALL $i2 params_ )
+					{
+					object root_2 = (object)adaptor.Nil();
+					DebugLocation(180, 63);
+					root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(CALL, "CALL"), root_2);
+
+					DebugLocation(180, 68);
+					adaptor.AddChild(root_2, stream_i2.NextNode());
+					DebugLocation(180, 72);
+					adaptor.AddChild(root_2, stream_params_.NextTree());
+
+					adaptor.AddChild(root_1, root_2);
+					}
+
+					adaptor.AddChild(root_0, root_1);
+					}
+
+				}
+
+				retval.Tree = root_0;
+				}
+				}
+
+				}
+				break;
 
 			}
-
 			retval.Stop = (IToken)input.LT(-1);
 
 			if ( state.backtracking == 0 ) {
@@ -4827,7 +5004,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			LeaveRule("call", 25);
 			Leave_call();
 		}
-		DebugLocation(180, 0);
+		DebugLocation(181, 0);
 		} finally { DebugExitRule(GrammarFileName, "call"); }
 		return retval;
 
@@ -4844,7 +5021,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_exprList();
 
 	// $ANTLR start "exprList"
-	// MathLang.g:182:1: exprList : ( simpleExpr ( ';' )+ | groupExpr ( ';' )* ) ;
+	// MathLang.g:183:1: exprList : ( simpleExpr ( ';' )+ | groupExpr ( ';' )* ) ;
 	[GrammarRule("exprList")]
 	private MathLangParser.exprList_return exprList()
 	{
@@ -4856,127 +5033,63 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
-		IToken char_literal143=null;
-		IToken char_literal145=null;
-		MathLangParser.simpleExpr_return simpleExpr142 = default(MathLangParser.simpleExpr_return);
-		MathLangParser.groupExpr_return groupExpr144 = default(MathLangParser.groupExpr_return);
+		IToken char_literal147=null;
+		IToken char_literal149=null;
+		MathLangParser.simpleExpr_return simpleExpr146 = default(MathLangParser.simpleExpr_return);
+		MathLangParser.groupExpr_return groupExpr148 = default(MathLangParser.groupExpr_return);
 
-		object char_literal143_tree=null;
-		object char_literal145_tree=null;
+		object char_literal147_tree=null;
+		object char_literal149_tree=null;
 
 		try { DebugEnterRule(GrammarFileName, "exprList");
-		DebugLocation(182, 0);
+		DebugLocation(183, 0);
 		try
 		{
-			// MathLang.g:182:9: ( ( simpleExpr ( ';' )+ | groupExpr ( ';' )* ) )
+			// MathLang.g:183:9: ( ( simpleExpr ( ';' )+ | groupExpr ( ';' )* ) )
 			DebugEnterAlt(1);
-			// MathLang.g:183:2: ( simpleExpr ( ';' )+ | groupExpr ( ';' )* )
+			// MathLang.g:184:2: ( simpleExpr ( ';' )+ | groupExpr ( ';' )* )
 			{
 			root_0 = (object)adaptor.Nil();
 
-			DebugLocation(183, 2);
-			// MathLang.g:183:2: ( simpleExpr ( ';' )+ | groupExpr ( ';' )* )
-			int alt34=2;
-			try { DebugEnterSubRule(34);
-			try { DebugEnterDecision(34, decisionCanBacktrack[34]);
-			int LA34_0 = input.LA(1);
+			DebugLocation(184, 2);
+			// MathLang.g:184:2: ( simpleExpr ( ';' )+ | groupExpr ( ';' )* )
+			int alt35=2;
+			try { DebugEnterSubRule(35);
+			try { DebugEnterDecision(35, decisionCanBacktrack[35]);
+			int LA35_0 = input.LA(1);
 
-			if ((LA34_0==PRINT||LA34_0==IDENT))
+			if ((LA35_0==PRINT||LA35_0==IDENT))
 			{
-				alt34=1;
+				alt35=1;
 			}
-			else if ((LA34_0==IF||LA34_0==FOR||(LA34_0>=WHILE && LA34_0<=REPEAT)||LA34_0==BEGIN||(LA34_0>=FUNC && LA34_0<=PROC)))
+			else if ((LA35_0==IF||LA35_0==FOR||(LA35_0>=WHILE && LA35_0<=REPEAT)||LA35_0==BEGIN||(LA35_0>=FUNC && LA35_0<=PROC)))
 			{
-				alt34=2;
+				alt35=2;
 			}
 			else
 			{
 				if (state.backtracking>0) {state.failed=true; return retval;}
-				NoViableAltException nvae = new NoViableAltException("", 34, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 35, 0, input);
 
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(34); }
-			switch (alt34)
+			} finally { DebugExitDecision(35); }
+			switch (alt35)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// MathLang.g:183:4: simpleExpr ( ';' )+
+				// MathLang.g:184:4: simpleExpr ( ';' )+
 				{
-				DebugLocation(183, 4);
-				PushFollow(Follow._simpleExpr_in_exprList1882);
-				simpleExpr142=simpleExpr();
+				DebugLocation(184, 4);
+				PushFollow(Follow._simpleExpr_in_exprList1919);
+				simpleExpr146=simpleExpr();
 				PopFollow();
 				if (state.failed) return retval;
-				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, simpleExpr142.Tree);
-				DebugLocation(183, 15);
-				// MathLang.g:183:15: ( ';' )+
-				int cnt32=0;
-				try { DebugEnterSubRule(32);
-				while (true)
-				{
-					int alt32=2;
-					try { DebugEnterDecision(32, decisionCanBacktrack[32]);
-					int LA32_0 = input.LA(1);
-
-					if ((LA32_0==63))
-					{
-						int LA32_2 = input.LA(2);
-
-						if ((EvaluatePredicate(synpred56_MathLang_fragment)))
-						{
-							alt32=1;
-						}
-
-
-					}
-
-
-					} finally { DebugExitDecision(32); }
-					switch (alt32)
-					{
-					case 1:
-						DebugEnterAlt(1);
-						// MathLang.g:183:16: ';'
-						{
-						DebugLocation(183, 19);
-						char_literal143=(IToken)Match(input,63,Follow._63_in_exprList1885); if (state.failed) return retval;
-
-						}
-						break;
-
-					default:
-						if (cnt32 >= 1)
-							goto loop32;
-
-						if (state.backtracking>0) {state.failed=true; return retval;}
-						EarlyExitException eee32 = new EarlyExitException( 32, input );
-						DebugRecognitionException(eee32);
-						throw eee32;
-					}
-					cnt32++;
-				}
-				loop32:
-					;
-
-				} finally { DebugExitSubRule(32); }
-
-
-				}
-				break;
-			case 2:
-				DebugEnterAlt(2);
-				// MathLang.g:184:3: groupExpr ( ';' )*
-				{
-				DebugLocation(184, 3);
-				PushFollow(Follow._groupExpr_in_exprList1893);
-				groupExpr144=groupExpr();
-				PopFollow();
-				if (state.failed) return retval;
-				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, groupExpr144.Tree);
-				DebugLocation(184, 13);
-				// MathLang.g:184:13: ( ';' )*
+				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, simpleExpr146.Tree);
+				DebugLocation(184, 15);
+				// MathLang.g:184:15: ( ';' )+
+				int cnt33=0;
 				try { DebugEnterSubRule(33);
 				while (true)
 				{
@@ -4988,7 +5101,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 						int LA33_2 = input.LA(2);
 
-						if ((EvaluatePredicate(synpred58_MathLang_fragment)))
+						if ((EvaluatePredicate(synpred57_MathLang_fragment)))
 						{
 							alt33=1;
 						}
@@ -4998,23 +5111,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 
 					} finally { DebugExitDecision(33); }
-					switch ( alt33 )
+					switch (alt33)
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// MathLang.g:184:14: ';'
+						// MathLang.g:184:16: ';'
 						{
-						DebugLocation(184, 17);
-						char_literal145=(IToken)Match(input,63,Follow._63_in_exprList1896); if (state.failed) return retval;
+						DebugLocation(184, 19);
+						char_literal147=(IToken)Match(input,63,Follow._63_in_exprList1922); if (state.failed) return retval;
 
 						}
 						break;
 
 					default:
-						goto loop33;
-					}
-				}
+						if (cnt33 >= 1)
+							goto loop33;
 
+						if (state.backtracking>0) {state.failed=true; return retval;}
+						EarlyExitException eee33 = new EarlyExitException( 33, input );
+						DebugRecognitionException(eee33);
+						throw eee33;
+					}
+					cnt33++;
+				}
 				loop33:
 					;
 
@@ -5023,9 +5142,67 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				}
 				break;
+			case 2:
+				DebugEnterAlt(2);
+				// MathLang.g:185:3: groupExpr ( ';' )*
+				{
+				DebugLocation(185, 3);
+				PushFollow(Follow._groupExpr_in_exprList1930);
+				groupExpr148=groupExpr();
+				PopFollow();
+				if (state.failed) return retval;
+				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, groupExpr148.Tree);
+				DebugLocation(185, 13);
+				// MathLang.g:185:13: ( ';' )*
+				try { DebugEnterSubRule(34);
+				while (true)
+				{
+					int alt34=2;
+					try { DebugEnterDecision(34, decisionCanBacktrack[34]);
+					int LA34_0 = input.LA(1);
+
+					if ((LA34_0==63))
+					{
+						int LA34_2 = input.LA(2);
+
+						if ((EvaluatePredicate(synpred59_MathLang_fragment)))
+						{
+							alt34=1;
+						}
+
+
+					}
+
+
+					} finally { DebugExitDecision(34); }
+					switch ( alt34 )
+					{
+					case 1:
+						DebugEnterAlt(1);
+						// MathLang.g:185:14: ';'
+						{
+						DebugLocation(185, 17);
+						char_literal149=(IToken)Match(input,63,Follow._63_in_exprList1933); if (state.failed) return retval;
+
+						}
+						break;
+
+					default:
+						goto loop34;
+					}
+				}
+
+				loop34:
+					;
+
+				} finally { DebugExitSubRule(34); }
+
+
+				}
+				break;
 
 			}
-			} finally { DebugExitSubRule(34); }
+			} finally { DebugExitSubRule(35); }
 
 
 			}
@@ -5051,7 +5228,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			LeaveRule("exprList", 26);
 			Leave_exprList();
 		}
-		DebugLocation(186, 0);
+		DebugLocation(187, 0);
 		} finally { DebugExitRule(GrammarFileName, "exprList"); }
 		return retval;
 
@@ -5068,7 +5245,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_main_();
 
 	// $ANTLR start "main_"
-	// MathLang.g:188:1: main_ : BEGIN ( exprList )* END '.' ;
+	// MathLang.g:189:1: main_ : BEGIN ( exprList )* END '.' ;
 	[GrammarRule("main_")]
 	private MathLangParser.main__return main_()
 	{
@@ -5080,77 +5257,77 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
-		IToken BEGIN146=null;
-		IToken END148=null;
-		IToken char_literal149=null;
-		MathLangParser.exprList_return exprList147 = default(MathLangParser.exprList_return);
+		IToken BEGIN150=null;
+		IToken END152=null;
+		IToken char_literal153=null;
+		MathLangParser.exprList_return exprList151 = default(MathLangParser.exprList_return);
 
-		object BEGIN146_tree=null;
-		object END148_tree=null;
-		object char_literal149_tree=null;
+		object BEGIN150_tree=null;
+		object END152_tree=null;
+		object char_literal153_tree=null;
 
 		try { DebugEnterRule(GrammarFileName, "main_");
-		DebugLocation(188, 0);
+		DebugLocation(189, 0);
 		try
 		{
-			// MathLang.g:188:6: ( BEGIN ( exprList )* END '.' )
+			// MathLang.g:189:6: ( BEGIN ( exprList )* END '.' )
 			DebugEnterAlt(1);
-			// MathLang.g:189:1: BEGIN ( exprList )* END '.'
+			// MathLang.g:190:1: BEGIN ( exprList )* END '.'
 			{
 			root_0 = (object)adaptor.Nil();
 
-			DebugLocation(189, 6);
-			BEGIN146=(IToken)Match(input,BEGIN,Follow._BEGIN_in_main_1909); if (state.failed) return retval;
+			DebugLocation(190, 6);
+			BEGIN150=(IToken)Match(input,BEGIN,Follow._BEGIN_in_main_1946); if (state.failed) return retval;
 			if ( state.backtracking == 0 ) {
-			BEGIN146_tree = (object)adaptor.Create(BEGIN146);
-			root_0 = (object)adaptor.BecomeRoot(BEGIN146_tree, root_0);
+			BEGIN150_tree = (object)adaptor.Create(BEGIN150);
+			root_0 = (object)adaptor.BecomeRoot(BEGIN150_tree, root_0);
 			}
-			DebugLocation(189, 8);
-			// MathLang.g:189:8: ( exprList )*
-			try { DebugEnterSubRule(35);
+			DebugLocation(190, 8);
+			// MathLang.g:190:8: ( exprList )*
+			try { DebugEnterSubRule(36);
 			while (true)
 			{
-				int alt35=2;
-				try { DebugEnterDecision(35, decisionCanBacktrack[35]);
-				int LA35_0 = input.LA(1);
+				int alt36=2;
+				try { DebugEnterDecision(36, decisionCanBacktrack[36]);
+				int LA36_0 = input.LA(1);
 
-				if ((LA35_0==IF||LA35_0==FOR||(LA35_0>=WHILE && LA35_0<=REPEAT)||LA35_0==BEGIN||LA35_0==PRINT||(LA35_0>=FUNC && LA35_0<=PROC)||LA35_0==IDENT))
+				if ((LA36_0==IF||LA36_0==FOR||(LA36_0>=WHILE && LA36_0<=REPEAT)||LA36_0==BEGIN||LA36_0==PRINT||(LA36_0>=FUNC && LA36_0<=PROC)||LA36_0==IDENT))
 				{
-					alt35=1;
+					alt36=1;
 				}
 
 
-				} finally { DebugExitDecision(35); }
-				switch ( alt35 )
+				} finally { DebugExitDecision(36); }
+				switch ( alt36 )
 				{
 				case 1:
 					DebugEnterAlt(1);
 					// MathLang.g:0:0: exprList
 					{
-					DebugLocation(189, 8);
-					PushFollow(Follow._exprList_in_main_1912);
-					exprList147=exprList();
+					DebugLocation(190, 8);
+					PushFollow(Follow._exprList_in_main_1949);
+					exprList151=exprList();
 					PopFollow();
 					if (state.failed) return retval;
-					if ( state.backtracking == 0 ) adaptor.AddChild(root_0, exprList147.Tree);
+					if ( state.backtracking == 0 ) adaptor.AddChild(root_0, exprList151.Tree);
 
 					}
 					break;
 
 				default:
-					goto loop35;
+					goto loop36;
 				}
 			}
 
-			loop35:
+			loop36:
 				;
 
-			} finally { DebugExitSubRule(35); }
+			} finally { DebugExitSubRule(36); }
 
-			DebugLocation(189, 21);
-			END148=(IToken)Match(input,END,Follow._END_in_main_1915); if (state.failed) return retval;
-			DebugLocation(189, 26);
-			char_literal149=(IToken)Match(input,66,Follow._66_in_main_1918); if (state.failed) return retval;
+			DebugLocation(190, 21);
+			END152=(IToken)Match(input,END,Follow._END_in_main_1952); if (state.failed) return retval;
+			DebugLocation(190, 26);
+			char_literal153=(IToken)Match(input,66,Follow._66_in_main_1955); if (state.failed) return retval;
 
 			}
 
@@ -5175,7 +5352,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			LeaveRule("main_", 27);
 			Leave_main_();
 		}
-		DebugLocation(190, 0);
+		DebugLocation(191, 0);
 		} finally { DebugExitRule(GrammarFileName, "main_"); }
 		return retval;
 
@@ -5192,7 +5369,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_program();
 
 	// $ANTLR start "program"
-	// MathLang.g:192:1: program : ( ( ( func_decl )* ( proc_decl )* ) | ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ ) );
+	// MathLang.g:193:1: program : ( ( ( func_decl )* ( proc_decl )* ) | ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ ) );
 	[GrammarRule("program")]
 	private MathLangParser.program_return program()
 	{
@@ -5204,99 +5381,57 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
-		MathLangParser.func_decl_return func_decl150 = default(MathLangParser.func_decl_return);
-		MathLangParser.proc_decl_return proc_decl151 = default(MathLangParser.proc_decl_return);
-		MathLangParser.const__return const_152 = default(MathLangParser.const__return);
-		MathLangParser.vars_return vars153 = default(MathLangParser.vars_return);
 		MathLangParser.func_decl_return func_decl154 = default(MathLangParser.func_decl_return);
 		MathLangParser.proc_decl_return proc_decl155 = default(MathLangParser.proc_decl_return);
-		MathLangParser.vars_return vars156 = default(MathLangParser.vars_return);
-		MathLangParser.main__return main_157 = default(MathLangParser.main__return);
+		MathLangParser.const__return const_156 = default(MathLangParser.const__return);
+		MathLangParser.vars_return vars157 = default(MathLangParser.vars_return);
+		MathLangParser.func_decl_return func_decl158 = default(MathLangParser.func_decl_return);
+		MathLangParser.proc_decl_return proc_decl159 = default(MathLangParser.proc_decl_return);
+		MathLangParser.vars_return vars160 = default(MathLangParser.vars_return);
+		MathLangParser.main__return main_161 = default(MathLangParser.main__return);
 
 
 		try { DebugEnterRule(GrammarFileName, "program");
-		DebugLocation(192, 0);
+		DebugLocation(193, 0);
 		try
 		{
-			// MathLang.g:192:8: ( ( ( func_decl )* ( proc_decl )* ) | ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ ) )
-			int alt42=2;
-			try { DebugEnterDecision(42, decisionCanBacktrack[42]);
-			int LA42_0 = input.LA(1);
+			// MathLang.g:193:8: ( ( ( func_decl )* ( proc_decl )* ) | ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ ) )
+			int alt43=2;
+			try { DebugEnterDecision(43, decisionCanBacktrack[43]);
+			int LA43_0 = input.LA(1);
 
-			if ((LA42_0==EOF||(LA42_0>=FUNC && LA42_0<=PROC)))
+			if ((LA43_0==EOF||(LA43_0>=FUNC && LA43_0<=PROC)))
 			{
-				alt42=1;
+				alt43=1;
 			}
-			else if ((LA42_0==VAR||LA42_0==CONST_))
+			else if ((LA43_0==VAR||LA43_0==CONST_))
 			{
-				alt42=2;
+				alt43=2;
 			}
 			else
 			{
 				if (state.backtracking>0) {state.failed=true; return retval;}
-				NoViableAltException nvae = new NoViableAltException("", 42, 0, input);
+				NoViableAltException nvae = new NoViableAltException("", 43, 0, input);
 
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(42); }
-			switch (alt42)
+			} finally { DebugExitDecision(43); }
+			switch (alt43)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// MathLang.g:192:10: ( ( func_decl )* ( proc_decl )* )
+				// MathLang.g:193:10: ( ( func_decl )* ( proc_decl )* )
 				{
 				root_0 = (object)adaptor.Nil();
 
-				DebugLocation(192, 10);
-				// MathLang.g:192:10: ( ( func_decl )* ( proc_decl )* )
+				DebugLocation(193, 10);
+				// MathLang.g:193:10: ( ( func_decl )* ( proc_decl )* )
 				DebugEnterAlt(1);
-				// MathLang.g:192:12: ( func_decl )* ( proc_decl )*
+				// MathLang.g:193:12: ( func_decl )* ( proc_decl )*
 				{
-				DebugLocation(192, 12);
-				// MathLang.g:192:12: ( func_decl )*
-				try { DebugEnterSubRule(36);
-				while (true)
-				{
-					int alt36=2;
-					try { DebugEnterDecision(36, decisionCanBacktrack[36]);
-					int LA36_0 = input.LA(1);
-
-					if ((LA36_0==FUNC))
-					{
-						alt36=1;
-					}
-
-
-					} finally { DebugExitDecision(36); }
-					switch ( alt36 )
-					{
-					case 1:
-						DebugEnterAlt(1);
-						// MathLang.g:0:0: func_decl
-						{
-						DebugLocation(192, 12);
-						PushFollow(Follow._func_decl_in_program1929);
-						func_decl150=func_decl();
-						PopFollow();
-						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, func_decl150.Tree);
-
-						}
-						break;
-
-					default:
-						goto loop36;
-					}
-				}
-
-				loop36:
-					;
-
-				} finally { DebugExitSubRule(36); }
-
-				DebugLocation(192, 23);
-				// MathLang.g:192:23: ( proc_decl )*
+				DebugLocation(193, 12);
+				// MathLang.g:193:12: ( func_decl )*
 				try { DebugEnterSubRule(37);
 				while (true)
 				{
@@ -5304,7 +5439,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					try { DebugEnterDecision(37, decisionCanBacktrack[37]);
 					int LA37_0 = input.LA(1);
 
-					if ((LA37_0==PROC))
+					if ((LA37_0==FUNC))
 					{
 						alt37=1;
 					}
@@ -5315,14 +5450,14 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// MathLang.g:0:0: proc_decl
+						// MathLang.g:0:0: func_decl
 						{
-						DebugLocation(192, 23);
-						PushFollow(Follow._proc_decl_in_program1932);
-						proc_decl151=proc_decl();
+						DebugLocation(193, 12);
+						PushFollow(Follow._func_decl_in_program1966);
+						func_decl154=func_decl();
 						PopFollow();
 						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, proc_decl151.Tree);
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, func_decl154.Tree);
 
 						}
 						break;
@@ -5337,25 +5472,8 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(37); }
 
-
-				}
-
-
-				}
-				break;
-			case 2:
-				DebugEnterAlt(2);
-				// MathLang.g:193:2: ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ )
-				{
-				root_0 = (object)adaptor.Nil();
-
-				DebugLocation(193, 2);
-				// MathLang.g:193:2: ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ )
-				DebugEnterAlt(1);
-				// MathLang.g:193:3: ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_
-				{
-				DebugLocation(193, 3);
-				// MathLang.g:193:3: ( const_ )*
+				DebugLocation(193, 23);
+				// MathLang.g:193:23: ( proc_decl )*
 				try { DebugEnterSubRule(38);
 				while (true)
 				{
@@ -5363,7 +5481,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					try { DebugEnterDecision(38, decisionCanBacktrack[38]);
 					int LA38_0 = input.LA(1);
 
-					if ((LA38_0==CONST_))
+					if ((LA38_0==PROC))
 					{
 						alt38=1;
 					}
@@ -5374,14 +5492,14 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// MathLang.g:0:0: const_
+						// MathLang.g:0:0: proc_decl
 						{
-						DebugLocation(193, 3);
-						PushFollow(Follow._const__in_program1938);
-						const_152=const_();
+						DebugLocation(193, 23);
+						PushFollow(Follow._proc_decl_in_program1969);
+						proc_decl155=proc_decl();
 						PopFollow();
 						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, const_152.Tree);
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, proc_decl155.Tree);
 
 						}
 						break;
@@ -5396,9 +5514,25 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(38); }
 
-				DebugLocation(193, 11);
-				// MathLang.g:193:11: ( vars )+
-				int cnt39=0;
+
+				}
+
+
+				}
+				break;
+			case 2:
+				DebugEnterAlt(2);
+				// MathLang.g:194:2: ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ )
+				{
+				root_0 = (object)adaptor.Nil();
+
+				DebugLocation(194, 2);
+				// MathLang.g:194:2: ( ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_ )
+				DebugEnterAlt(1);
+				// MathLang.g:194:3: ( const_ )* ( vars )+ ( func_decl | proc_decl )* ( vars )* main_
+				{
+				DebugLocation(194, 3);
+				// MathLang.g:194:3: ( const_ )*
 				try { DebugEnterSubRule(39);
 				while (true)
 				{
@@ -5406,123 +5540,111 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					try { DebugEnterDecision(39, decisionCanBacktrack[39]);
 					int LA39_0 = input.LA(1);
 
-					if ((LA39_0==VAR))
+					if ((LA39_0==CONST_))
 					{
-						int LA39_3 = input.LA(2);
-
-						if ((EvaluatePredicate(synpred64_MathLang_fragment)))
-						{
-							alt39=1;
-						}
-
-
+						alt39=1;
 					}
 
 
 					} finally { DebugExitDecision(39); }
-					switch (alt39)
+					switch ( alt39 )
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// MathLang.g:0:0: vars
+						// MathLang.g:0:0: const_
 						{
-						DebugLocation(193, 11);
-						PushFollow(Follow._vars_in_program1941);
-						vars153=vars();
+						DebugLocation(194, 3);
+						PushFollow(Follow._const__in_program1975);
+						const_156=const_();
 						PopFollow();
 						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, vars153.Tree);
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, const_156.Tree);
 
 						}
 						break;
 
 					default:
-						if (cnt39 >= 1)
-							goto loop39;
-
-						if (state.backtracking>0) {state.failed=true; return retval;}
-						EarlyExitException eee39 = new EarlyExitException( 39, input );
-						DebugRecognitionException(eee39);
-						throw eee39;
+						goto loop39;
 					}
-					cnt39++;
 				}
+
 				loop39:
 					;
 
 				} finally { DebugExitSubRule(39); }
 
-				DebugLocation(193, 18);
-				// MathLang.g:193:18: ( func_decl | proc_decl )*
+				DebugLocation(194, 11);
+				// MathLang.g:194:11: ( vars )+
+				int cnt40=0;
 				try { DebugEnterSubRule(40);
 				while (true)
 				{
-					int alt40=3;
+					int alt40=2;
 					try { DebugEnterDecision(40, decisionCanBacktrack[40]);
 					int LA40_0 = input.LA(1);
 
-					if ((LA40_0==FUNC))
+					if ((LA40_0==VAR))
 					{
-						alt40=1;
-					}
-					else if ((LA40_0==PROC))
-					{
-						alt40=2;
+						int LA40_3 = input.LA(2);
+
+						if ((EvaluatePredicate(synpred65_MathLang_fragment)))
+						{
+							alt40=1;
+						}
+
+
 					}
 
 
 					} finally { DebugExitDecision(40); }
-					switch ( alt40 )
+					switch (alt40)
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// MathLang.g:193:19: func_decl
+						// MathLang.g:0:0: vars
 						{
-						DebugLocation(193, 19);
-						PushFollow(Follow._func_decl_in_program1946);
-						func_decl154=func_decl();
+						DebugLocation(194, 11);
+						PushFollow(Follow._vars_in_program1978);
+						vars157=vars();
 						PopFollow();
 						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, func_decl154.Tree);
-
-						}
-						break;
-					case 2:
-						DebugEnterAlt(2);
-						// MathLang.g:193:29: proc_decl
-						{
-						DebugLocation(193, 29);
-						PushFollow(Follow._proc_decl_in_program1948);
-						proc_decl155=proc_decl();
-						PopFollow();
-						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, proc_decl155.Tree);
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, vars157.Tree);
 
 						}
 						break;
 
 					default:
-						goto loop40;
-					}
-				}
+						if (cnt40 >= 1)
+							goto loop40;
 
+						if (state.backtracking>0) {state.failed=true; return retval;}
+						EarlyExitException eee40 = new EarlyExitException( 40, input );
+						DebugRecognitionException(eee40);
+						throw eee40;
+					}
+					cnt40++;
+				}
 				loop40:
 					;
 
 				} finally { DebugExitSubRule(40); }
 
-				DebugLocation(193, 41);
-				// MathLang.g:193:41: ( vars )*
+				DebugLocation(194, 18);
+				// MathLang.g:194:18: ( func_decl | proc_decl )*
 				try { DebugEnterSubRule(41);
 				while (true)
 				{
-					int alt41=2;
+					int alt41=3;
 					try { DebugEnterDecision(41, decisionCanBacktrack[41]);
 					int LA41_0 = input.LA(1);
 
-					if ((LA41_0==VAR))
+					if ((LA41_0==FUNC))
 					{
 						alt41=1;
+					}
+					else if ((LA41_0==PROC))
+					{
+						alt41=2;
 					}
 
 
@@ -5531,14 +5653,27 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// MathLang.g:0:0: vars
+						// MathLang.g:194:19: func_decl
 						{
-						DebugLocation(193, 41);
-						PushFollow(Follow._vars_in_program1952);
-						vars156=vars();
+						DebugLocation(194, 19);
+						PushFollow(Follow._func_decl_in_program1983);
+						func_decl158=func_decl();
 						PopFollow();
 						if (state.failed) return retval;
-						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, vars156.Tree);
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, func_decl158.Tree);
+
+						}
+						break;
+					case 2:
+						DebugEnterAlt(2);
+						// MathLang.g:194:29: proc_decl
+						{
+						DebugLocation(194, 29);
+						PushFollow(Follow._proc_decl_in_program1985);
+						proc_decl159=proc_decl();
+						PopFollow();
+						if (state.failed) return retval;
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, proc_decl159.Tree);
 
 						}
 						break;
@@ -5553,12 +5688,54 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				} finally { DebugExitSubRule(41); }
 
-				DebugLocation(193, 47);
-				PushFollow(Follow._main__in_program1955);
-				main_157=main_();
+				DebugLocation(194, 41);
+				// MathLang.g:194:41: ( vars )*
+				try { DebugEnterSubRule(42);
+				while (true)
+				{
+					int alt42=2;
+					try { DebugEnterDecision(42, decisionCanBacktrack[42]);
+					int LA42_0 = input.LA(1);
+
+					if ((LA42_0==VAR))
+					{
+						alt42=1;
+					}
+
+
+					} finally { DebugExitDecision(42); }
+					switch ( alt42 )
+					{
+					case 1:
+						DebugEnterAlt(1);
+						// MathLang.g:0:0: vars
+						{
+						DebugLocation(194, 41);
+						PushFollow(Follow._vars_in_program1989);
+						vars160=vars();
+						PopFollow();
+						if (state.failed) return retval;
+						if ( state.backtracking == 0 ) adaptor.AddChild(root_0, vars160.Tree);
+
+						}
+						break;
+
+					default:
+						goto loop42;
+					}
+				}
+
+				loop42:
+					;
+
+				} finally { DebugExitSubRule(42); }
+
+				DebugLocation(194, 47);
+				PushFollow(Follow._main__in_program1992);
+				main_161=main_();
 				PopFollow();
 				if (state.failed) return retval;
-				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, main_157.Tree);
+				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, main_161.Tree);
 
 				}
 
@@ -5588,7 +5765,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			LeaveRule("program", 28);
 			Leave_program();
 		}
-		DebugLocation(194, 0);
+		DebugLocation(195, 0);
 		} finally { DebugExitRule(GrammarFileName, "program"); }
 		return retval;
 
@@ -5605,7 +5782,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_result();
 
 	// $ANTLR start "result"
-	// MathLang.g:196:1: result : program EOF -> ^( PROGRAM program ) ;
+	// MathLang.g:197:1: result : program EOF -> ^( PROGRAM program ) ;
 	[GrammarRule("result")]
 	private MathLangParser.result_return result()
 	{
@@ -5617,29 +5794,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
-		IToken EOF159=null;
-		MathLangParser.program_return program158 = default(MathLangParser.program_return);
+		IToken EOF163=null;
+		MathLangParser.program_return program162 = default(MathLangParser.program_return);
 
-		object EOF159_tree=null;
+		object EOF163_tree=null;
 		RewriteRuleITokenStream stream_EOF=new RewriteRuleITokenStream(adaptor,"token EOF");
 		RewriteRuleSubtreeStream stream_program=new RewriteRuleSubtreeStream(adaptor,"rule program");
 		try { DebugEnterRule(GrammarFileName, "result");
-		DebugLocation(196, 41);
+		DebugLocation(197, 41);
 		try
 		{
-			// MathLang.g:196:7: ( program EOF -> ^( PROGRAM program ) )
+			// MathLang.g:197:7: ( program EOF -> ^( PROGRAM program ) )
 			DebugEnterAlt(1);
-			// MathLang.g:196:9: program EOF
+			// MathLang.g:197:9: program EOF
 			{
-			DebugLocation(196, 9);
-			PushFollow(Follow._program_in_result1964);
-			program158=program();
+			DebugLocation(197, 9);
+			PushFollow(Follow._program_in_result2001);
+			program162=program();
 			PopFollow();
 			if (state.failed) return retval;
-			if ( state.backtracking == 0 ) stream_program.Add(program158.Tree);
-			DebugLocation(196, 17);
-			EOF159=(IToken)Match(input,EOF,Follow._EOF_in_result1966); if (state.failed) return retval; 
-			if ( state.backtracking == 0 ) stream_EOF.Add(EOF159);
+			if ( state.backtracking == 0 ) stream_program.Add(program162.Tree);
+			DebugLocation(197, 17);
+			EOF163=(IToken)Match(input,EOF,Follow._EOF_in_result2003); if (state.failed) return retval; 
+			if ( state.backtracking == 0 ) stream_EOF.Add(EOF163);
 
 
 
@@ -5656,16 +5833,16 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.Tree:null);
 
 			root_0 = (object)adaptor.Nil();
-			// 196:21: -> ^( PROGRAM program )
+			// 197:21: -> ^( PROGRAM program )
 			{
-				DebugLocation(196, 24);
-				// MathLang.g:196:24: ^( PROGRAM program )
+				DebugLocation(197, 24);
+				// MathLang.g:197:24: ^( PROGRAM program )
 				{
 				object root_1 = (object)adaptor.Nil();
-				DebugLocation(196, 26);
+				DebugLocation(197, 26);
 				root_1 = (object)adaptor.BecomeRoot((object)adaptor.Create(PROGRAM, "PROGRAM"), root_1);
 
-				DebugLocation(196, 34);
+				DebugLocation(197, 34);
 				adaptor.AddChild(root_1, stream_program.NextTree());
 
 				adaptor.AddChild(root_0, root_1);
@@ -5700,7 +5877,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			LeaveRule("result", 29);
 			Leave_result();
 		}
-		DebugLocation(196, 41);
+		DebugLocation(197, 41);
 		} finally { DebugExitRule(GrammarFileName, "result"); }
 		return retval;
 
@@ -5717,7 +5894,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_execute();
 
 	// $ANTLR start "execute"
-	// MathLang.g:198:8: public execute : result ;
+	// MathLang.g:199:8: public execute : result ;
 	[GrammarRule("execute")]
 	public MathLangParser.execute_return execute()
 	{
@@ -5729,25 +5906,25 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
-		MathLangParser.result_return result160 = default(MathLangParser.result_return);
+		MathLangParser.result_return result164 = default(MathLangParser.result_return);
 
 
 		try { DebugEnterRule(GrammarFileName, "execute");
-		DebugLocation(198, 0);
+		DebugLocation(199, 0);
 		try
 		{
-			// MathLang.g:198:15: ( result )
+			// MathLang.g:199:15: ( result )
 			DebugEnterAlt(1);
-			// MathLang.g:199:3: result
+			// MathLang.g:200:3: result
 			{
 			root_0 = (object)adaptor.Nil();
 
-			DebugLocation(199, 3);
-			PushFollow(Follow._result_in_execute1985);
-			result160=result();
+			DebugLocation(200, 3);
+			PushFollow(Follow._result_in_execute2022);
+			result164=result();
 			PopFollow();
 			if (state.failed) return retval;
-			if ( state.backtracking == 0 ) adaptor.AddChild(root_0, result160.Tree);
+			if ( state.backtracking == 0 ) adaptor.AddChild(root_0, result164.Tree);
 
 			}
 
@@ -5772,7 +5949,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			LeaveRule("execute", 30);
 			Leave_execute();
 		}
-		DebugLocation(200, 0);
+		DebugLocation(201, 0);
 		} finally { DebugExitRule(GrammarFileName, "execute"); }
 		return retval;
 
@@ -5894,83 +6071,83 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	}
 	// $ANTLR end synpred47_MathLang
 
-	partial void Enter_synpred56_MathLang_fragment();
-	partial void Leave_synpred56_MathLang_fragment();
+	partial void Enter_synpred57_MathLang_fragment();
+	partial void Leave_synpred57_MathLang_fragment();
 
-	// $ANTLR start synpred56_MathLang
-	public void synpred56_MathLang_fragment()
+	// $ANTLR start synpred57_MathLang
+	public void synpred57_MathLang_fragment()
 	{
-		Enter_synpred56_MathLang_fragment();
-		EnterRule("synpred56_MathLang_fragment", 86);
-		TraceIn("synpred56_MathLang_fragment", 86);
+		Enter_synpred57_MathLang_fragment();
+		EnterRule("synpred57_MathLang_fragment", 87);
+		TraceIn("synpred57_MathLang_fragment", 87);
 		try
 		{
-			// MathLang.g:183:16: ( ';' )
+			// MathLang.g:184:16: ( ';' )
 			DebugEnterAlt(1);
-			// MathLang.g:183:16: ';'
+			// MathLang.g:184:16: ';'
 			{
-			DebugLocation(183, 16);
-			Match(input,63,Follow._63_in_synpred56_MathLang1885); if (state.failed) return;
+			DebugLocation(184, 16);
+			Match(input,63,Follow._63_in_synpred57_MathLang1922); if (state.failed) return;
 
 			}
 
 		}
 		finally
 		{
-			TraceOut("synpred56_MathLang_fragment", 86);
-			LeaveRule("synpred56_MathLang_fragment", 86);
-			Leave_synpred56_MathLang_fragment();
+			TraceOut("synpred57_MathLang_fragment", 87);
+			LeaveRule("synpred57_MathLang_fragment", 87);
+			Leave_synpred57_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred56_MathLang
+	// $ANTLR end synpred57_MathLang
 
-	partial void Enter_synpred58_MathLang_fragment();
-	partial void Leave_synpred58_MathLang_fragment();
+	partial void Enter_synpred59_MathLang_fragment();
+	partial void Leave_synpred59_MathLang_fragment();
 
-	// $ANTLR start synpred58_MathLang
-	public void synpred58_MathLang_fragment()
+	// $ANTLR start synpred59_MathLang
+	public void synpred59_MathLang_fragment()
 	{
-		Enter_synpred58_MathLang_fragment();
-		EnterRule("synpred58_MathLang_fragment", 88);
-		TraceIn("synpred58_MathLang_fragment", 88);
+		Enter_synpred59_MathLang_fragment();
+		EnterRule("synpred59_MathLang_fragment", 89);
+		TraceIn("synpred59_MathLang_fragment", 89);
 		try
 		{
-			// MathLang.g:184:14: ( ';' )
+			// MathLang.g:185:14: ( ';' )
 			DebugEnterAlt(1);
-			// MathLang.g:184:14: ';'
+			// MathLang.g:185:14: ';'
 			{
-			DebugLocation(184, 14);
-			Match(input,63,Follow._63_in_synpred58_MathLang1896); if (state.failed) return;
+			DebugLocation(185, 14);
+			Match(input,63,Follow._63_in_synpred59_MathLang1933); if (state.failed) return;
 
 			}
 
 		}
 		finally
 		{
-			TraceOut("synpred58_MathLang_fragment", 88);
-			LeaveRule("synpred58_MathLang_fragment", 88);
-			Leave_synpred58_MathLang_fragment();
+			TraceOut("synpred59_MathLang_fragment", 89);
+			LeaveRule("synpred59_MathLang_fragment", 89);
+			Leave_synpred59_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred58_MathLang
+	// $ANTLR end synpred59_MathLang
 
-	partial void Enter_synpred64_MathLang_fragment();
-	partial void Leave_synpred64_MathLang_fragment();
+	partial void Enter_synpred65_MathLang_fragment();
+	partial void Leave_synpred65_MathLang_fragment();
 
-	// $ANTLR start synpred64_MathLang
-	public void synpred64_MathLang_fragment()
+	// $ANTLR start synpred65_MathLang
+	public void synpred65_MathLang_fragment()
 	{
-		Enter_synpred64_MathLang_fragment();
-		EnterRule("synpred64_MathLang_fragment", 94);
-		TraceIn("synpred64_MathLang_fragment", 94);
+		Enter_synpred65_MathLang_fragment();
+		EnterRule("synpred65_MathLang_fragment", 95);
+		TraceIn("synpred65_MathLang_fragment", 95);
 		try
 		{
-			// MathLang.g:193:11: ( vars )
+			// MathLang.g:194:11: ( vars )
 			DebugEnterAlt(1);
-			// MathLang.g:193:11: vars
+			// MathLang.g:194:11: vars
 			{
-			DebugLocation(193, 11);
-			PushFollow(Follow._vars_in_synpred64_MathLang1941);
+			DebugLocation(194, 11);
+			PushFollow(Follow._vars_in_synpred65_MathLang1978);
 			vars();
 			PopFollow();
 			if (state.failed) return;
@@ -5980,12 +6157,12 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("synpred64_MathLang_fragment", 94);
-			LeaveRule("synpred64_MathLang_fragment", 94);
-			Leave_synpred64_MathLang_fragment();
+			TraceOut("synpred65_MathLang_fragment", 95);
+			LeaveRule("synpred65_MathLang_fragment", 95);
+			Leave_synpred65_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred64_MathLang
+	// $ANTLR end synpred65_MathLang
 	#endregion Rules
 
 	#region Synpreds
@@ -6240,25 +6417,31 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		public static readonly BitSet _59_in_call1856 = new BitSet(new ulong[]{0x1800C00000000030UL});
 		public static readonly BitSet _params__in_call1858 = new BitSet(new ulong[]{0x1000000000000000UL});
 		public static readonly BitSet _60_in_call1860 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _simpleExpr_in_exprList1882 = new BitSet(new ulong[]{0x8000000000000000UL});
-		public static readonly BitSet _63_in_exprList1885 = new BitSet(new ulong[]{0x8000000000000002UL});
-		public static readonly BitSet _groupExpr_in_exprList1893 = new BitSet(new ulong[]{0x8000000000000002UL});
-		public static readonly BitSet _63_in_exprList1896 = new BitSet(new ulong[]{0x8000000000000002UL});
-		public static readonly BitSet _BEGIN_in_main_1909 = new BitSet(new ulong[]{0x861C03104000UL});
-		public static readonly BitSet _exprList_in_main_1912 = new BitSet(new ulong[]{0x861C03104000UL});
-		public static readonly BitSet _END_in_main_1915 = new BitSet(new ulong[]{0x0UL,0x4UL});
-		public static readonly BitSet _66_in_main_1918 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _func_decl_in_program1929 = new BitSet(new ulong[]{0x861403104002UL});
-		public static readonly BitSet _proc_decl_in_program1932 = new BitSet(new ulong[]{0x861403104002UL});
-		public static readonly BitSet _const__in_program1938 = new BitSet(new ulong[]{0x10200000000UL});
-		public static readonly BitSet _vars_in_program1941 = new BitSet(new ulong[]{0x861603104000UL});
-		public static readonly BitSet _func_decl_in_program1946 = new BitSet(new ulong[]{0x861603104000UL});
-		public static readonly BitSet _proc_decl_in_program1948 = new BitSet(new ulong[]{0x861603104000UL});
-		public static readonly BitSet _vars_in_program1952 = new BitSet(new ulong[]{0x861603104000UL});
-		public static readonly BitSet _main__in_program1955 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _program_in_result1964 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_result1966 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _result_in_execute1985 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_call1877 = new BitSet(new ulong[]{0x10000000000000UL});
+		public static readonly BitSet _ASSIGN_in_call1879 = new BitSet(new ulong[]{0x800000000000UL});
+		public static readonly BitSet _IDENT_in_call1883 = new BitSet(new ulong[]{0x800000000000000UL});
+		public static readonly BitSet _59_in_call1885 = new BitSet(new ulong[]{0x1800C00000000030UL});
+		public static readonly BitSet _params__in_call1887 = new BitSet(new ulong[]{0x1000000000000000UL});
+		public static readonly BitSet _60_in_call1889 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _simpleExpr_in_exprList1919 = new BitSet(new ulong[]{0x8000000000000000UL});
+		public static readonly BitSet _63_in_exprList1922 = new BitSet(new ulong[]{0x8000000000000002UL});
+		public static readonly BitSet _groupExpr_in_exprList1930 = new BitSet(new ulong[]{0x8000000000000002UL});
+		public static readonly BitSet _63_in_exprList1933 = new BitSet(new ulong[]{0x8000000000000002UL});
+		public static readonly BitSet _BEGIN_in_main_1946 = new BitSet(new ulong[]{0x861C03104000UL});
+		public static readonly BitSet _exprList_in_main_1949 = new BitSet(new ulong[]{0x861C03104000UL});
+		public static readonly BitSet _END_in_main_1952 = new BitSet(new ulong[]{0x0UL,0x4UL});
+		public static readonly BitSet _66_in_main_1955 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _func_decl_in_program1966 = new BitSet(new ulong[]{0x861403104002UL});
+		public static readonly BitSet _proc_decl_in_program1969 = new BitSet(new ulong[]{0x861403104002UL});
+		public static readonly BitSet _const__in_program1975 = new BitSet(new ulong[]{0x10200000000UL});
+		public static readonly BitSet _vars_in_program1978 = new BitSet(new ulong[]{0x861603104000UL});
+		public static readonly BitSet _func_decl_in_program1983 = new BitSet(new ulong[]{0x861603104000UL});
+		public static readonly BitSet _proc_decl_in_program1985 = new BitSet(new ulong[]{0x861603104000UL});
+		public static readonly BitSet _vars_in_program1989 = new BitSet(new ulong[]{0x861603104000UL});
+		public static readonly BitSet _main__in_program1992 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _program_in_result2001 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_result2003 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _result_in_execute2022 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _ELSIF_in_synpred27_MathLang1362 = new BitSet(new ulong[]{0x800C00000000030UL});
 		public static readonly BitSet _term_in_synpred27_MathLang1366 = new BitSet(new ulong[]{0x8000UL});
 		public static readonly BitSet _THEN_in_synpred27_MathLang1368 = new BitSet(new ulong[]{0x861403104000UL});
@@ -6266,9 +6449,9 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		public static readonly BitSet _ELSE_in_synpred28_MathLang1377 = new BitSet(new ulong[]{0x861403104000UL});
 		public static readonly BitSet _exprList_in_synpred28_MathLang1381 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _type_decl_in_synpred47_MathLang1697 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _63_in_synpred56_MathLang1885 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _63_in_synpred58_MathLang1896 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _vars_in_synpred64_MathLang1941 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _63_in_synpred57_MathLang1922 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _63_in_synpred59_MathLang1933 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _vars_in_synpred65_MathLang1978 = new BitSet(new ulong[]{0x2UL});
 
 	}
 	#endregion Follow sets

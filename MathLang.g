@@ -177,6 +177,7 @@ proc_sign^ ';'! const_* vars* groupExpr ';'!
 
 call:
 IDENT '(' params_ ')' -> ^(CALL IDENT params_)
+| (i1=IDENT ASSIGN i2=IDENT '(' params_ ')') ->^(ASSIGN $i1 ^(CALL $i2 params_))
 ;
 
 exprList: 

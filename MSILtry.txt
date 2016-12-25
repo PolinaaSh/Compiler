@@ -11,14 +11,14 @@
   .method public static int32 H ( ) cil managed {
     .locals init (
       [0] int32 
-    )
- [2] int32
-    )
+     
+)
     L_000000: ldc.i4 2
     L_000001: ldc.i4 2
     L_000002: mul
-    L_000003: ldloc 2
-    L_000004: ret
+    L_000003: stloc 0
+    L_000004: ldloc 0
+    L_000005: ret
   }
   .method public hidebysig static void main() cil managed {
     .entrypoint
@@ -33,6 +33,7 @@
     L_000008: ldsfld      int32 Program::a
     L_000009: call void [mscorlib]System.Console::WriteLine(int32)
     L_000010: call        int32 Program::H()
-    L_000011: ret
+    L_000011: stsfld      int32 Program::a
+    L_000012: ret
   }
 }

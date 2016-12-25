@@ -261,15 +261,16 @@ namespace MathLang
             if (node.GetChild(3).Text == "var" || node.GetChild(3).Text == "const")
             {
                 Gen((NodeData)node.GetChild(3), sb);
-                sb.Append(string.Format(" [{0}] {1}\n", 1, ToMsilType(node.GetChild(0).Text)));
-                //sb[sb.Length - 2] = ' ';
-                sb.Append("    )\n");
+               /* sb[sb.Length - 2] = ' ';
+                sb.Append(string.Format(", [{0}] {1}\n", 1, ToMsilType(node.GetChild(0).Text)));*/
+                sb[sb.Length - 2] = ' ';
+                sb.Append(")\n");
                 
                 Gen((NodeData)node.GetChild(node.ChildCount-1), sb);
             }
             else
                 Gen((NodeData)node.GetChild(3), sb);
-            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,1));
+            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,0));
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n");
             lineNum = 0;
@@ -285,8 +286,12 @@ namespace MathLang
             {
                 string type = ToMsilType(node.GetChild(1).GetChild(i).Cast().TypeData.ToString().ToLower());
                 sb0.Append(string.Format("{0},", type));
-                if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local") || node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Param"))
+                if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local"))
                     sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node.GetChild(1).GetChild(i).Cast())));
+                else if (node.GetChild(0).Text.Contains("Param"))
+                {
+                    sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum(node.GetChild(1).GetChild(i).Cast())));
+                }
                 else
                     sb.Append(string.Format("    L_{0:D6}: ldsfld      {1} Program::{2}\n", lineNum++, ToMsilType(node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Cast().TypeData.ToString().ToLower()), node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Text));
             }
@@ -312,11 +317,15 @@ namespace MathLang
         }
         public void GenIdent(NodeData node, StringBuilder sb)
         {
-            if (node.GetChild(0).Text.Contains("Local") || node.GetChild(0).Text.Contains("Param"))
+            if (node.GetChild(0).Text.Contains("Local"))
                 sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node)));
+            else if(node.GetChild(0).Text.Contains("Param"))
+            {
+                sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum(node)));
+            }
             else if (node.GetChild(0).Text.Contains("Global"))
             {
-                sb.Append(string.Format("    L_{0:D6}: ldsfld      int32 Program::{1}\n", lineNum++, node.Text/*GetVarNum(node)*/));
+                sb.Append(string.Format("    L_{0:D6}: ldsfld      {1} Program::{2}\n", lineNum++,ToMsilType(node.TypeData.ToString().ToLower()), node.Text/*GetVarNum(node)*/));
             }
         }
         public void GenNumber(NodeData node, StringBuilder sb)
@@ -328,6 +337,10 @@ namespace MathLang
             Gen((NodeData)node.GetChild(1), sb);
             if (node.GetChild(0).GetChild(0).Text.Contains("Local") || node.GetChild(0).Text.Contains("Param"))
                 sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0))));
+            else if (node.GetChild(0).Text.Contains("Param"))
+            {
+                sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0))));
+            }
             else if (node.GetChild(0).GetChild(0).Text.Contains("Global"))
             {
                 sb.Append(string.Format("    L_{0:D6}: stsfld      int32 Program::{1}\n", lineNum++, node.GetChild(0).Text/* GetVarNum(node)*/));
@@ -470,15 +483,23 @@ namespace MathLang
             Gen((NodeData)node.GetChild(2), sb0);
             sb0.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
 
-            if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local") || node.GetChild(0).Text.Contains("Param"))
+            if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local"))
                 sb0.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+            else if (node.GetChild(0).Text.Contains("Param"))
+            {
+                sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+            }
             else
                 sb0.Append(string.Format("    L_{0:D6}: ldsfld      int32 Program::{1}\n", lineNum++, (NodeData)node.GetChild(0).GetChild(0)));
 
             sb0.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
 
-            if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local") || node.GetChild(0).Text.Contains("Param"))
+            if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local"))
                 sb0.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+            else if (node.GetChild(0).Text.Contains("Param"))
+            {
+                sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+            }
             else
                 sb0.Append(string.Format("    L_{0:D6}: stsfld      int32 Program::{1}\n", lineNum++, (NodeData)node.GetChild(0).GetChild(0)));
 

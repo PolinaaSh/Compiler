@@ -4,7 +4,7 @@ var a,i:integer;
 function H():integer;
 var s:integer;
 begin
-H:=2*2;
+s:=2*2;
 end;
 
 begin
@@ -12,7 +12,7 @@ a:=5;
 i:=7;
 a:= i mod a;
 print a;
-H();
+a:=H();
 end.
 
 
