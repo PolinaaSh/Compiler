@@ -567,18 +567,23 @@ namespace MathLang
             StringBuilder sb0 = new StringBuilder();
             Gen((NodeData)node.GetChild(2), sb0);
             sb0.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
-
             if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local"))
-                sb0.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
-            else if (node.GetChild(0).Text.Contains("Param"))
+                    sb0.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+                else if (node.GetChild(0).Text.Contains("Param"))
+                {
+                    sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+                }
+                else
+                    sb0.Append(string.Format("    L_{0:D6}: ldsfld      int32 Program::{1}\n", lineNum++, (NodeData)node.GetChild(0).GetChild(0)));
+            if (node.GetChild(1).Text == "LT" || node.GetChild(1).Text == "LE")
             {
-                sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
+                sb0.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
+
             }
-            else
-                sb0.Append(string.Format("    L_{0:D6}: ldsfld      int32 Program::{1}\n", lineNum++, (NodeData)node.GetChild(0).GetChild(0)));
-
-            sb0.Append(string.Format("    L_{0:D6}: add\n", lineNum++));
-
+            else if (node.GetChild(1).Text == "GT" || node.GetChild(1).Text == "GE")
+            {
+                sb0.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
+            }
             if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local"))
                 sb0.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
             else if (node.GetChild(0).Text.Contains("Param"))

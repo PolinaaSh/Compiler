@@ -93,10 +93,10 @@ LT:     '<'     ;
 
 group:
   '('! term ')'!
-|logic_value
+| logic_value
 | NUMBER
 | IDENT
-|  (IDENT '[' index_']') ->^(IDENT ^(INDEX index_))
+| (IDENT '[' index_']') ->^(IDENT ^(INDEX index_))
 ;
 
 mult: group ( ( MUL | DIVIDE )^ group )*  ;
@@ -118,7 +118,7 @@ index_: IDENT|NUMBER
 simpleExpr:
   IDENT ASSIGN^ term
 | PRINT^ term
-|( IDENT '[' index_']' ASSIGN group)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) group)
+|( IDENT '[' index_']' ASSIGN term)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) term)
 | call
 ;
 
@@ -127,7 +127,7 @@ groupExpr:
 |( FOR IDENT ASSIGN t1=term TO t2=term DO exprList)->^(FOR ^(ASSIGN IDENT $t1) ^(LT IDENT $t2) exprList)
 | WHILE^ '('!term')'! DO! exprList
 | REPEAT^ exprList+ UNTIL! term
-| BEGIN exprList+ END  -> ^(BLOCK exprList+)
+| BEGIN exprList+ END ';' -> ^(BLOCK exprList+)
 |func_decl
 |proc_decl
 ;
