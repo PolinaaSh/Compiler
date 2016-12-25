@@ -46,13 +46,21 @@ namespace MathLang
                             string typeVar = node.GetChild(i).Text;
                             for (int k = 0; k < node.GetChild(i).ChildCount; k++)
                             {
-                                node.GetChild(i).GetChild(k).Cast().TypeData = StrToDataType(typeVar);
-                                NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "var"));
-                                NodeData type = new NodeData(new TokenSs(MathLangLexer.INT, String.Format("{0}", typeVar)));
-                                splitedNode.AddChild(type);
-                                splitedNode.AddChild(node.GetChild(i).GetChild(k));
-                                listSplitedVar.Add(splitedNode);
-                                splitedNode.check = true;
+                                NodeData splitedNode = null;
+                                if (node.GetChild(i).GetChild(k).Text != "array")
+                                {
+                                    node.GetChild(i).GetChild(k).Cast().TypeData = StrToDataType(typeVar);
+                                    splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "var"));
+                                    NodeData type = new NodeData(new TokenSs(MathLangLexer.INT, String.Format("{0}", typeVar)));
+                                    splitedNode.AddChild(type);
+                                    splitedNode.AddChild(node.GetChild(i).GetChild(k));
+                                    listSplitedVar.Add(splitedNode);
+                                    splitedNode.check = true;
+                                }
+                                else
+                                {
+                                   listSplitedVar.AddRange(ArrayDescription(scope, node.GetChild(i).Cast()));
+                                }                                
                             }
                         }
                         // запихнуть маркеры
@@ -136,15 +144,23 @@ namespace MathLang
                     {
                         // Зарегать объявленные переменные
                         ITree nodeVarIdent;
+                        if (node.GetChild(1).Text.ToLower() != "array")
+                        {
+                            //if (node.GetChild(1).Type == MathLangLexer.IDENT)
+                                nodeVarIdent = node.GetChild(1);
+                           // else
+                           //     nodeVarIdent = node.GetChild(1).GetChild(0);
 
-                        if (node.GetChild(1).Type == MathLangLexer.IDENT)
-                            nodeVarIdent = node.GetChild(1);
+                            IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
+                            RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                        }
                         else
-                            nodeVarIdent = node.GetChild(1).GetChild(0);
-
-                        IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
-
-                        RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                        {
+                           // if (node.GetChild(2).Type == MathLangLexer.IDENT)
+                                nodeVarIdent = node.GetChild(2);
+                                IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
+                                RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                        }
                     }
                     #endregion
                     break;
@@ -394,7 +410,7 @@ namespace MathLang
                     }
                     #endregion
                     return;
-                /* case MathLangLexer.ASSIGN_ARR:
+                /*case MathLangLexer.:
                      #region assignArray
                      {
                          for (int i = 0; i < node.ChildCount; i++)
@@ -403,7 +419,7 @@ namespace MathLang
                          IdentDescription array = scope.GetContainVarRecursive(node.GetChild(0).Text);
                          if (!array.IsArray)
                              throw new ApplicationException(string.Format("SSKA. {0} is not array", node.GetChild(0).Text));
-                         if (node.GetChild(1).TypeData() != DataType.Int)
+                         if (node.GetChild(1).TypeData() != DataType.Integer)
                              throw new ApplicationException(string.Format("SSKA. {0} have index not integer.", node.GetChild(0).Text));
 
                          DataType first = array.TypeData;
@@ -419,11 +435,11 @@ namespace MathLang
 
                          if (first != secont)
                          {
-                             if (first == DataType.Float && secont == DataType.Int)
+                             if (first == DataType.Real && secont == DataType.Integer)
                              {
                                  // я могу конвертировать инт в флоат.
-                                 ConvertTo(node.GetChild(2).Cast(), DataType.Float);
-                                 node.TypeData = DataType.Float;
+                                 ConvertTo(node.GetChild(2).Cast(), DataType.Real);
+                                 node.TypeData = DataType.Real;
                              }
                              else
                              {
@@ -445,6 +461,26 @@ namespace MathLang
         /// <param name="scope"></param>
         /// <param name="node"></param>
         /// <returns></returns>
+        private List<NodeData> ArrayDescription(Scope scope, NodeData node)
+        {
+            List<NodeData> listSplitedVar = new List<NodeData>();
+            string typeVar = node.Text;
+            for (int k = 0; k < node.GetChild(0).ChildCount - 2; k++)
+            {
+                node.GetChild(0).GetChild(k).Cast().TypeData = StrToDataType(typeVar);
+                NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.VAR, "var"));
+                NodeData type = new NodeData(new TokenSs(MathLangLexer.INT, String.Format("{0}", typeVar)));
+                NodeData arr = new NodeData(new TokenSs(MathLangLexer.ARRAY, "array"));
+                splitedNode.AddChild(type);
+                splitedNode.AddChild(arr);
+                splitedNode.AddChild(node.GetChild(0).GetChild(k));
+                splitedNode.AddChild(node.GetChild(0).GetChild(node.GetChild(0).ChildCount - 2));
+                splitedNode.AddChild(node.GetChild(0).GetChild(node.GetChild(0).ChildCount - 1));
+                listSplitedVar.Add(splitedNode);
+                splitedNode.check = true;
+            }
+            return listSplitedVar;
+    }
         private IdentDescription AddScopeInNode(Scope scope, NodeData node)
         {
             IdentDescription ident = scope.GetContainVarRecursive(node.Text);
@@ -468,16 +504,16 @@ namespace MathLang
         {
             string dataType;
             bool isArray;
-            /* if (nodeVar.GetChild(0).Type == MathLangLexer.ARRAY_TYPE)
+             if (nodeVar.GetChild(1).Text == "array")
              {
                  isArray = true;
-                 dataType = nodeVar.GetChild(0).GetChild(0).Text;
+                 dataType = nodeVar.GetChild(0).Text;
              }
              else
-             {*/
+             {
             isArray = false;
             dataType = dType;
-            //}
+            }
 
             IdentDescription ident = scope.GetContainVarRecursive(nodeVarIdent.Text);
             if (ident != null && ident.TypeIdent != IdentType.Global)

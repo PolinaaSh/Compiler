@@ -1,6 +1,6 @@
 var a,i:integer;
     r:real;
-
+    arr : array [1 .. 10] of integer;
 function H():integer;
 var s:integer;
 begin
@@ -8,11 +8,13 @@ s:=2*2;
 end;
 
 begin
+r:=4;
 a:=5;
 i:=7;
 a:= i mod a;
 print a;
 a:=H();
+print a;
 end.
 
 

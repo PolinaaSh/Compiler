@@ -34,6 +34,8 @@
     L_000009: call void [mscorlib]System.Console::WriteLine(int32)
     L_000010: call        int32 Program::H()
     L_000011: stsfld      int32 Program::a
-    L_000012: ret
+    L_000012: ldsfld      int32 Program::a
+    L_000013: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000014: ret
   }
 }
