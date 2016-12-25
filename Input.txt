@@ -1,20 +1,18 @@
 var a,i:integer;
-    r:real;
     arr : array [1 .. 10] of integer;
-function H():integer;
-var s:integer;
 begin
-s:=2*2;
-end;
-
-begin
-r:=4;
-a:=5;
-i:=7;
-a:= i mod a;
-print a;
-a:=H();
-print a;
+arr[1]:=8;
+arr[2]:=5;
+arr[3]:=7;
+arr[4]:=13;
+arr[5]:=10;
+arr[6]:=1;
+arr[7]:=4;
+arr[8]:=2;
+arr[9]:=11;
+arr[10]:=100;
+for i:=1 to 10 do
+print arr[i];
 end.
 
 
