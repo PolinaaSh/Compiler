@@ -1,16 +1,16 @@
 var a,i:integer;
     arr : array [1 .. 10] of integer;
 begin
-arr[1]:=8;
-arr[2]:=5;
-arr[3]:=7;
-arr[4]:=13;
-arr[5]:=10;
-arr[6]:=1;
-arr[7]:=4;
-arr[8]:=2;
+arr[1]:=5;
+arr[2]:=7;
+arr[3]:=12;
+arr[4]:=50;
+arr[5]:=0;
+arr[6]:=14;
+arr[7]:=3;
+arr[8]:=8;
 arr[9]:=11;
-arr[10]:=100;
+arr[10]:=41;
 for i:=1 to 10 do
 print arr[i];
 end.

@@ -28,12 +28,13 @@ namespace MathLang
                 Console.WriteLine();
                 //MathLangIntepreter.Execute(program);
                 Console.WriteLine(MSILGenerator.Gen(program));
-                Console.ReadLine();
+               
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: {0}", e);
             }
+            Console.ReadLine();
         }
     }
 }

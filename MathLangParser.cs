@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2016-12-25 17:46:24
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2016-12-25 21:37:07
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -1744,7 +1744,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: group, index_, IDENT, ASSIGN
+				// elements: group, IDENT, ASSIGN, index_
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -1855,7 +1855,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_groupExpr();
 
 	// $ANTLR start "groupExpr"
-	// MathLang.g:125:1: groupExpr : ( ( IF '(' t1= term ')' THEN lst= exprList ( ELSIF t2= term THEN lst2= exprList )* ( ELSE lst3= exprList )? ) -> ^( IF $t1 $lst ( ^( ELSIF $t2 $lst2) )* ( ^( ELSE $lst3) )? ) | ( FOR IDENT ASSIGN t1= term TO t2= term DO exprList ) -> ^( FOR ^( ASSIGN IDENT $t1) ^( LE IDENT $t2) exprList ) | WHILE '(' term ')' DO exprList | REPEAT ( exprList )+ UNTIL term | BEGIN ( exprList )+ END -> ^( BLOCK ( exprList )+ ) | func_decl | proc_decl );
+	// MathLang.g:125:1: groupExpr : ( ( IF '(' t1= term ')' THEN lst= exprList ( ELSIF t2= term THEN lst2= exprList )* ( ELSE lst3= exprList )? ) -> ^( IF $t1 $lst ( ^( ELSIF $t2 $lst2) )* ( ^( ELSE $lst3) )? ) | ( FOR IDENT ASSIGN t1= term TO t2= term DO exprList ) -> ^( FOR ^( ASSIGN IDENT $t1) ^( LT IDENT $t2) exprList ) | WHILE '(' term ')' DO exprList | REPEAT ( exprList )+ UNTIL term | BEGIN ( exprList )+ END -> ^( BLOCK ( exprList )+ ) | func_decl | proc_decl );
 	[GrammarRule("groupExpr")]
 	private MathLangParser.groupExpr_return groupExpr()
 	{
@@ -1940,7 +1940,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		DebugLocation(125, 0);
 		try
 		{
-			// MathLang.g:125:10: ( ( IF '(' t1= term ')' THEN lst= exprList ( ELSIF t2= term THEN lst2= exprList )* ( ELSE lst3= exprList )? ) -> ^( IF $t1 $lst ( ^( ELSIF $t2 $lst2) )* ( ^( ELSE $lst3) )? ) | ( FOR IDENT ASSIGN t1= term TO t2= term DO exprList ) -> ^( FOR ^( ASSIGN IDENT $t1) ^( LE IDENT $t2) exprList ) | WHILE '(' term ')' DO exprList | REPEAT ( exprList )+ UNTIL term | BEGIN ( exprList )+ END -> ^( BLOCK ( exprList )+ ) | func_decl | proc_decl )
+			// MathLang.g:125:10: ( ( IF '(' t1= term ')' THEN lst= exprList ( ELSIF t2= term THEN lst2= exprList )* ( ELSE lst3= exprList )? ) -> ^( IF $t1 $lst ( ^( ELSIF $t2 $lst2) )* ( ^( ELSE $lst3) )? ) | ( FOR IDENT ASSIGN t1= term TO t2= term DO exprList ) -> ^( FOR ^( ASSIGN IDENT $t1) ^( LT IDENT $t2) exprList ) | WHILE '(' term ')' DO exprList | REPEAT ( exprList )+ UNTIL term | BEGIN ( exprList )+ END -> ^( BLOCK ( exprList )+ ) | func_decl | proc_decl )
 			int alt13=7;
 			try { DebugEnterDecision(13, decisionCanBacktrack[13]);
 			switch (input.LA(1))
@@ -2140,7 +2140,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: IF, t2, ELSIF, lst3, lst, ELSE, lst2, t1
+				// elements: lst, ELSE, IF, t1, lst2, t2, lst3, ELSIF
 				// token labels: 
 				// rule labels: lst3, t2, retval, t1, lst2, lst
 				// token list labels: 
@@ -2171,7 +2171,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					adaptor.AddChild(root_1, stream_lst.NextTree());
 					DebugLocation(126, 115);
 					// MathLang.g:126:115: ( ^( ELSIF $t2 $lst2) )*
-					while ( stream_t2.HasNext||stream_ELSIF.HasNext||stream_lst2.HasNext )
+					while ( stream_lst2.HasNext||stream_t2.HasNext||stream_ELSIF.HasNext )
 					{
 						DebugLocation(126, 116);
 						// MathLang.g:126:116: ^( ELSIF $t2 $lst2)
@@ -2189,12 +2189,12 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						}
 
 					}
+					stream_lst2.Reset();
 					stream_t2.Reset();
 					stream_ELSIF.Reset();
-					stream_lst2.Reset();
 					DebugLocation(126, 137);
 					// MathLang.g:126:137: ( ^( ELSE $lst3) )?
-					if ( stream_lst3.HasNext||stream_ELSE.HasNext )
+					if ( stream_ELSE.HasNext||stream_lst3.HasNext )
 					{
 						DebugLocation(126, 138);
 						// MathLang.g:126:138: ^( ELSE $lst3)
@@ -2210,8 +2210,8 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						}
 
 					}
-					stream_lst3.Reset();
 					stream_ELSE.Reset();
+					stream_lst3.Reset();
 
 					adaptor.AddChild(root_0, root_1);
 					}
@@ -2278,7 +2278,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: IDENT, IDENT, t2, exprList, ASSIGN, FOR, t1
+				// elements: exprList, IDENT, FOR, t1, ASSIGN, IDENT, t2
 				// token labels: 
 				// rule labels: t2, retval, t1
 				// token list labels: 
@@ -2291,10 +2291,10 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				RewriteRuleSubtreeStream stream_t1=new RewriteRuleSubtreeStream(adaptor,"rule t1",t1!=null?t1.Tree:null);
 
 				root_0 = (object)adaptor.Nil();
-				// 127:52: -> ^( FOR ^( ASSIGN IDENT $t1) ^( LE IDENT $t2) exprList )
+				// 127:52: -> ^( FOR ^( ASSIGN IDENT $t1) ^( LT IDENT $t2) exprList )
 				{
 					DebugLocation(127, 54);
-					// MathLang.g:127:54: ^( FOR ^( ASSIGN IDENT $t1) ^( LE IDENT $t2) exprList )
+					// MathLang.g:127:54: ^( FOR ^( ASSIGN IDENT $t1) ^( LT IDENT $t2) exprList )
 					{
 					object root_1 = (object)adaptor.Nil();
 					DebugLocation(127, 56);
@@ -2315,11 +2315,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					adaptor.AddChild(root_1, root_2);
 					}
 					DebugLocation(127, 80);
-					// MathLang.g:127:80: ^( LE IDENT $t2)
+					// MathLang.g:127:80: ^( LT IDENT $t2)
 					{
 					object root_2 = (object)adaptor.Nil();
 					DebugLocation(127, 82);
-					root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(LE, "LE"), root_2);
+					root_2 = (object)adaptor.BecomeRoot((object)adaptor.Create(LT, "LT"), root_2);
 
 					DebugLocation(127, 85);
 					adaptor.AddChild(root_2, stream_IDENT.NextNode());
@@ -3228,7 +3228,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: type, ARRAY, IDENT, group
+				// elements: type, IDENT, group, ARRAY
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -4026,7 +4026,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: FUNC, type_decl, IDENT, type
+			// elements: IDENT, FUNC, type, type_decl
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4301,7 +4301,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: PROC, param_var, type_decl, IDENT
+			// elements: IDENT, PROC, type_decl, param_var
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4853,7 +4853,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: IDENT, params_
+				// elements: params_, IDENT
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -4931,7 +4931,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: params_, ASSIGN, i1, i2
+				// elements: i1, ASSIGN, i2, params_
 				// token labels: i2, i1
 				// rule labels: retval
 				// token list labels: 

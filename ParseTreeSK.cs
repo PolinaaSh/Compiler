@@ -137,6 +137,11 @@ namespace MathLang
                 case MathLangLexer.IDENT:
                     // Все переменные должны ссылаться на зону видимости
                     node.IdentDescription = AddScopeInNode(scope, node);
+                    if(node.ChildCount>0 && node.GetChild(0).Text.ToLower() =="index")
+                    {
+                        if (!IsNum(node.GetChild(0).GetChild(0).Text))
+                        node.GetChild(0).GetChild(0).Cast().IdentDescription = AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
+                    }
                     return;
 
                 case MathLangLexer.VAR:
@@ -622,6 +627,15 @@ namespace MathLang
                 default: return DataType.Void;
 
             }
+        }
+        private bool IsNum(string numb)
+        {
+            for(int i=0;i<numb.Length;i++)
+            {
+                if (!Char.IsNumber(numb[i]))
+                   return false;
+            }
+            return true;
         }
     }
 }
