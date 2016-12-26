@@ -79,130 +79,103 @@
     L_000062: stelem.i4 
     L_000063: ldc.i4 1
     L_000064: stsfld      int32 Program::j
-    L_000065: ldc.i4 1
-    L_000066: ldsfld      int32 Program::j
-    L_000067: sub
-    L_000068: stsfld      int32 Program::j
-    L_000069: ldsfld      int32 Program::j
-    L_000070: ldc.i4 10
-    L_000071: clt
-    L_000072: brfalse L_000082
-    L_000073: ldsfld     int32[] Program::arr
-    L_000074: ldsfld      int32 Program::j
-    L_000075: ldelem.i4 
-    L_000076: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000077: ldc.i4 1
-    L_000078: ldsfld      int32 Program::j
-    L_000079: add
-    L_000080: stsfld      int32 Program::j
-    L_000081: br L_000069
-    L_000082: ldc.i4 10000
-    L_000083: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000084: ldc.i4 1
-    L_000085: stsfld      int32 Program::i
-    L_000086: ldc.i4 1
+    L_000065: ldsfld      int32 Program::j
+    L_000066: ldc.i4 10
+    L_000067: clt
+    L_000068: brfalse L_000080
+    L_000069: ldsfld     int32[] Program::arr
+    L_000070: ldsfld      int32 Program::j
+    L_000071: ldc.i4 1
+    L_000072: sub
+    L_000073: ldelem.i4 
+    L_000074: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000075: ldc.i4 1
+    L_000076: ldsfld      int32 Program::j
+    L_000077: add
+    L_000078: stsfld      int32 Program::j
+    L_000079: br L_000065
+    L_000080: ldc.i4 1
+    L_000081: stsfld      int32 Program::i
+    L_000082: ldsfld      int32 Program::i
+    L_000083: ldc.i4 10
+    L_000084: clt
+    L_000085: brfalse L_000145
+    L_000086: ldc.i4 10
     L_000087: ldsfld      int32 Program::i
     L_000088: sub
-    L_000089: stsfld      int32 Program::i
-    L_000090: ldsfld      int32 Program::i
-    L_000091: ldc.i4 9
-    L_000092: clt
-    L_000093: brfalse L_000170
-    L_000094: ldc.i4 9
-    L_000095: ldsfld      int32 Program::i
-    L_000096: sub
-    L_000097: stsfld      int32 Program::s
-    L_000098: ldc.i4 1
-    L_000099: stsfld      int32 Program::k
-    L_000100: ldc.i4 1
+    L_000089: stsfld      int32 Program::s
+    L_000090: ldc.i4 1
+    L_000091: stsfld      int32 Program::k
+    L_000092: ldsfld      int32 Program::k
+    L_000093: ldsfld      int32 Program::s
+    L_000094: clt
+    L_000095: brfalse L_000140
+    L_000096: ldsfld      int32 Program::k
+    L_000097: ldc.i4 1
+    L_000098: add
+    L_000099: stsfld      int32 Program::p
+    L_000100: ldsfld     int32[] Program::arr
     L_000101: ldsfld      int32 Program::k
-    L_000102: sub
-    L_000103: stsfld      int32 Program::k
-    L_000104: ldsfld      int32 Program::k
-    L_000105: ldsfld      int32 Program::s
-    L_000106: clt
-    L_000107: brfalse L_000165
-    L_000108: ldsfld      int32 Program::k
-    L_000109: ldc.i4 1
-    L_000110: add
-    L_000111: stsfld      int32 Program::p
+    L_000102: ldc.i4 1
+    L_000103: sub
+    L_000104: ldelem.i4 
+    L_000105: ldsfld     int32[] Program::arr
+    L_000106: ldsfld      int32 Program::p
+    L_000107: ldc.i4 1
+    L_000108: sub
+    L_000109: ldelem.i4 
+    L_000110: cgt
+    L_000111: brfalse L_000135
     L_000112: ldsfld     int32[] Program::arr
     L_000113: ldsfld      int32 Program::k
-    L_000114: ldelem.i4 
-    L_000115: ldsfld     int32[] Program::arr
-    L_000116: ldsfld      int32 Program::p
-    L_000117: ldelem.i4 
-    L_000118: cgt
-    L_000119: brfalse L_000160
-    L_000120: ldsfld     int32[] Program::arr
-    L_000121: ldsfld      int32 Program::k
-    L_000122: ldelem.i4 
-    L_000123: stsfld      int32 Program::x
-    L_000124: ldsfld     int32[] Program::arr
-    L_000125: ldsfld      int32 Program::k
-    L_000126: ldc.i4 1
-    L_000127: sub
+    L_000114: ldc.i4 1
+    L_000115: sub
+    L_000116: ldelem.i4 
+    L_000117: stsfld      int32 Program::x
+    L_000118: ldsfld     int32[] Program::arr
+    L_000119: ldsfld      int32 Program::k
+    L_000120: ldc.i4 1
+    L_000121: sub
+    L_000122: ldsfld     int32[] Program::arr
+    L_000123: ldsfld      int32 Program::p
+    L_000124: ldc.i4 1
+    L_000125: sub
+    L_000126: ldelem.i4 
+    L_000127: stelem.i4 
     L_000128: ldsfld     int32[] Program::arr
     L_000129: ldsfld      int32 Program::p
-    L_000130: ldelem.i4 
-    L_000131: stelem.i4 
-    L_000132: ldsfld     int32[] Program::arr
-    L_000133: ldsfld      int32 Program::p
-    L_000134: ldc.i4 1
-    L_000135: sub
-    L_000136: ldsfld      int32 Program::x
-    L_000137: stelem.i4 
-    L_000138: ldc.i4 1
-    L_000139: stsfld      int32 Program::j
+    L_000130: ldc.i4 1
+    L_000131: sub
+    L_000132: ldsfld      int32 Program::x
+    L_000133: stelem.i4 
+    L_000134: br L_000135
+    L_000135: ldc.i4 1
+    L_000136: ldsfld      int32 Program::k
+    L_000137: add
+    L_000138: stsfld      int32 Program::k
+    L_000139: br L_000092
     L_000140: ldc.i4 1
-    L_000141: ldsfld      int32 Program::j
-    L_000142: sub
-    L_000143: stsfld      int32 Program::j
-    L_000144: ldsfld      int32 Program::j
-    L_000145: ldc.i4 10
-    L_000146: clt
-    L_000147: brfalse L_000157
-    L_000148: ldsfld     int32[] Program::arr
-    L_000149: ldsfld      int32 Program::j
-    L_000150: ldelem.i4 
-    L_000151: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000152: ldc.i4 1
-    L_000153: ldsfld      int32 Program::j
-    L_000154: add
-    L_000155: stsfld      int32 Program::j
-    L_000156: br L_000144
-    L_000157: ldc.i4 10000
-    L_000158: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000159: br L_000160
-    L_000160: ldc.i4 1
-    L_000161: ldsfld      int32 Program::k
-    L_000162: add
-    L_000163: stsfld      int32 Program::k
-    L_000164: br L_000104
-    L_000165: ldc.i4 1
-    L_000166: ldsfld      int32 Program::i
-    L_000167: add
-    L_000168: stsfld      int32 Program::i
-    L_000169: br L_000090
-    L_000170: ldc.i4 1
-    L_000171: stsfld      int32 Program::j
-    L_000172: ldc.i4 1
-    L_000173: ldsfld      int32 Program::j
-    L_000174: sub
-    L_000175: stsfld      int32 Program::j
-    L_000176: ldsfld      int32 Program::j
-    L_000177: ldc.i4 10
-    L_000178: clt
-    L_000179: brfalse L_000189
-    L_000180: ldsfld     int32[] Program::arr
-    L_000181: ldsfld      int32 Program::j
-    L_000182: ldelem.i4 
-    L_000183: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000184: ldc.i4 1
-    L_000185: ldsfld      int32 Program::j
-    L_000186: add
-    L_000187: stsfld      int32 Program::j
-    L_000188: br L_000176
-    L_000189: ret
+    L_000141: ldsfld      int32 Program::i
+    L_000142: add
+    L_000143: stsfld      int32 Program::i
+    L_000144: br L_000082
+    L_000145: ldc.i4 1
+    L_000146: stsfld      int32 Program::j
+    L_000147: ldsfld      int32 Program::j
+    L_000148: ldc.i4 10
+    L_000149: clt
+    L_000150: brfalse L_000162
+    L_000151: ldsfld     int32[] Program::arr
+    L_000152: ldsfld      int32 Program::j
+    L_000153: ldc.i4 1
+    L_000154: sub
+    L_000155: ldelem.i4 
+    L_000156: call void [mscorlib]System.Console::WriteLine(int32)
+    L_000157: ldc.i4 1
+    L_000158: ldsfld      int32 Program::j
+    L_000159: add
+    L_000160: stsfld      int32 Program::j
+    L_000161: br L_000147
+    L_000162: ret
   }
 }

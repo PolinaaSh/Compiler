@@ -41,6 +41,7 @@ tokens {
   BEGIN   = 'begin'    ;
   END     = 'end'      ;
   PRINT   = 'print'    ;
+  RINTSTR = 'printStr' ;
   INPUT   = 'input'    ;
   ARRAY   = 'array'    ;
   OF      = 'of'       ;
@@ -118,6 +119,7 @@ index_: IDENT|NUMBER
 simpleExpr:
   IDENT ASSIGN^ term
 | PRINT^ term
+| PRINTSTR^ term
 |( IDENT '[' index_']' ASSIGN term)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) term)
 | call
 ;

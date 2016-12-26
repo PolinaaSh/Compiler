@@ -13,11 +13,10 @@ arr[9]:=11;
 arr[10]:=41;
 for j:=1 to 10 do
     print arr[j];
- print 10000;
 
-for i:=1 to 9 do 
+for i:=1 to 10 do 
 begin 
-s:=9-i;
+s:=10-i;
   for k:= 1 to s  do  begin
     p:=k+1;
     if(arr[k] > arr[p]) then 
@@ -25,11 +24,7 @@ s:=9-i;
       x:=arr[k]; 
 	  arr[k]:=arr[p]; 
 	  arr[p]:=x; 
-	  	 for j:=1 to 10 do
-    print arr[j];
-	 print 10000;
 	 end; 
-
   end;
 end;
 for j:=1 to 10 do
