@@ -1,5 +1,10 @@
 var x,s,k,i,p,j:integer;
     arr : array [1 .. 10] of integer;
+procedure Pr();
+	begin
+	x:=555;
+	print x;
+	end;
 function Sqr(x:integer):integer;
 var k:integer;
 begin
@@ -10,6 +15,7 @@ begin
 k:=10;
 x:=Sqr(k);
 print x;
+Pr(k);
 end.
 
 

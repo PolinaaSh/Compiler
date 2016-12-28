@@ -131,6 +131,13 @@ namespace MathLang
                     }
                     #endregion
                     return;
+                case MathLangLexer.PROC:
+                    #region proc
+                      Scope newSc = RegistrationFun(scope, node, node.GetChild(0).Cast());
+                        for (int i = 1; i < node.ChildCount; i++)
+                            FillVars(node.GetChild(i).Cast(), newSc);
+                    #endregion
+                    break;
 
                 case MathLangLexer.IDENT:
                     #region ident
@@ -457,11 +464,6 @@ namespace MathLang
 
             node.AddChild(infoScope);
             node.TypeData = ident.TypeData;
-
-            //node.Text = node.Text + " " + ident.TypeIdent + ": " + ident.IndexVar;
-            // NodeData nd = new NodeData(new TokenSs(node.Type, node.Text + " " + ident.TypeIdent + ": " + ident.IndexVar));
-            //node.Parent.SetChild(node.ChildIndex, nd);
-
             return ident;
         }
         private void RegistrationVar(Scope scope, NodeData nodeVar, NodeData nodeVarIdent, IdentType typeIdent, string dType)
@@ -499,10 +501,12 @@ namespace MathLang
             if (ident != null)
                 throw new ApplicationException(string.Format("SSKA. Identifier '{0}' already exists", nodeVarIdent.Text));
 
+            DataType dt = nodeFun.Text == "function" ? ParseDataType(nodeFun.GetChild(0).Text) : DataType.Void;
+            IdentType it = nodeFun.Text == "function" ? IdentType.Function : IdentType.Procedure;
             IdentDescription newIdentFun = new IdentDescription(
                 nodeFun,
-                ParseDataType(nodeFun.GetChild(0).Text),
-                IdentType.Function,
+                dt,
+                it,
                 false
                 );
             scope.RegisterIdent(nodeVarIdent.Text, newIdentFun);
