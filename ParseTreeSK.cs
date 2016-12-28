@@ -128,21 +128,23 @@ namespace MathLang
                         Scope newScope = RegistrationFun(scope, node, node.GetChild(1).Cast());
                         for (int i = 2; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScope);
-                        //FillVars(node.GetChild(3).Cast(), newScope);// переменные
-                        //FillVars(node.GetChild(4).Cast(), newScope);// блок функции
                     }
                     #endregion
                     return;
 
                 case MathLangLexer.IDENT:
+                    #region ident
                     // Все переменные должны ссылаться на зону видимости
-                    node.IdentDescription = AddScopeInNode(scope, node);
-                    if(node.ChildCount>0 && node.GetChild(0).Text.ToLower() =="index")
+                    if(node.Text =="result" && scope.Function!=null)
                     {
-                        if (!IsNum(node.GetChild(0).GetChild(0).Text))
-                        node.GetChild(0).GetChild(0).Cast().IdentDescription = AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
+                        node.TypeData = scope.Function.TypeData;
+                        NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.UNKNOWN, "Local"));
+                        node.AddChild(splitedNode);
                     }
-                    return;
+                    else
+                    node.IdentDescription = AddScopeInNode(scope, node);
+                    #endregion 
+                    break;
 
                 case MathLangLexer.VAR:
                     #region var
@@ -151,20 +153,15 @@ namespace MathLang
                         ITree nodeVarIdent;
                         if (node.GetChild(1).Text.ToLower() != "array")
                         {
-                            //if (node.GetChild(1).Type == MathLangLexer.IDENT)
-                                nodeVarIdent = node.GetChild(1);
-                           // else
-                           //     nodeVarIdent = node.GetChild(1).GetChild(0);
-
+                            nodeVarIdent = node.GetChild(1);
                             IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
                             RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
                         }
                         else
                         {
-                           // if (node.GetChild(2).Type == MathLangLexer.IDENT)
-                                nodeVarIdent = node.GetChild(2);
-                                IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
-                                RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                            nodeVarIdent = node.GetChild(2);
+                            IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
+                            RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
                         }
                     }
                     #endregion
@@ -172,18 +169,19 @@ namespace MathLang
 
                 case MathLangLexer.PARAMS:
                     // Зарегать парметры функции и добавить зону видимости
+                    #region params
                     for (int i = 0; i < node.ChildCount; i++)
                     {
                         string dataType = node.GetChild(i).Text;
                         for (int k = 0; k < node.GetChild(i).ChildCount; k++)
                         {
-                            RegistrationVar(scope, node, node.GetChild(i).GetChild(k).Cast(), IdentType.Param, dataType);
-                            AddScopeInNode(scope, node.GetChild(i).GetChild(k).Cast());
+                            RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(k).Cast(), IdentType.Param, dataType);
+                           // AddScopeInNode(scope, node.GetChild(i).GetChild(k).Cast());
                         }
                     }
-                    // RegistrationVar(scope, node, node.GetChild(1).Cast(), IdentType.Param);
-                    // AddScopeInNode(scope, node.GetChild(1).Cast());
-                    return;
+
+                    #endregion
+                    break;
                 case MathLangLexer.CALL:
                     #region CALL
                     IdentDescription identFun = AddScopeInNode(scope, node.GetChild(0).Cast());
@@ -229,7 +227,7 @@ namespace MathLang
                                     throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
                                 }
                             }
-                            AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
+                           // AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                             parNum++;
                         }
                     }
@@ -334,7 +332,7 @@ namespace MathLang
                             FillVars(node.GetChild(i).Cast(), scope);
 
                         DataType first = node.GetChild(0).Cast().TypeData;
-                        DataType second ;//= node.GetChild(1).Cast().TypeData;
+                        DataType second ;
                         if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Procedure"))
                             throw new ApplicationException(string.Format("Assign to procedure {0}",node.GetChild(1).GetChild(0).Text));
                         else if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Function"))
@@ -415,45 +413,6 @@ namespace MathLang
                     }
                     #endregion
                     return;
-                /*case MathLangLexer.:
-                     #region assignArray
-                     {
-                         for (int i = 0; i < node.ChildCount; i++)
-                             FillVars(node.GetChild(i).Cast(), scope);
-
-                         IdentDescription array = scope.GetContainVarRecursive(node.GetChild(0).Text);
-                         if (!array.IsArray)
-                             throw new ApplicationException(string.Format("SSKA. {0} is not array", node.GetChild(0).Text));
-                         if (node.GetChild(1).TypeData() != DataType.Integer)
-                             throw new ApplicationException(string.Format("SSKA. {0} have index not integer.", node.GetChild(0).Text));
-
-                         DataType first = array.TypeData;
-                         node.TypeData = first;			// Сразу присвоим, чтобы потом не вызывать два раза в разных моментах кода.
-
-                         // Костыль, если значение массива используется как значение.
-                         if (node.ChildCount == 2)
-                         {
-                             return;
-                         }
-
-                         DataType secont = node.GetChild(2).Cast().TypeData;
-
-                         if (first != secont)
-                         {
-                             if (first == DataType.Real && secont == DataType.Integer)
-                             {
-                                 // я могу конвертировать инт в флоат.
-                                 ConvertTo(node.GetChild(2).Cast(), DataType.Real);
-                                 node.TypeData = DataType.Real;
-                             }
-                             else
-                             {
-                                 throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", first, secont));
-                             }
-                         }
-                     }
-                     #endregion
-                     return;*/
             }
 
             for (int i = 0; i < node.ChildCount; i++)
@@ -509,7 +468,7 @@ namespace MathLang
         {
             string dataType;
             bool isArray;
-             if (nodeVar.GetChild(1).Text == "array")
+             if (nodeVar.ChildCount>1 && nodeVar.GetChild(1).Text == "array")
              {
                  isArray = true;
                  dataType = nodeVar.GetChild(0).Text;

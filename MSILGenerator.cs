@@ -8,7 +8,8 @@ namespace MathLang
     class MSILGenerator
     {
 
-        private int lineNum = 0;
+        private  int lineNum = 0;
+        private int resNum = 0;
         private StringBuilder arr = new StringBuilder();
 
         public static string ToMsilType(String type)
@@ -29,15 +30,11 @@ namespace MathLang
        extends [mscorlib]System.Object
 {
 ");
-            //.class public Program
-
             MSILGenerator generator = new MSILGenerator();
             generator.Gen(program, sb);
             sb.Append(@"
 }
-"
-            );
-
+"           );
             return sb.ToString();
         }
 
@@ -46,13 +43,13 @@ namespace MathLang
             return ((InfoAboutScope)node.GetChild(0)).Ident.IndexVar;
         }
 
-        private static void 
+        private  void 
             GenLocalVars(NodeData node, StringBuilder sb)
         {
             if (node.Type == MathLangLexer.VAR)
             {
-                string type = ToMsilType(node.GetChild(0).Text);
                 int num;
+                string type = ToMsilType(node.GetChild(0).Text);
                 if (node.GetChild(1).Text == "array")
                 {
                     num = GetVarNum((NodeData)node.GetChild(2));
@@ -67,7 +64,7 @@ namespace MathLang
             else
                 for (int i = 0; i < node.ChildCount; i++)
                     GenLocalVars((NodeData)node.GetChild(i), sb);
-        }
+         }
         private  void GenGlobalVars(NodeData node, StringBuilder sb)
         {
             if (node.Type == MathLangLexer.VAR)
@@ -259,8 +256,6 @@ namespace MathLang
         {
             sb.Append("    .locals init (\n");
             GenLocalVars((NodeData)node.Parent, sb);
-            sb[sb.Length - 2] = ' ';
-            sb.Append("    )\n");
         }
         public void GenBegin(NodeData node, StringBuilder sb)
         {
@@ -285,19 +280,18 @@ namespace MathLang
             if (node.GetChild(3).Text == "var" || node.GetChild(3).Text == "const")
             {
                 Gen((NodeData)node.GetChild(3), sb);
-               /* sb[sb.Length - 2] = ' ';
-                sb.Append(string.Format(", [{0}] {1}\n", 1, ToMsilType(node.GetChild(0).Text)));*/
+                resNum = node.ChildCount - 4;
+                sb.Append(string.Format("      [{0}] {1},\n",resNum , ToMsilType(node.GetChild(0).Text)));
                 sb[sb.Length - 2] = ' ';
-                sb.Append(")\n");
-                
+                sb.Append(")\n");                
                 Gen((NodeData)node.GetChild(node.ChildCount-1), sb);
             }
             else
                 Gen((NodeData)node.GetChild(3), sb);
-            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,0));
+            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,node.ChildCount-4));
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n");
-            lineNum = 0;
+            //lineNum = 0;
         }
         public void GenCall(NodeData node, StringBuilder sb)
         {
@@ -399,12 +393,12 @@ namespace MathLang
                 sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
                 sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
                 Gen((NodeData)node.GetChild(1), sb);
-               /*if (node.GetChild(1).ChildCount>0 && node.GetChild(1).GetChild(0).Text.ToLower() == "index")
-                {
-                    sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
-                    sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
-                }*/
                 sb.Append(string.Format("    L_{0:D6}: stelem.i4 \n", lineNum++));
+            }
+            else if (node.GetChild(0).Text =="result")
+            {
+                Gen((NodeData)node.GetChild(1), sb);
+                sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, resNum));
             }
             else
             {

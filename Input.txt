@@ -1,34 +1,15 @@
 var x,s,k,i,p,j:integer;
     arr : array [1 .. 10] of integer;
+function Sqr(x:integer):integer;
+var k:integer;
 begin
-arr[1]:=5;
-arr[2]:=7;
-arr[3]:=12;
-arr[4]:=50;
-arr[5]:=0;
-arr[6]:=14;
-arr[7]:=3;
-arr[8]:=8;
-arr[9]:=11;
-arr[10]:=41;
-for j:=1 to 10 do
-    print arr[j];
-
-for i:=1 to 10 do 
-begin 
-s:=10-i;
-  for k:= 1 to s  do  begin
-    p:=k+1;
-    if(arr[k] > arr[p]) then 
-     begin 
-      x:=arr[k]; 
-	  arr[k]:=arr[p]; 
-	  arr[p]:=x; 
-	 end; 
-  end;
+k:=x*x;
+result:=k;
 end;
-for j:=1 to 10 do
-    print arr[j];
+begin
+k:=10;
+x:=Sqr(k);
+print x;
 end.
 
 
