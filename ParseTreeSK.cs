@@ -59,8 +59,8 @@ namespace MathLang
                                 }
                                 else
                                 {
-                                   listSplitedVar.AddRange(ArrayDescription(scope, node.GetChild(i).Cast()));
-                                }                                
+                                    listSplitedVar.AddRange(ArrayDescription(scope, node.GetChild(i).Cast()));
+                                }
                             }
                         }
                         // запихнуть маркеры
@@ -133,24 +133,24 @@ namespace MathLang
                     return;
                 case MathLangLexer.PROC:
                     #region proc
-                      Scope newSc = RegistrationFun(scope, node, node.GetChild(0).Cast());
-                        for (int i = 1; i < node.ChildCount; i++)
-                            FillVars(node.GetChild(i).Cast(), newSc);
+                    Scope newSc = RegistrationFun(scope, node, node.GetChild(0).Cast());
+                    for (int i = 1; i < node.ChildCount; i++)
+                        FillVars(node.GetChild(i).Cast(), newSc);
                     #endregion
                     break;
 
                 case MathLangLexer.IDENT:
                     #region ident
                     // Все переменные должны ссылаться на зону видимости
-                    if(node.Text =="result" && scope.Function!=null)
+                    if (node.Text == "result" && scope.Function != null)
                     {
                         node.TypeData = scope.Function.TypeData;
                         NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.UNKNOWN, "Local"));
                         node.AddChild(splitedNode);
                     }
                     else
-                    node.IdentDescription = AddScopeInNode(scope, node);
-                    #endregion 
+                        node.IdentDescription = AddScopeInNode(scope, node);
+                    #endregion
                     break;
 
                 case MathLangLexer.VAR:
@@ -183,7 +183,7 @@ namespace MathLang
                         for (int k = 0; k < node.GetChild(i).ChildCount; k++)
                         {
                             RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(k).Cast(), IdentType.Param, dataType);
-                           // AddScopeInNode(scope, node.GetChild(i).GetChild(k).Cast());
+                            // AddScopeInNode(scope, node.GetChild(i).GetChild(k).Cast());
                         }
                     }
 
@@ -191,54 +191,11 @@ namespace MathLang
                     break;
                 case MathLangLexer.CALL:
                     #region CALL
-                    IdentDescription identFun = AddScopeInNode(scope, node.GetChild(0).Cast());
-
-                    if (identFun.TypeIdent != IdentType.Function && identFun.TypeIdent != IdentType.Procedure)
-                        throw new ApplicationException(string.Format("SSKA. Identifier '{0}' is not function or procedure", identFun.NameAttribut));
-
-                    // Проверить количество параметров.
-                    int countParamsCall = node.GetChild(1).ChildCount;
-                    int countParamsFun = 0;
-                    for (int i = 0; i < identFun.Node.GetChild(2).ChildCount; i++)
-                    {
-                        for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
-                        {
-                            countParamsFun++;
-                        }
-                    }
-                    if (countParamsCall != countParamsFun)
-                        throw new ApplicationException(string.Format("SSKA. Not equals params count in function '{0}'", identFun.NameAttribut));
-
-                    // Определить тип переменных и распределить по параметрам.
-                    for (int i = 1; i < node.ChildCount; i++)
-                        FillVars(node.GetChild(i).Cast(), scope);
-
-                    // К этому моменту все типы определены.
-                    // Сравнить типы.
-                    int parNum = 0;
-                    for (int i = 0; i < identFun.Node.GetChild(2).ChildCount; i++)
-                    {
-                        string funDataType = identFun.Node.GetChild(2).GetChild(i).Text;
-                        for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
-                        {
-                           IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
-                            string calldataType = idescr.TypeData.ToString().ToLower();
-                            if (funDataType != calldataType)
-                            {
-                                if ((funDataType == "real") && (calldataType == "integer"))
-                                {
-                                    ConvertTo(node.GetChild(1).GetChild(k).Cast(), DataType.Real);
-                                }
-                                else
-                                {
-                                    throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
-                                }
-                            }
-                           // AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
-                            parNum++;
-                        }
-                    }
-                  
+                    IdentDescription ident = AddScopeInNode(scope, node.GetChild(0).Cast());
+                    if (ident.TypeIdent == IdentType.Function)
+                        CallFunc(node, ident, scope);
+                    else if (ident.TypeIdent == IdentType.Procedure)
+                        CallProc(node, ident, scope);
                     #endregion
                     return;
 
@@ -339,14 +296,14 @@ namespace MathLang
                             FillVars(node.GetChild(i).Cast(), scope);
 
                         DataType first = node.GetChild(0).Cast().TypeData;
-                        DataType second ;
+                        DataType second;
                         if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Procedure"))
-                            throw new ApplicationException(string.Format("Assign to procedure {0}",node.GetChild(1).GetChild(0).Text));
+                            throw new ApplicationException(string.Format("Assign to procedure {0}", node.GetChild(1).GetChild(0).Text));
                         else if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Function"))
                             second = node.GetChild(1).GetChild(0).Cast().TypeData;
-                        else 
+                        else
                             second = node.GetChild(1).Cast().TypeData;
-                            
+
                         if (first != second)
                         {
                             if (first == DataType.Real && second == DataType.Integer)
@@ -451,7 +408,7 @@ namespace MathLang
                 splitedNode.check = true;
             }
             return listSplitedVar;
-    }
+        }
         private IdentDescription AddScopeInNode(Scope scope, NodeData node)
         {
             IdentDescription ident = scope.GetContainVarRecursive(node.Text);
@@ -470,15 +427,15 @@ namespace MathLang
         {
             string dataType;
             bool isArray;
-             if (nodeVar.ChildCount>1 && nodeVar.GetChild(1).Text == "array")
-             {
-                 isArray = true;
-                 dataType = nodeVar.GetChild(0).Text;
-             }
-             else
-             {
-            isArray = false;
-            dataType = dType;
+            if (nodeVar.ChildCount > 1 && nodeVar.GetChild(1).Text == "array")
+            {
+                isArray = true;
+                dataType = nodeVar.GetChild(0).Text;
+            }
+            else
+            {
+                isArray = false;
+                dataType = dType;
             }
 
             IdentDescription ident = scope.GetContainVarRecursive(nodeVarIdent.Text);
@@ -593,12 +550,109 @@ namespace MathLang
         }
         private bool IsNum(string numb)
         {
-            for(int i=0;i<numb.Length;i++)
+            for (int i = 0; i < numb.Length; i++)
             {
                 if (!Char.IsNumber(numb[i]))
-                   return false;
+                    return false;
             }
             return true;
+        }
+        private void CallFunc(NodeData node,IdentDescription identFun,Scope scope)
+        {
+             if (identFun.TypeIdent != IdentType.Function)
+                throw new ApplicationException(string.Format("SSKA. Identifier '{0}' is not function ", identFun.NameAttribut));
+
+            // Проверить количество параметров.
+            int countParamsCall = node.GetChild(1).ChildCount;
+            int countParamsFun = 0;
+            for (int i = 0; i < identFun.Node.GetChild(2).ChildCount; i++)
+            {
+                for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
+                {
+                    countParamsFun++;
+                }
+            }
+            if (countParamsCall != countParamsFun)
+                throw new ApplicationException(string.Format("SSKA. Not equals params count in function '{0}'", identFun.NameAttribut));
+
+            // Определить тип переменных и распределить по параметрам.
+            for (int i = 1; i < node.ChildCount; i++)
+                FillVars(node.GetChild(i).Cast(), scope);
+
+            // К этому моменту все типы определены.
+            // Сравнить типы.
+            int parNum = 0;
+            for (int i = 0; i < identFun.Node.GetChild(2).ChildCount; i++)
+            {
+                string funDataType = identFun.Node.GetChild(2).GetChild(i).Text;
+                for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
+                {
+                    IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
+                    string calldataType = idescr.TypeData.ToString().ToLower();
+                    if (funDataType != calldataType)
+                    {
+                        if ((funDataType == "real") && (calldataType == "integer"))
+                        {
+                            ConvertTo(node.GetChild(1).GetChild(parNum).Cast(), DataType.Real);
+                        }
+                        else
+                        {
+                            throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
+                        }
+                    }
+                    // AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
+                    parNum++;
+                }
+            }
+
+        }
+        private void CallProc(NodeData node,IdentDescription identProc,Scope scope)
+        {
+            if (identProc.TypeIdent != IdentType.Procedure)
+                throw new ApplicationException(string.Format("SSKA. Identifier '{0}' is not procedure ", identProc.NameAttribut));
+
+            // Проверить количество параметров.
+            int countParamsCall = node.GetChild(1).ChildCount;
+            int countParamsFun = 0;
+            for (int i = 0; i < identProc.Node.GetChild(1).ChildCount; i++)
+            {
+                for (int k = 0; k < identProc.Node.GetChild(1).GetChild(i).ChildCount; k++)
+                {
+                    countParamsFun++;
+                }
+            }
+            if (countParamsCall != countParamsFun)
+                throw new ApplicationException(string.Format("SSKA. Not equals params count in function '{0}'", identProc.NameAttribut));
+
+            // Определить тип переменных и распределить по параметрам.
+            for (int i = 1; i < node.ChildCount; i++)
+                FillVars(node.GetChild(i).Cast(), scope);
+
+            // К этому моменту все типы определены.
+            // Сравнить типы.
+            int parNum = 0;
+            for (int i = 0; i < identProc.Node.GetChild(1).ChildCount; i++)
+            {
+                string procDataType = identProc.Node.GetChild(1).GetChild(i).Text;
+                for (int k = 0; k < identProc.Node.GetChild(1).GetChild(i).ChildCount; k++)
+                {
+                    IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
+                    string calldataType = idescr.TypeData.ToString().ToLower();
+                    if (procDataType != calldataType)
+                    {
+                        if ((procDataType == "real") && (calldataType == "integer"))
+                        {
+                            ConvertTo(node.GetChild(1).GetChild(parNum).Cast(), DataType.Real);
+                        }
+                        else
+                        {
+                            throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, procDataType));
+                        }
+                    }
+                    parNum++;
+                }
+            }
+
         }
     }
 }

@@ -1,4 +1,5 @@
 var x,s,k,i,p,j:integer;
+  rt:real;
     arr : array [1 .. 10] of integer;
 procedure Pr();
 	begin
@@ -15,7 +16,7 @@ begin
 k:=10;
 x:=Sqr(k);
 print x;
-Pr(k);
+Pr();
 end.
 
 

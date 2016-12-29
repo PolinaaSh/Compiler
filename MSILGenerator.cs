@@ -260,6 +260,11 @@ namespace MathLang
         {
             sb.Append("    .locals init (\n");
             GenLocalVars((NodeData)node.Parent, sb);
+            if (node.Parent.Text != "function")
+            {
+                sb[sb.Length - 2] = ' ';
+                sb.Append(")\n");
+            }
         }
         public void GenBegin(NodeData node, StringBuilder sb)
         {
@@ -301,17 +306,11 @@ namespace MathLang
         {
             sb.Append("  .method public static void");
             sb.Append(string.Format(" {0}", node.GetChild(0).Text));//имя
-            GenParams(node.GetChild(2).Cast(), sb);//параметры
+            GenParams(node.GetChild(1).Cast(), sb);//параметры
             sb.Append(" cil managed {\n");
-            if (node.GetChild(2).Text == "var" || node.GetChild(3).Text == "const")
-            {
-                Gen((NodeData)node.GetChild(2), sb);
-                sb[sb.Length - 2] = ' ';
-                sb.Append(")\n");
-                Gen((NodeData)node.GetChild(node.ChildCount - 1), sb);
-            }
-            else
-                Gen((NodeData)node.GetChild(2), sb);
+            for (int i = 2; i < node.ChildCount; i++)
+                Gen(node.GetChild(i).Cast(),sb);
+
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n");
         }
