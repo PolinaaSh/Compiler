@@ -1,22 +1,17 @@
-var x,s,k,i,p,j:integer;
-  rt:real;
-    arr : array [1 .. 10] of integer;
-procedure Pr();
-	begin
-	x:=555;
-	print x;
-	end;
-function Sqr(x:integer):integer;
-var k:integer;
+var n:integer;
+
+procedure Prr(var g:integer);
+var a:integer;
 begin
-k:=x*x;
-result:=k;
+a:=10;
+g:=a*a*a;
 end;
+
 begin
-k:=10;
-x:=Sqr(k);
-print x;
-Pr();
+n:=15;
+print n;
+Prr(n);
+print n;
 end.
 
 

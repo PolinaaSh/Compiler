@@ -158,15 +158,12 @@ params_:
 (param(',' param)*)? -> ^(PARAMS param*)
 ;
 
-param_var: VAR^ type_decl+
-;
-
 func_sign:
 (FUNC IDENT '('( type_decl (';' type_decl)*)*')' ':' type ';')-> ^(FUNC type IDENT ^(PARAMS type_decl*))
 ;
 
 proc_sign:
-(PROC IDENT '('( type_decl (';' type_decl)* ';' param_var)*')' ';')-> ^(PROC IDENT ^(PARAMS  (type_decl+ param_var)*))
+(PROC IDENT '('(( t1=type_decl (';' type_decl)* ';')* VAR t2=type_decl*)*')' ';')-> ^(PROC IDENT ^(PARAMS  $t1*  ^(VAR $t2)*))
 ;
 
 func_decl:

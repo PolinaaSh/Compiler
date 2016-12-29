@@ -134,8 +134,6 @@ namespace MathLang
                 case MathLangLexer.PROC:
                     #region proc
                     Scope newSc = RegistrationFun(scope, node, node.GetChild(0).Cast());
-                    for (int i = 1; i < node.ChildCount; i++)
-                        FillVars(node.GetChild(i).Cast(), newSc);
                     #endregion
                     break;
 
@@ -157,18 +155,22 @@ namespace MathLang
                     #region var
                     {
                         // Зарегать объявленные переменные
-                        ITree nodeVarIdent;
-                        if (node.GetChild(1).Text.ToLower() != "array")
+                        if (node.Parent.Text != "PARAMS")
                         {
-                            nodeVarIdent = node.GetChild(1);
-                            IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
-                            RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
-                        }
-                        else
-                        {
-                            nodeVarIdent = node.GetChild(2);
-                            IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
-                            RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                            ITree nodeVarIdent;
+                            if (node.GetChild(1).Text.ToLower() != "array")
+                            {
+                                nodeVarIdent = node.GetChild(1);
+                                IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
+                                RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                            }
+                            else
+                            {
+                                nodeVarIdent = node.GetChild(2);
+                                // IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : (node.Parent.Text.Equals("PARAMS") ?IdentType.Param:IdentType.Local);
+                                IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
+                                RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                            }
                         }
                     }
                     #endregion
@@ -180,10 +182,17 @@ namespace MathLang
                     for (int i = 0; i < node.ChildCount; i++)
                     {
                         string dataType = node.GetChild(i).Text;
-                        for (int k = 0; k < node.GetChild(i).ChildCount; k++)
+                        if (dataType == "var")
                         {
-                            RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(k).Cast(), IdentType.Param, dataType);
-                            // AddScopeInNode(scope, node.GetChild(i).GetChild(k).Cast());
+                            dataType = node.GetChild(i).GetChild(0).Text;
+                             RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(1).Cast(), IdentType.Param, dataType);
+                        }
+                        else
+                        {
+                            for (int k = 0; k < node.GetChild(i).ChildCount; k++)
+                            {
+                                    RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(k).Cast(), IdentType.Param, dataType);
+                            }
                         }
                     }
 
@@ -421,6 +430,7 @@ namespace MathLang
 
             node.AddChild(infoScope);
             node.TypeData = ident.TypeData;
+            node.IdentDescription = ident;
             return ident;
         }
         private void RegistrationVar(Scope scope, NodeData nodeVar, NodeData nodeVarIdent, IdentType typeIdent, string dType)
@@ -618,6 +628,11 @@ namespace MathLang
             {
                 for (int k = 0; k < identProc.Node.GetChild(1).GetChild(i).ChildCount; k++)
                 {
+                    if (identProc.Node.GetChild(1).GetChild(i).Text == "var")
+                    {
+                        countParamsFun++;
+                        break;
+                    }
                     countParamsFun++;
                 }
             }
@@ -634,8 +649,9 @@ namespace MathLang
             for (int i = 0; i < identProc.Node.GetChild(1).ChildCount; i++)
             {
                 string procDataType = identProc.Node.GetChild(1).GetChild(i).Text;
-                for (int k = 0; k < identProc.Node.GetChild(1).GetChild(i).ChildCount; k++)
+                if (procDataType == "var")
                 {
+                    procDataType = identProc.Node.GetChild(1).GetChild(i).GetChild(0).Text;
                     IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
                     string calldataType = idescr.TypeData.ToString().ToLower();
                     if (procDataType != calldataType)
@@ -650,6 +666,26 @@ namespace MathLang
                         }
                     }
                     parNum++;
+                }
+                else
+                {
+                    for (int k = 0; k < identProc.Node.GetChild(1).GetChild(i).ChildCount; k++)
+                    {
+                        IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
+                        string calldataType = idescr.TypeData.ToString().ToLower();
+                        if (procDataType != calldataType)
+                        {
+                            if ((procDataType == "real") && (calldataType == "integer"))
+                            {
+                                ConvertTo(node.GetChild(1).GetChild(parNum).Cast(), DataType.Real);
+                            }
+                            else
+                            {
+                                throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, procDataType));
+                            }
+                        }
+                        parNum++;
+                    }
                 }
             }
 
