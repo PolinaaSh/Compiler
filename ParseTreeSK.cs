@@ -126,6 +126,7 @@ namespace MathLang
                     #region FUNC
                     {
                         Scope newScope = RegistrationFun(scope, node, node.GetChild(1).Cast());
+                        AddScopeInNode(scope,node.GetChild(1).Cast());
                         for (int i = 2; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScope);
                     }
@@ -134,8 +135,11 @@ namespace MathLang
                 case MathLangLexer.PROC:
                     #region proc
                     Scope newSc = RegistrationFun(scope, node, node.GetChild(0).Cast());
+                    AddScopeInNode(scope, node.GetChild(0).Cast());
+                    for (int i = 1; i < node.ChildCount; i++)
+                        FillVars(node.GetChild(i).Cast(), newSc);
                     #endregion
-                    break;
+                    return;
 
                 case MathLangLexer.IDENT:
                     #region ident
@@ -146,10 +150,15 @@ namespace MathLang
                         NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.UNKNOWN, "Local"));
                         node.AddChild(splitedNode);
                     }
+                    else if(node.ChildCount>0 && node.GetChild(0).Text=="INDEX")
+                    {
+                        node.IdentDescription = AddScopeInNode(scope, node);
+                        AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
+                    }
                     else
                         node.IdentDescription = AddScopeInNode(scope, node);
                     #endregion
-                    break;
+                    return;
 
                 case MathLangLexer.VAR:
                     #region var
@@ -163,6 +172,7 @@ namespace MathLang
                                 nodeVarIdent = node.GetChild(1);
                                 IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
                                 RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                                AddScopeInNode(scope, node.GetChild(1).Cast());
                             }
                             else
                             {
@@ -170,11 +180,12 @@ namespace MathLang
                                 // IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : (node.Parent.Text.Equals("PARAMS") ?IdentType.Param:IdentType.Local);
                                 IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
                                 RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
+                                AddScopeInNode(scope, node.GetChild(2).Cast());
                             }
-                        }
+                         }
                     }
                     #endregion
-                    break;
+                   return;
 
                 case MathLangLexer.PARAMS:
                     // Зарегать парметры функции и добавить зону видимости
@@ -186,18 +197,20 @@ namespace MathLang
                         {
                             dataType = node.GetChild(i).GetChild(0).Text;
                              RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(1).Cast(), IdentType.Param, dataType);
+                             AddScopeInNode(scope, node.GetChild(i).GetChild(1).Cast());
                         }
                         else
                         {
                             for (int k = 0; k < node.GetChild(i).ChildCount; k++)
                             {
                                     RegistrationVar(scope, node.GetChild(i).Cast(), node.GetChild(i).GetChild(k).Cast(), IdentType.Param, dataType);
+                                    AddScopeInNode(scope, node.GetChild(i).GetChild(k).Cast());
                             }
                         }
                     }
 
                     #endregion
-                    break;
+                    return;
                 case MathLangLexer.CALL:
                     #region CALL
                     IdentDescription ident = AddScopeInNode(scope, node.GetChild(0).Cast());
@@ -477,7 +490,7 @@ namespace MathLang
                 false
                 );
             scope.RegisterIdent(nodeVarIdent.Text, newIdentFun);
-
+            //newScope.RegisterIdent(nodeVarIdent.Text, newIdentFun);
             newScope.Function = newIdentFun;
 
             return newScope;
@@ -610,7 +623,7 @@ namespace MathLang
                             throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
                         }
                     }
-                    // AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
+                    AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                     parNum++;
                 }
             }
@@ -665,6 +678,7 @@ namespace MathLang
                             throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, procDataType));
                         }
                     }
+                    AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                     parNum++;
                 }
                 else
@@ -684,6 +698,7 @@ namespace MathLang
                                 throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, procDataType));
                             }
                         }
+                        AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                         parNum++;
                     }
                 }

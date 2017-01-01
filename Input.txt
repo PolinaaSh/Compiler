@@ -1,17 +1,18 @@
 var n:integer;
-
-procedure Prr(k:integer;var g,m:integer);
-var a:integer;
+	arr:array [1 .. 10] of integer;
+procedure Prr(k:integer;var g:integer);
+var n:integer;
 begin
-a:=10;
-g:=a*a*a;
-m:=444;
+n:=10;
+g:=n*n;
 end;
 
 begin
+n:=1;
+arr[n]:=1;
 n:=15;
 print n;
-Prr(n,n,n);
+Prr(n,n);
 print n;
 end.
 
