@@ -1,18 +1,18 @@
-var n:integer;
+var n,r:integer;
 	arr:array [1 .. 10] of integer;
-procedure Prr(k:integer;var g:integer);
-var n:integer;
+
+function Year(d:integer;var b:integer):integer;
 begin
-n:=10;
-g:=n*n;
+b:=41;
+result:=100;
 end;
 
 begin
 n:=1;
 arr[n]:=1;
-n:=15;
-print n;
-Prr(n,n);
+print arr[n];
+r:=Year(r,n);
+print r;
 print n;
 end.
 

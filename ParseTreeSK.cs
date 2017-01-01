@@ -159,7 +159,6 @@ namespace MathLang
                         node.IdentDescription = AddScopeInNode(scope, node);
                     #endregion
                     return;
-
                 case MathLangLexer.VAR:
                     #region var
                     {
@@ -186,7 +185,6 @@ namespace MathLang
                     }
                     #endregion
                    return;
-
                 case MathLangLexer.PARAMS:
                     // Зарегать парметры функции и добавить зону видимости
                     #region params
@@ -592,6 +590,11 @@ namespace MathLang
             {
                 for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
                 {
+                    if (identFun.Node.GetChild(2).GetChild(i).Text == "var")
+                    {
+                        countParamsFun++;
+                        break;
+                    }
                     countParamsFun++;
                 }
             }
@@ -608,8 +611,9 @@ namespace MathLang
             for (int i = 0; i < identFun.Node.GetChild(2).ChildCount; i++)
             {
                 string funDataType = identFun.Node.GetChild(2).GetChild(i).Text;
-                for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
+                if (funDataType == "var")
                 {
+                    funDataType = identFun.Node.GetChild(2).GetChild(i).GetChild(0).Text;
                     IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
                     string calldataType = idescr.TypeData.ToString().ToLower();
                     if (funDataType != calldataType)
@@ -625,6 +629,27 @@ namespace MathLang
                     }
                     AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                     parNum++;
+                }
+                else
+                {
+                    for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
+                    {
+                        IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
+                        string calldataType = idescr.TypeData.ToString().ToLower();
+                        if (funDataType != calldataType)
+                        {
+                            if ((funDataType == "real") && (calldataType == "integer"))
+                            {
+                                ConvertTo(node.GetChild(1).GetChild(parNum).Cast(), DataType.Real);
+                            }
+                            else
+                            {
+                                throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
+                            }
+                        }
+                        AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
+                        parNum++;
+                    }
                 }
             }
 
