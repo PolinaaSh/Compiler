@@ -46,7 +46,7 @@ namespace MathLang
         private  void 
             GenLocalVars(NodeData node, StringBuilder sb)
         {
-            if (node.Type == MathLangLexer.VAR)
+            if (node.Type == MathLangLexer.VAR && node.Parent.Text !="PARAMS")
             {
                 int num;
                 string type = ToMsilType(node.GetChild(0).Text);
@@ -324,7 +324,7 @@ namespace MathLang
             for (int i = 0; i < node.GetChild(1).ChildCount; i++)
             {
                 string type = ToMsilType(node.GetChild(1).GetChild(i).Cast().TypeData.ToString().ToLower());
-                if (node.GetChild(0).Cast().IdentDescription.Node.GetChild(1).GetChild(i).Text == "var")
+                if (CheckVar(node.GetChild(0).Cast(),i))
                 {
                     type = ToMsilType(node.GetChild(1).GetChild(i).Cast().TypeData.ToString().ToLower()) + "&";
                     if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local"))
@@ -341,7 +341,7 @@ namespace MathLang
                     }
                 }
                 sb0.Append(string.Format("{0},", type));
-                if (node.GetChild(0).Cast().IdentDescription.Node.GetChild(1).GetChild(i).Text != "var")
+                if (!CheckVar(node.GetChild(0).Cast(), i))
                 {
                     if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local"))
                     {
@@ -699,6 +699,36 @@ namespace MathLang
             //Gen((NodeData)node.GetChild(0), sb);
             sb.Append(string.Format("    L_{0:D6}: ldstr {1}\n", lineNum++,node.GetChild(0)));
             sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine(string)\n", lineNum++));
+        }
+        public bool CheckVar(NodeData node,int n)//передаю узел с параметрами
+        {
+            int count = 0;
+            NodeData origin = node.IdentDescription.Node.Cast();
+            if (origin.Text == "function")
+            {
+                for (int i = 0; i < origin.GetChild(2).ChildCount; i++)
+                {
+                    for (int k = 0; k < origin.GetChild(2).GetChild(i).ChildCount; k++)
+                    {
+                        if (origin.GetChild(2).GetChild(i).Text == "var" && count == n)
+                            return true;
+                        count++;
+                    }
+                }
+            }
+            else if (origin.Text == "procedure")
+            {
+                for (int i = 0; i < origin.GetChild(1).ChildCount; i++)
+                {
+                    for(int k=0;k<origin.GetChild(1).GetChild(i).ChildCount;k++)
+                    {
+                        if (origin.GetChild(1).GetChild(i).Text == "var" && count == n)
+                            return true;
+                        count++;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

@@ -1,16 +1,17 @@
 var n:integer;
 
-procedure Prr(var g:integer);
+procedure Prr(k:integer;var g,m:integer);
 var a:integer;
 begin
 a:=10;
 g:=a*a*a;
+m:=444;
 end;
 
 begin
 n:=15;
 print n;
-Prr(n);
+Prr(n,n,n);
 print n;
 end.
 
