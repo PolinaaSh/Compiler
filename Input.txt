@@ -1,17 +1,15 @@
-var n,r:integer;
-	arr:array [1 .. 10] of integer;
+var n,r,m:integer;
 
-function Year(d:integer;var b:integer):integer;
-begin
-b:=41;
-result:=100;
+function Year(d:integer;var k:integer):integer; 
+begin 
+k:=500; 
+result:=d*d; 
 end;
 
 begin
-n:=1;
-arr[n]:=1;
-print arr[n];
-r:=Year(r,n);
+n:=3;
+m:=2;
+r:=Year(m,n);
 print r;
 print n;
 end.

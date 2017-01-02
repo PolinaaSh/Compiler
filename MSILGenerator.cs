@@ -60,6 +60,8 @@ namespace MathLang
                     num = GetVarNum((NodeData)node.GetChild(1));
                     sb.Append(string.Format("      [{0}] {1},\n", num, type));
                 }
+                if(node.Parent.Text=="function")
+                resNum++;
             }
             else
                 for (int i = 0; i < node.ChildCount; i++)
@@ -286,20 +288,43 @@ namespace MathLang
             sb.Append(string.Format(" {0}", node.GetChild(1).Text));//имя
             GenParams(node.GetChild(2).Cast(),sb);//параметры
             sb.Append(" cil managed {\n");
-            if (node.GetChild(3).Text == "var" || node.GetChild(3).Text == "const")
+            bool haveVar=false;
+            StringBuilder sb0 = new StringBuilder();
+            for (int i = 3; i < node.ChildCount;i++)
             {
-                Gen((NodeData)node.GetChild(3), sb);
-                resNum = node.ChildCount - 4;
-                sb.Append(string.Format("      [{0}] {1},\n",resNum , ToMsilType(node.GetChild(0).Text)));
-                sb[sb.Length - 2] = ' ';
-                sb.Append(")\n");                
-                Gen((NodeData)node.GetChild(node.ChildCount-1), sb);
+                Gen((NodeData)node.GetChild(i), sb0);
+                if(node.GetChild(i).Text=="var")
+                {
+                    sb0.Append(string.Format("      [{0}] {1},\n", resNum, ToMsilType(node.GetChild(0).Text)));
+                    sb0[sb0.Length - 2] = ' ';
+                    sb0.Append(")\n");
+                    haveVar = true;
+                }
             }
-            else
-                Gen((NodeData)node.GetChild(3), sb);
-            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,node.ChildCount-4));
+            if (!haveVar)
+            {
+                sb.Append("    .locals init (\n");
+                sb.Append(string.Format("      [{0}] {1}\n", resNum, ToMsilType(node.GetChild(0).Text)));
+                sb.Append("    )\n");
+            }
+            sb.Append(sb0);
+            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,resNum));
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n");
+                /*if (node.GetChild(3).Text == "var" || node.GetChild(3).Text == "const")
+                {
+                    Gen((NodeData)node.GetChild(3), sb);
+                    resNum = node.ChildCount - 4;
+                    sb.Append(string.Format("      [{0}] {1},\n", resNum, ToMsilType(node.GetChild(0).Text)));
+                    sb[sb.Length - 2] = ' ';
+                    sb.Append(")\n");
+                    Gen((NodeData)node.GetChild(node.ChildCount - 1), sb);
+                }
+                else
+                    Gen((NodeData)node.GetChild(3), sb);
+            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,node.ChildCount-4));
+            sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
+            sb.Append("  }\n");*/
             //lineNum = 0;
         }
         public void GenProc(NodeData node, StringBuilder sb)
@@ -337,7 +362,7 @@ namespace MathLang
                     }
                     else if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Global"))
                     {
-                        sb.Append(string.Format("    L_{0:D6}: ldsflda      {1} Program::{2}\n", lineNum++, ToMsilType(node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Cast().TypeData.ToString().ToLower()), node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Text));
+                        sb.Append(string.Format("    L_{0:D6}: ldsflda      {1} Program::{2}\n", lineNum++, ToMsilType(node.GetChild(1).GetChild(/*node.GetChild(1).ChildCount - 1 - */i).Cast().TypeData.ToString().ToLower()), node.GetChild(1).GetChild(/*node.GetChild(1).ChildCount - 1 -*/ i).Text));
                     }
                 }
                 sb0.Append(string.Format("{0},", type));
@@ -353,7 +378,7 @@ namespace MathLang
                     }
                     else if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Global"))
                     {
-                        sb.Append(string.Format("    L_{0:D6}: ldsfld      {1} Program::{2}\n", lineNum++, ToMsilType(node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Cast().TypeData.ToString().ToLower()), node.GetChild(1).GetChild(node.GetChild(1).ChildCount - 1 - i).Text));
+                        sb.Append(string.Format("    L_{0:D6}: ldsfld      {1} Program::{2}\n", lineNum++, ToMsilType(node.GetChild(1).GetChild(/*node.GetChild(1).ChildCount - 1 -*/ i).Cast().TypeData.ToString().ToLower()), node.GetChild(1).GetChild(/*node.GetChild(1).ChildCount - 1 -*/ i).Text));
                     }
                 }
             }
