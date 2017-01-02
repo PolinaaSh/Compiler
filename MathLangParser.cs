@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2017-01-02 00:52:40
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2017-01-02 20:01:53
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -1446,7 +1446,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_index_();
 
 	// $ANTLR start "index_"
-	// MathLang.g:116:1: index_ : ( IDENT | NUMBER );
+	// MathLang.g:116:1: index_ : term ;
 	[GrammarRule("index_")]
 	private MathLangParser.index__return index_()
 	{
@@ -1458,36 +1458,25 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 		object root_0 = null;
 
-		IToken set32=null;
+		MathLangParser.term_return term32 = default(MathLangParser.term_return);
 
-		object set32_tree=null;
 
 		try { DebugEnterRule(GrammarFileName, "index_");
 		DebugLocation(116, 0);
 		try
 		{
-			// MathLang.g:116:7: ( IDENT | NUMBER )
+			// MathLang.g:116:7: ( term )
 			DebugEnterAlt(1);
-			// MathLang.g:
+			// MathLang.g:116:9: term
 			{
 			root_0 = (object)adaptor.Nil();
 
-			DebugLocation(116, 7);
-			set32=(IToken)input.LT(1);
-			if ((input.LA(1)>=NUMBER && input.LA(1)<=IDENT))
-			{
-				input.Consume();
-				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, (object)adaptor.Create(set32));
-				state.errorRecovery=false;state.failed=false;
-			}
-			else
-			{
-				if (state.backtracking>0) {state.failed=true; return retval;}
-				MismatchedSetException mse = new MismatchedSetException(null,input);
-				DebugRecognitionException(mse);
-				throw mse;
-			}
-
+			DebugLocation(116, 9);
+			PushFollow(Follow._term_in_index_1281);
+			term32=term();
+			PopFollow();
+			if (state.failed) return retval;
+			if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term32.Tree);
 
 			}
 
@@ -1674,19 +1663,19 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(120, 3);
-				IDENT33=(IToken)Match(input,IDENT,Follow._IDENT_in_simpleExpr1293); if (state.failed) return retval;
+				IDENT33=(IToken)Match(input,IDENT,Follow._IDENT_in_simpleExpr1291); if (state.failed) return retval;
 				if ( state.backtracking==0 ) {
 				IDENT33_tree = (object)adaptor.Create(IDENT33);
 				adaptor.AddChild(root_0, IDENT33_tree);
 				}
 				DebugLocation(120, 15);
-				ASSIGN34=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_simpleExpr1295); if (state.failed) return retval;
+				ASSIGN34=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_simpleExpr1293); if (state.failed) return retval;
 				if ( state.backtracking == 0 ) {
 				ASSIGN34_tree = (object)adaptor.Create(ASSIGN34);
 				root_0 = (object)adaptor.BecomeRoot(ASSIGN34_tree, root_0);
 				}
 				DebugLocation(120, 17);
-				PushFollow(Follow._term_in_simpleExpr1298);
+				PushFollow(Follow._term_in_simpleExpr1296);
 				term35=term();
 				PopFollow();
 				if (state.failed) return retval;
@@ -1701,13 +1690,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(121, 8);
-				PRINT36=(IToken)Match(input,PRINT,Follow._PRINT_in_simpleExpr1302); if (state.failed) return retval;
+				PRINT36=(IToken)Match(input,PRINT,Follow._PRINT_in_simpleExpr1300); if (state.failed) return retval;
 				if ( state.backtracking == 0 ) {
 				PRINT36_tree = (object)adaptor.Create(PRINT36);
 				root_0 = (object)adaptor.BecomeRoot(PRINT36_tree, root_0);
 				}
 				DebugLocation(121, 10);
-				PushFollow(Follow._term_in_simpleExpr1305);
+				PushFollow(Follow._term_in_simpleExpr1303);
 				term37=term();
 				PopFollow();
 				if (state.failed) return retval;
@@ -1722,13 +1711,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(122, 11);
-				PRINTSTR38=(IToken)Match(input,PRINTSTR,Follow._PRINTSTR_in_simpleExpr1309); if (state.failed) return retval;
+				PRINTSTR38=(IToken)Match(input,PRINTSTR,Follow._PRINTSTR_in_simpleExpr1307); if (state.failed) return retval;
 				if ( state.backtracking == 0 ) {
 				PRINTSTR38_tree = (object)adaptor.Create(PRINTSTR38);
 				root_0 = (object)adaptor.BecomeRoot(PRINTSTR38_tree, root_0);
 				}
 				DebugLocation(122, 13);
-				PushFollow(Follow._term_in_simpleExpr1312);
+				PushFollow(Follow._term_in_simpleExpr1310);
 				term39=term();
 				PopFollow();
 				if (state.failed) return retval;
@@ -1746,29 +1735,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:123:4: IDENT '[' index_ ']' ASSIGN term
 				{
 				DebugLocation(123, 4);
-				IDENT40=(IToken)Match(input,IDENT,Follow._IDENT_in_simpleExpr1317); if (state.failed) return retval; 
+				IDENT40=(IToken)Match(input,IDENT,Follow._IDENT_in_simpleExpr1315); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT40);
 
 				DebugLocation(123, 10);
-				char_literal41=(IToken)Match(input,63,Follow._63_in_simpleExpr1319); if (state.failed) return retval; 
+				char_literal41=(IToken)Match(input,63,Follow._63_in_simpleExpr1317); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_63.Add(char_literal41);
 
 				DebugLocation(123, 14);
-				PushFollow(Follow._index__in_simpleExpr1321);
+				PushFollow(Follow._index__in_simpleExpr1319);
 				index_42=index_();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_index_.Add(index_42.Tree);
 				DebugLocation(123, 20);
-				char_literal43=(IToken)Match(input,64,Follow._64_in_simpleExpr1322); if (state.failed) return retval; 
+				char_literal43=(IToken)Match(input,64,Follow._64_in_simpleExpr1320); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_64.Add(char_literal43);
 
 				DebugLocation(123, 24);
-				ASSIGN44=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_simpleExpr1324); if (state.failed) return retval; 
+				ASSIGN44=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_simpleExpr1322); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_ASSIGN.Add(ASSIGN44);
 
 				DebugLocation(123, 31);
-				PushFollow(Follow._term_in_simpleExpr1326);
+				PushFollow(Follow._term_in_simpleExpr1324);
 				term45=term();
 				PopFollow();
 				if (state.failed) return retval;
@@ -1780,7 +1769,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: index_, term, IDENT, ASSIGN
+				// elements: IDENT, ASSIGN, term, index_
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -1843,7 +1832,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(124, 3);
-				PushFollow(Follow._call_in_simpleExpr1351);
+				PushFollow(Follow._call_in_simpleExpr1349);
 				call46=call();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2042,29 +2031,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:128:4: IF '(' t1= term ')' THEN lst= exprList ( ELSIF t2= term THEN lst2= exprList )* ( ELSE lst3= exprList )?
 				{
 				DebugLocation(128, 4);
-				IF47=(IToken)Match(input,IF,Follow._IF_in_groupExpr1362); if (state.failed) return retval; 
+				IF47=(IToken)Match(input,IF,Follow._IF_in_groupExpr1360); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IF.Add(IF47);
 
 				DebugLocation(128, 7);
-				char_literal48=(IToken)Match(input,61,Follow._61_in_groupExpr1364); if (state.failed) return retval; 
+				char_literal48=(IToken)Match(input,61,Follow._61_in_groupExpr1362); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_61.Add(char_literal48);
 
 				DebugLocation(128, 13);
-				PushFollow(Follow._term_in_groupExpr1368);
+				PushFollow(Follow._term_in_groupExpr1366);
 				t1=term();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_term.Add(t1.Tree);
 				DebugLocation(128, 19);
-				char_literal49=(IToken)Match(input,62,Follow._62_in_groupExpr1370); if (state.failed) return retval; 
+				char_literal49=(IToken)Match(input,62,Follow._62_in_groupExpr1368); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_62.Add(char_literal49);
 
 				DebugLocation(128, 23);
-				THEN50=(IToken)Match(input,THEN,Follow._THEN_in_groupExpr1372); if (state.failed) return retval; 
+				THEN50=(IToken)Match(input,THEN,Follow._THEN_in_groupExpr1370); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_THEN.Add(THEN50);
 
 				DebugLocation(128, 31);
-				PushFollow(Follow._exprList_in_groupExpr1376);
+				PushFollow(Follow._exprList_in_groupExpr1374);
 				lst=exprList();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2082,7 +2071,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 						int LA9_2 = input.LA(2);
 
-						if ((EvaluatePredicate(synpred28_MathLang_fragment)))
+						if ((EvaluatePredicate(synpred27_MathLang_fragment)))
 						{
 							alt9=1;
 						}
@@ -2099,21 +2088,21 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:128:42: ELSIF t2= term THEN lst2= exprList
 						{
 						DebugLocation(128, 42);
-						ELSIF51=(IToken)Match(input,ELSIF,Follow._ELSIF_in_groupExpr1379); if (state.failed) return retval; 
+						ELSIF51=(IToken)Match(input,ELSIF,Follow._ELSIF_in_groupExpr1377); if (state.failed) return retval; 
 						if ( state.backtracking == 0 ) stream_ELSIF.Add(ELSIF51);
 
 						DebugLocation(128, 50);
-						PushFollow(Follow._term_in_groupExpr1383);
+						PushFollow(Follow._term_in_groupExpr1381);
 						t2=term();
 						PopFollow();
 						if (state.failed) return retval;
 						if ( state.backtracking == 0 ) stream_term.Add(t2.Tree);
 						DebugLocation(128, 56);
-						THEN52=(IToken)Match(input,THEN,Follow._THEN_in_groupExpr1385); if (state.failed) return retval; 
+						THEN52=(IToken)Match(input,THEN,Follow._THEN_in_groupExpr1383); if (state.failed) return retval; 
 						if ( state.backtracking == 0 ) stream_THEN.Add(THEN52);
 
 						DebugLocation(128, 65);
-						PushFollow(Follow._exprList_in_groupExpr1389);
+						PushFollow(Follow._exprList_in_groupExpr1387);
 						lst2=exprList();
 						PopFollow();
 						if (state.failed) return retval;
@@ -2143,7 +2132,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				{
 					int LA10_1 = input.LA(2);
 
-					if ((EvaluatePredicate(synpred29_MathLang_fragment)))
+					if ((EvaluatePredicate(synpred28_MathLang_fragment)))
 					{
 						alt10=1;
 					}
@@ -2156,11 +2145,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:128:78: ELSE lst3= exprList
 					{
 					DebugLocation(128, 78);
-					ELSE53=(IToken)Match(input,ELSE,Follow._ELSE_in_groupExpr1394); if (state.failed) return retval; 
+					ELSE53=(IToken)Match(input,ELSE,Follow._ELSE_in_groupExpr1392); if (state.failed) return retval; 
 					if ( state.backtracking == 0 ) stream_ELSE.Add(ELSE53);
 
 					DebugLocation(128, 87);
-					PushFollow(Follow._exprList_in_groupExpr1398);
+					PushFollow(Follow._exprList_in_groupExpr1396);
 					lst3=exprList();
 					PopFollow();
 					if (state.failed) return retval;
@@ -2179,7 +2168,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: lst2, IF, lst3, t2, ELSIF, ELSE, lst, t1
+				// elements: lst3, lst, ELSE, t1, lst2, IF, t2, ELSIF
 				// token labels: 
 				// rule labels: lst3, t2, retval, t1, lst2, lst
 				// token list labels: 
@@ -2273,39 +2262,39 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:129:4: FOR IDENT ASSIGN t1= term TO t2= term DO exprList
 				{
 				DebugLocation(129, 4);
-				FOR54=(IToken)Match(input,FOR,Follow._FOR_in_groupExpr1439); if (state.failed) return retval; 
+				FOR54=(IToken)Match(input,FOR,Follow._FOR_in_groupExpr1437); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_FOR.Add(FOR54);
 
 				DebugLocation(129, 8);
-				IDENT55=(IToken)Match(input,IDENT,Follow._IDENT_in_groupExpr1441); if (state.failed) return retval; 
+				IDENT55=(IToken)Match(input,IDENT,Follow._IDENT_in_groupExpr1439); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT55);
 
 				DebugLocation(129, 14);
-				ASSIGN56=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_groupExpr1443); if (state.failed) return retval; 
+				ASSIGN56=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_groupExpr1441); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_ASSIGN.Add(ASSIGN56);
 
 				DebugLocation(129, 23);
-				PushFollow(Follow._term_in_groupExpr1447);
+				PushFollow(Follow._term_in_groupExpr1445);
 				t1=term();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_term.Add(t1.Tree);
 				DebugLocation(129, 29);
-				TO57=(IToken)Match(input,TO,Follow._TO_in_groupExpr1449); if (state.failed) return retval; 
+				TO57=(IToken)Match(input,TO,Follow._TO_in_groupExpr1447); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_TO.Add(TO57);
 
 				DebugLocation(129, 34);
-				PushFollow(Follow._term_in_groupExpr1453);
+				PushFollow(Follow._term_in_groupExpr1451);
 				t2=term();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_term.Add(t2.Tree);
 				DebugLocation(129, 40);
-				DO58=(IToken)Match(input,DO,Follow._DO_in_groupExpr1455); if (state.failed) return retval; 
+				DO58=(IToken)Match(input,DO,Follow._DO_in_groupExpr1453); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_DO.Add(DO58);
 
 				DebugLocation(129, 43);
-				PushFollow(Follow._exprList_in_groupExpr1457);
+				PushFollow(Follow._exprList_in_groupExpr1455);
 				exprList59=exprList();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2317,7 +2306,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: FOR, t1, ASSIGN, IDENT, IDENT, exprList, t2
+				// elements: IDENT, t2, FOR, t1, exprList, IDENT, ASSIGN
 				// token labels: 
 				// rule labels: t2, retval, t1
 				// token list labels: 
@@ -2388,25 +2377,25 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(130, 8);
-				WHILE60=(IToken)Match(input,WHILE,Follow._WHILE_in_groupExpr1486); if (state.failed) return retval;
+				WHILE60=(IToken)Match(input,WHILE,Follow._WHILE_in_groupExpr1484); if (state.failed) return retval;
 				if ( state.backtracking == 0 ) {
 				WHILE60_tree = (object)adaptor.Create(WHILE60);
 				root_0 = (object)adaptor.BecomeRoot(WHILE60_tree, root_0);
 				}
 				DebugLocation(130, 13);
-				char_literal61=(IToken)Match(input,61,Follow._61_in_groupExpr1489); if (state.failed) return retval;
+				char_literal61=(IToken)Match(input,61,Follow._61_in_groupExpr1487); if (state.failed) return retval;
 				DebugLocation(130, 14);
-				PushFollow(Follow._term_in_groupExpr1491);
+				PushFollow(Follow._term_in_groupExpr1489);
 				term62=term();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, term62.Tree);
 				DebugLocation(130, 21);
-				char_literal63=(IToken)Match(input,62,Follow._62_in_groupExpr1492); if (state.failed) return retval;
+				char_literal63=(IToken)Match(input,62,Follow._62_in_groupExpr1490); if (state.failed) return retval;
 				DebugLocation(130, 25);
-				DO64=(IToken)Match(input,DO,Follow._DO_in_groupExpr1495); if (state.failed) return retval;
+				DO64=(IToken)Match(input,DO,Follow._DO_in_groupExpr1493); if (state.failed) return retval;
 				DebugLocation(130, 27);
-				PushFollow(Follow._exprList_in_groupExpr1498);
+				PushFollow(Follow._exprList_in_groupExpr1496);
 				exprList65=exprList();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2421,7 +2410,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(131, 9);
-				REPEAT66=(IToken)Match(input,REPEAT,Follow._REPEAT_in_groupExpr1502); if (state.failed) return retval;
+				REPEAT66=(IToken)Match(input,REPEAT,Follow._REPEAT_in_groupExpr1500); if (state.failed) return retval;
 				if ( state.backtracking == 0 ) {
 				REPEAT66_tree = (object)adaptor.Create(REPEAT66);
 				root_0 = (object)adaptor.BecomeRoot(REPEAT66_tree, root_0);
@@ -2450,7 +2439,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: exprList
 						{
 						DebugLocation(131, 11);
-						PushFollow(Follow._exprList_in_groupExpr1505);
+						PushFollow(Follow._exprList_in_groupExpr1503);
 						exprList67=exprList();
 						PopFollow();
 						if (state.failed) return retval;
@@ -2476,9 +2465,9 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				} finally { DebugExitSubRule(11); }
 
 				DebugLocation(131, 26);
-				UNTIL68=(IToken)Match(input,UNTIL,Follow._UNTIL_in_groupExpr1508); if (state.failed) return retval;
+				UNTIL68=(IToken)Match(input,UNTIL,Follow._UNTIL_in_groupExpr1506); if (state.failed) return retval;
 				DebugLocation(131, 28);
-				PushFollow(Follow._term_in_groupExpr1511);
+				PushFollow(Follow._term_in_groupExpr1509);
 				term69=term();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2491,7 +2480,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:132:3: BEGIN ( exprList )+ END ';'
 				{
 				DebugLocation(132, 3);
-				BEGIN70=(IToken)Match(input,BEGIN,Follow._BEGIN_in_groupExpr1515); if (state.failed) return retval; 
+				BEGIN70=(IToken)Match(input,BEGIN,Follow._BEGIN_in_groupExpr1513); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_BEGIN.Add(BEGIN70);
 
 				DebugLocation(132, 9);
@@ -2518,7 +2507,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: exprList
 						{
 						DebugLocation(132, 9);
-						PushFollow(Follow._exprList_in_groupExpr1517);
+						PushFollow(Follow._exprList_in_groupExpr1515);
 						exprList71=exprList();
 						PopFollow();
 						if (state.failed) return retval;
@@ -2544,11 +2533,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				} finally { DebugExitSubRule(12); }
 
 				DebugLocation(132, 19);
-				END72=(IToken)Match(input,END,Follow._END_in_groupExpr1520); if (state.failed) return retval; 
+				END72=(IToken)Match(input,END,Follow._END_in_groupExpr1518); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_END.Add(END72);
 
 				DebugLocation(132, 23);
-				char_literal73=(IToken)Match(input,65,Follow._65_in_groupExpr1522); if (state.failed) return retval; 
+				char_literal73=(IToken)Match(input,65,Follow._65_in_groupExpr1520); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_65.Add(char_literal73);
 
 
@@ -2606,7 +2595,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(133, 2);
-				PushFollow(Follow._func_decl_in_groupExpr1534);
+				PushFollow(Follow._func_decl_in_groupExpr1532);
 				func_decl74=func_decl();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2621,7 +2610,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				root_0 = (object)adaptor.Nil();
 
 				DebugLocation(134, 2);
-				PushFollow(Follow._proc_decl_in_groupExpr1537);
+				PushFollow(Follow._proc_decl_in_groupExpr1535);
 				proc_decl75=proc_decl();
 				PopFollow();
 				if (state.failed) return retval;
@@ -2702,13 +2691,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(139, 7);
-			IDENT76=(IToken)Match(input,IDENT,Follow._IDENT_in_const_decl1547); if (state.failed) return retval;
+			IDENT76=(IToken)Match(input,IDENT,Follow._IDENT_in_const_decl1545); if (state.failed) return retval;
 			if ( state.backtracking == 0 ) {
 			IDENT76_tree = (object)adaptor.Create(IDENT76);
 			root_0 = (object)adaptor.BecomeRoot(IDENT76_tree, root_0);
 			}
 			DebugLocation(139, 15);
-			EQUALS77=(IToken)Match(input,EQUALS,Follow._EQUALS_in_const_decl1550); if (state.failed) return retval;
+			EQUALS77=(IToken)Match(input,EQUALS,Follow._EQUALS_in_const_decl1548); if (state.failed) return retval;
 			DebugLocation(139, 17);
 			set78=(IToken)input.LT(1);
 			if ((input.LA(1)>=NUMBER && input.LA(1)<=IDENT))
@@ -2749,7 +2738,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:139:33: ';'
 					{
 					DebugLocation(139, 36);
-					char_literal79=(IToken)Match(input,65,Follow._65_in_const_decl1560); if (state.failed) return retval;
+					char_literal79=(IToken)Match(input,65,Follow._65_in_const_decl1558); if (state.failed) return retval;
 
 					}
 					break;
@@ -2839,7 +2828,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(142, 7);
-			CONST_80=(IToken)Match(input,CONST_,Follow._CONST__in_const_1571); if (state.failed) return retval;
+			CONST_80=(IToken)Match(input,CONST_,Follow._CONST__in_const_1569); if (state.failed) return retval;
 			if ( state.backtracking == 0 ) {
 			CONST_80_tree = (object)adaptor.Create(CONST_80);
 			root_0 = (object)adaptor.BecomeRoot(CONST_80_tree, root_0);
@@ -2868,7 +2857,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:0:0: const_decl
 					{
 					DebugLocation(142, 9);
-					PushFollow(Follow._const_decl_in_const_1574);
+					PushFollow(Follow._const_decl_in_const_1572);
 					const_decl81=const_decl();
 					PopFollow();
 					if (state.failed) return retval;
@@ -3041,7 +3030,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:146:5: IDENT ( ',' IDENT )*
 						{
 						DebugLocation(146, 5);
-						IDENT82=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1587); if (state.failed) return retval; 
+						IDENT82=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1585); if (state.failed) return retval; 
 						if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT82);
 
 						DebugLocation(146, 11);
@@ -3067,11 +3056,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 								// MathLang.g:146:12: ',' IDENT
 								{
 								DebugLocation(146, 12);
-								char_literal83=(IToken)Match(input,66,Follow._66_in_type_decl1590); if (state.failed) return retval; 
+								char_literal83=(IToken)Match(input,66,Follow._66_in_type_decl1588); if (state.failed) return retval; 
 								if ( state.backtracking == 0 ) stream_66.Add(char_literal83);
 
 								DebugLocation(146, 16);
-								IDENT84=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1592); if (state.failed) return retval; 
+								IDENT84=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1590); if (state.failed) return retval; 
 								if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT84);
 
 
@@ -3112,11 +3101,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				}
 
 				DebugLocation(146, 26);
-				char_literal85=(IToken)Match(input,67,Follow._67_in_type_decl1598); if (state.failed) return retval; 
+				char_literal85=(IToken)Match(input,67,Follow._67_in_type_decl1596); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_67.Add(char_literal85);
 
 				DebugLocation(146, 30);
-				PushFollow(Follow._type_in_type_decl1600);
+				PushFollow(Follow._type_in_type_decl1598);
 				type86=type();
 				PopFollow();
 				if (state.failed) return retval;
@@ -3174,7 +3163,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:147:3: IDENT ( ',' IDENT )* ':' ARRAY '[' group '.' '.' group ']' OF type
 				{
 				DebugLocation(147, 3);
-				IDENT87=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1612); if (state.failed) return retval; 
+				IDENT87=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1610); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT87);
 
 				DebugLocation(147, 9);
@@ -3200,11 +3189,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:147:10: ',' IDENT
 						{
 						DebugLocation(147, 10);
-						char_literal88=(IToken)Match(input,66,Follow._66_in_type_decl1615); if (state.failed) return retval; 
+						char_literal88=(IToken)Match(input,66,Follow._66_in_type_decl1613); if (state.failed) return retval; 
 						if ( state.backtracking == 0 ) stream_66.Add(char_literal88);
 
 						DebugLocation(147, 14);
-						IDENT89=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1617); if (state.failed) return retval; 
+						IDENT89=(IToken)Match(input,IDENT,Follow._IDENT_in_type_decl1615); if (state.failed) return retval; 
 						if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT89);
 
 
@@ -3222,47 +3211,47 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				} finally { DebugExitSubRule(18); }
 
 				DebugLocation(147, 21);
-				char_literal90=(IToken)Match(input,67,Follow._67_in_type_decl1620); if (state.failed) return retval; 
+				char_literal90=(IToken)Match(input,67,Follow._67_in_type_decl1618); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_67.Add(char_literal90);
 
 				DebugLocation(147, 25);
-				ARRAY91=(IToken)Match(input,ARRAY,Follow._ARRAY_in_type_decl1622); if (state.failed) return retval; 
+				ARRAY91=(IToken)Match(input,ARRAY,Follow._ARRAY_in_type_decl1620); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_ARRAY.Add(ARRAY91);
 
 				DebugLocation(147, 31);
-				char_literal92=(IToken)Match(input,63,Follow._63_in_type_decl1624); if (state.failed) return retval; 
+				char_literal92=(IToken)Match(input,63,Follow._63_in_type_decl1622); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_63.Add(char_literal92);
 
 				DebugLocation(147, 35);
-				PushFollow(Follow._group_in_type_decl1626);
+				PushFollow(Follow._group_in_type_decl1624);
 				group93=group();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_group.Add(group93.Tree);
 				DebugLocation(147, 41);
-				char_literal94=(IToken)Match(input,68,Follow._68_in_type_decl1628); if (state.failed) return retval; 
+				char_literal94=(IToken)Match(input,68,Follow._68_in_type_decl1626); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_68.Add(char_literal94);
 
 				DebugLocation(147, 44);
-				char_literal95=(IToken)Match(input,68,Follow._68_in_type_decl1629); if (state.failed) return retval; 
+				char_literal95=(IToken)Match(input,68,Follow._68_in_type_decl1627); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_68.Add(char_literal95);
 
 				DebugLocation(147, 47);
-				PushFollow(Follow._group_in_type_decl1630);
+				PushFollow(Follow._group_in_type_decl1628);
 				group96=group();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_group.Add(group96.Tree);
 				DebugLocation(147, 53);
-				char_literal97=(IToken)Match(input,64,Follow._64_in_type_decl1632); if (state.failed) return retval; 
+				char_literal97=(IToken)Match(input,64,Follow._64_in_type_decl1630); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_64.Add(char_literal97);
 
 				DebugLocation(147, 57);
-				OF98=(IToken)Match(input,OF,Follow._OF_in_type_decl1634); if (state.failed) return retval; 
+				OF98=(IToken)Match(input,OF,Follow._OF_in_type_decl1632); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_OF.Add(OF98);
 
 				DebugLocation(147, 60);
-				PushFollow(Follow._type_in_type_decl1636);
+				PushFollow(Follow._type_in_type_decl1634);
 				type99=type();
 				PopFollow();
 				if (state.failed) return retval;
@@ -3271,7 +3260,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: type, IDENT, group, ARRAY
+				// elements: IDENT, type, ARRAY, group
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -3407,7 +3396,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(151, 5);
-			VAR100=(IToken)Match(input,VAR,Follow._VAR_in_vars1661); if (state.failed) return retval;
+			VAR100=(IToken)Match(input,VAR,Follow._VAR_in_vars1659); if (state.failed) return retval;
 			if ( state.backtracking == 0 ) {
 			VAR100_tree = (object)adaptor.Create(VAR100);
 			root_0 = (object)adaptor.BecomeRoot(VAR100_tree, root_0);
@@ -3436,13 +3425,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:151:8: type_decl ';'
 					{
 					DebugLocation(151, 8);
-					PushFollow(Follow._type_decl_in_vars1665);
+					PushFollow(Follow._type_decl_in_vars1663);
 					type_decl101=type_decl();
 					PopFollow();
 					if (state.failed) return retval;
 					if ( state.backtracking == 0 ) adaptor.AddChild(root_0, type_decl101.Tree);
 					DebugLocation(151, 21);
-					char_literal102=(IToken)Match(input,65,Follow._65_in_vars1667); if (state.failed) return retval;
+					char_literal102=(IToken)Match(input,65,Follow._65_in_vars1665); if (state.failed) return retval;
 
 					}
 					break;
@@ -3530,7 +3519,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(154, 8);
-			PushFollow(Follow._term_in_param1678);
+			PushFollow(Follow._term_in_param1676);
 			term103=term();
 			PopFollow();
 			if (state.failed) return retval;
@@ -3622,7 +3611,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:158:2: param ( ',' param )*
 				{
 				DebugLocation(158, 2);
-				PushFollow(Follow._param_in_params_1687);
+				PushFollow(Follow._param_in_params_1685);
 				param104=param();
 				PopFollow();
 				if (state.failed) return retval;
@@ -3650,11 +3639,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:158:8: ',' param
 						{
 						DebugLocation(158, 8);
-						char_literal105=(IToken)Match(input,66,Follow._66_in_params_1689); if (state.failed) return retval; 
+						char_literal105=(IToken)Match(input,66,Follow._66_in_params_1687); if (state.failed) return retval; 
 						if ( state.backtracking == 0 ) stream_66.Add(char_literal105);
 
 						DebugLocation(158, 12);
-						PushFollow(Follow._param_in_params_1691);
+						PushFollow(Follow._param_in_params_1689);
 						param106=param();
 						PopFollow();
 						if (state.failed) return retval;
@@ -3821,15 +3810,15 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:162:2: FUNC IDENT '(' (t1= type_decl ( ';' type_decl )* )* ( ';' VAR (t2= type_decl )* )* ')' ':' type ';'
 			{
 			DebugLocation(162, 2);
-			FUNC107=(IToken)Match(input,FUNC,Follow._FUNC_in_func_sign1713); if (state.failed) return retval; 
+			FUNC107=(IToken)Match(input,FUNC,Follow._FUNC_in_func_sign1711); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_FUNC.Add(FUNC107);
 
 			DebugLocation(162, 7);
-			IDENT108=(IToken)Match(input,IDENT,Follow._IDENT_in_func_sign1715); if (state.failed) return retval; 
+			IDENT108=(IToken)Match(input,IDENT,Follow._IDENT_in_func_sign1713); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT108);
 
 			DebugLocation(162, 13);
-			char_literal109=(IToken)Match(input,61,Follow._61_in_func_sign1717); if (state.failed) return retval; 
+			char_literal109=(IToken)Match(input,61,Follow._61_in_func_sign1715); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_61.Add(char_literal109);
 
 			DebugLocation(162, 16);
@@ -3855,7 +3844,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:162:18: t1= type_decl ( ';' type_decl )*
 					{
 					DebugLocation(162, 21);
-					PushFollow(Follow._type_decl_in_func_sign1723);
+					PushFollow(Follow._type_decl_in_func_sign1721);
 					t1=type_decl();
 					PopFollow();
 					if (state.failed) return retval;
@@ -3890,11 +3879,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 							// MathLang.g:162:33: ';' type_decl
 							{
 							DebugLocation(162, 33);
-							char_literal110=(IToken)Match(input,65,Follow._65_in_func_sign1726); if (state.failed) return retval; 
+							char_literal110=(IToken)Match(input,65,Follow._65_in_func_sign1724); if (state.failed) return retval; 
 							if ( state.backtracking == 0 ) stream_65.Add(char_literal110);
 
 							DebugLocation(162, 37);
-							PushFollow(Follow._type_decl_in_func_sign1728);
+							PushFollow(Follow._type_decl_in_func_sign1726);
 							type_decl111=type_decl();
 							PopFollow();
 							if (state.failed) return retval;
@@ -3950,11 +3939,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:162:51: ';' VAR (t2= type_decl )*
 					{
 					DebugLocation(162, 51);
-					char_literal112=(IToken)Match(input,65,Follow._65_in_func_sign1734); if (state.failed) return retval; 
+					char_literal112=(IToken)Match(input,65,Follow._65_in_func_sign1732); if (state.failed) return retval; 
 					if ( state.backtracking == 0 ) stream_65.Add(char_literal112);
 
 					DebugLocation(162, 55);
-					VAR113=(IToken)Match(input,VAR,Follow._VAR_in_func_sign1736); if (state.failed) return retval; 
+					VAR113=(IToken)Match(input,VAR,Follow._VAR_in_func_sign1734); if (state.failed) return retval; 
 					if ( state.backtracking == 0 ) stream_VAR.Add(VAR113);
 
 					DebugLocation(162, 61);
@@ -3980,7 +3969,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 							// MathLang.g:0:0: t2= type_decl
 							{
 							DebugLocation(162, 61);
-							PushFollow(Follow._type_decl_in_func_sign1740);
+							PushFollow(Follow._type_decl_in_func_sign1738);
 							t2=type_decl();
 							PopFollow();
 							if (state.failed) return retval;
@@ -4014,21 +4003,21 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(26); }
 
 			DebugLocation(162, 74);
-			char_literal114=(IToken)Match(input,62,Follow._62_in_func_sign1744); if (state.failed) return retval; 
+			char_literal114=(IToken)Match(input,62,Follow._62_in_func_sign1742); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_62.Add(char_literal114);
 
 			DebugLocation(162, 78);
-			char_literal115=(IToken)Match(input,67,Follow._67_in_func_sign1746); if (state.failed) return retval; 
+			char_literal115=(IToken)Match(input,67,Follow._67_in_func_sign1744); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_67.Add(char_literal115);
 
 			DebugLocation(162, 82);
-			PushFollow(Follow._type_in_func_sign1748);
+			PushFollow(Follow._type_in_func_sign1746);
 			type116=type();
 			PopFollow();
 			if (state.failed) return retval;
 			if ( state.backtracking == 0 ) stream_type.Add(type116.Tree);
 			DebugLocation(162, 87);
-			char_literal117=(IToken)Match(input,65,Follow._65_in_func_sign1750); if (state.failed) return retval; 
+			char_literal117=(IToken)Match(input,65,Follow._65_in_func_sign1748); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_65.Add(char_literal117);
 
 
@@ -4038,7 +4027,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: type, FUNC, VAR, t1, t2, IDENT
+			// elements: t1, IDENT, type, FUNC, t2, VAR
 			// token labels: 
 			// rule labels: t2, retval, t1
 			// token list labels: 
@@ -4082,7 +4071,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				stream_t1.Reset();
 				DebugLocation(162, 126);
 				// MathLang.g:162:126: ( ^( VAR $t2) )*
-				while ( stream_VAR.HasNext||stream_t2.HasNext )
+				while ( stream_t2.HasNext||stream_VAR.HasNext )
 				{
 					DebugLocation(162, 126);
 					// MathLang.g:162:126: ^( VAR $t2)
@@ -4098,8 +4087,8 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					}
 
 				}
-				stream_VAR.Reset();
 				stream_t2.Reset();
+				stream_VAR.Reset();
 
 				adaptor.AddChild(root_1, root_2);
 				}
@@ -4206,15 +4195,15 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:166:2: PROC IDENT '(' ( (t1= type_decl ( ';' type_decl )* ';' )* VAR (t2= type_decl )* )* ')' ';'
 			{
 			DebugLocation(166, 2);
-			PROC118=(IToken)Match(input,PROC,Follow._PROC_in_proc_sign1785); if (state.failed) return retval; 
+			PROC118=(IToken)Match(input,PROC,Follow._PROC_in_proc_sign1783); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_PROC.Add(PROC118);
 
 			DebugLocation(166, 7);
-			IDENT119=(IToken)Match(input,IDENT,Follow._IDENT_in_proc_sign1787); if (state.failed) return retval; 
+			IDENT119=(IToken)Match(input,IDENT,Follow._IDENT_in_proc_sign1785); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT119);
 
 			DebugLocation(166, 13);
-			char_literal120=(IToken)Match(input,61,Follow._61_in_proc_sign1789); if (state.failed) return retval; 
+			char_literal120=(IToken)Match(input,61,Follow._61_in_proc_sign1787); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_61.Add(char_literal120);
 
 			DebugLocation(166, 16);
@@ -4262,7 +4251,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 							// MathLang.g:166:19: t1= type_decl ( ';' type_decl )* ';'
 							{
 							DebugLocation(166, 21);
-							PushFollow(Follow._type_decl_in_proc_sign1795);
+							PushFollow(Follow._type_decl_in_proc_sign1793);
 							t1=type_decl();
 							PopFollow();
 							if (state.failed) return retval;
@@ -4280,7 +4269,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 								{
 									int LA27_1 = input.LA(2);
 
-									if ((EvaluatePredicate(synpred52_MathLang_fragment)))
+									if ((EvaluatePredicate(synpred51_MathLang_fragment)))
 									{
 										alt27=1;
 									}
@@ -4297,11 +4286,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 									// MathLang.g:166:33: ';' type_decl
 									{
 									DebugLocation(166, 33);
-									char_literal121=(IToken)Match(input,65,Follow._65_in_proc_sign1798); if (state.failed) return retval; 
+									char_literal121=(IToken)Match(input,65,Follow._65_in_proc_sign1796); if (state.failed) return retval; 
 									if ( state.backtracking == 0 ) stream_65.Add(char_literal121);
 
 									DebugLocation(166, 37);
-									PushFollow(Follow._type_decl_in_proc_sign1800);
+									PushFollow(Follow._type_decl_in_proc_sign1798);
 									type_decl122=type_decl();
 									PopFollow();
 									if (state.failed) return retval;
@@ -4321,7 +4310,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 							} finally { DebugExitSubRule(27); }
 
 							DebugLocation(166, 49);
-							char_literal123=(IToken)Match(input,65,Follow._65_in_proc_sign1804); if (state.failed) return retval; 
+							char_literal123=(IToken)Match(input,65,Follow._65_in_proc_sign1802); if (state.failed) return retval; 
 							if ( state.backtracking == 0 ) stream_65.Add(char_literal123);
 
 
@@ -4339,7 +4328,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					} finally { DebugExitSubRule(28); }
 
 					DebugLocation(166, 55);
-					VAR124=(IToken)Match(input,VAR,Follow._VAR_in_proc_sign1808); if (state.failed) return retval; 
+					VAR124=(IToken)Match(input,VAR,Follow._VAR_in_proc_sign1806); if (state.failed) return retval; 
 					if ( state.backtracking == 0 ) stream_VAR.Add(VAR124);
 
 					DebugLocation(166, 61);
@@ -4355,7 +4344,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						{
 							int LA29_2 = input.LA(2);
 
-							if ((EvaluatePredicate(synpred54_MathLang_fragment)))
+							if ((EvaluatePredicate(synpred53_MathLang_fragment)))
 							{
 								alt29=1;
 							}
@@ -4372,7 +4361,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 							// MathLang.g:0:0: t2= type_decl
 							{
 							DebugLocation(166, 61);
-							PushFollow(Follow._type_decl_in_proc_sign1812);
+							PushFollow(Follow._type_decl_in_proc_sign1810);
 							t2=type_decl();
 							PopFollow();
 							if (state.failed) return retval;
@@ -4406,11 +4395,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(30); }
 
 			DebugLocation(166, 74);
-			char_literal125=(IToken)Match(input,62,Follow._62_in_proc_sign1816); if (state.failed) return retval; 
+			char_literal125=(IToken)Match(input,62,Follow._62_in_proc_sign1814); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_62.Add(char_literal125);
 
 			DebugLocation(166, 78);
-			char_literal126=(IToken)Match(input,65,Follow._65_in_proc_sign1818); if (state.failed) return retval; 
+			char_literal126=(IToken)Match(input,65,Follow._65_in_proc_sign1816); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_65.Add(char_literal126);
 
 
@@ -4420,7 +4409,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: VAR, t2, IDENT, PROC, t1
+			// elements: VAR, t1, t2, IDENT, PROC
 			// token labels: 
 			// rule labels: t2, retval, t1
 			// token list labels: 
@@ -4566,13 +4555,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(170, 10);
-			PushFollow(Follow._func_sign_in_func_decl1852);
+			PushFollow(Follow._func_sign_in_func_decl1850);
 			func_sign127=func_sign();
 			PopFollow();
 			if (state.failed) return retval;
 			if ( state.backtracking == 0 ) root_0 = (object)adaptor.BecomeRoot(func_sign127.Tree, root_0);
 			DebugLocation(170, 15);
-			char_literal128=(IToken)Match(input,65,Follow._65_in_func_decl1855); if (state.failed) return retval;
+			char_literal128=(IToken)Match(input,65,Follow._65_in_func_decl1853); if (state.failed) return retval;
 			DebugLocation(170, 17);
 			// MathLang.g:170:17: ( const_ )*
 			try { DebugEnterSubRule(31);
@@ -4596,7 +4585,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:0:0: const_
 					{
 					DebugLocation(170, 17);
-					PushFollow(Follow._const__in_func_decl1858);
+					PushFollow(Follow._const__in_func_decl1856);
 					const_129=const_();
 					PopFollow();
 					if (state.failed) return retval;
@@ -4638,7 +4627,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:0:0: vars
 					{
 					DebugLocation(170, 25);
-					PushFollow(Follow._vars_in_func_decl1861);
+					PushFollow(Follow._vars_in_func_decl1859);
 					vars130=vars();
 					PopFollow();
 					if (state.failed) return retval;
@@ -4658,13 +4647,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(32); }
 
 			DebugLocation(170, 31);
-			PushFollow(Follow._groupExpr_in_func_decl1864);
+			PushFollow(Follow._groupExpr_in_func_decl1862);
 			groupExpr131=groupExpr();
 			PopFollow();
 			if (state.failed) return retval;
 			if ( state.backtracking == 0 ) adaptor.AddChild(root_0, groupExpr131.Tree);
 			DebugLocation(170, 44);
-			char_literal132=(IToken)Match(input,65,Follow._65_in_func_decl1866); if (state.failed) return retval;
+			char_literal132=(IToken)Match(input,65,Follow._65_in_func_decl1864); if (state.failed) return retval;
 
 			}
 
@@ -4739,13 +4728,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(174, 10);
-			PushFollow(Follow._proc_sign_in_proc_decl1875);
+			PushFollow(Follow._proc_sign_in_proc_decl1873);
 			proc_sign133=proc_sign();
 			PopFollow();
 			if (state.failed) return retval;
 			if ( state.backtracking == 0 ) root_0 = (object)adaptor.BecomeRoot(proc_sign133.Tree, root_0);
 			DebugLocation(174, 15);
-			char_literal134=(IToken)Match(input,65,Follow._65_in_proc_decl1878); if (state.failed) return retval;
+			char_literal134=(IToken)Match(input,65,Follow._65_in_proc_decl1876); if (state.failed) return retval;
 			DebugLocation(174, 17);
 			// MathLang.g:174:17: ( const_ )*
 			try { DebugEnterSubRule(33);
@@ -4769,7 +4758,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:0:0: const_
 					{
 					DebugLocation(174, 17);
-					PushFollow(Follow._const__in_proc_decl1881);
+					PushFollow(Follow._const__in_proc_decl1879);
 					const_135=const_();
 					PopFollow();
 					if (state.failed) return retval;
@@ -4811,7 +4800,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:0:0: vars
 					{
 					DebugLocation(174, 25);
-					PushFollow(Follow._vars_in_proc_decl1884);
+					PushFollow(Follow._vars_in_proc_decl1882);
 					vars136=vars();
 					PopFollow();
 					if (state.failed) return retval;
@@ -4831,13 +4820,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(34); }
 
 			DebugLocation(174, 31);
-			PushFollow(Follow._groupExpr_in_proc_decl1887);
+			PushFollow(Follow._groupExpr_in_proc_decl1885);
 			groupExpr137=groupExpr();
 			PopFollow();
 			if (state.failed) return retval;
 			if ( state.backtracking == 0 ) adaptor.AddChild(root_0, groupExpr137.Tree);
 			DebugLocation(174, 44);
-			char_literal138=(IToken)Match(input,65,Follow._65_in_proc_decl1889); if (state.failed) return retval;
+			char_literal138=(IToken)Match(input,65,Follow._65_in_proc_decl1887); if (state.failed) return retval;
 
 			}
 
@@ -4961,28 +4950,28 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:178:1: IDENT '(' params_ ')'
 				{
 				DebugLocation(178, 1);
-				IDENT139=(IToken)Match(input,IDENT,Follow._IDENT_in_call1898); if (state.failed) return retval; 
+				IDENT139=(IToken)Match(input,IDENT,Follow._IDENT_in_call1896); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IDENT.Add(IDENT139);
 
 				DebugLocation(178, 7);
-				char_literal140=(IToken)Match(input,61,Follow._61_in_call1900); if (state.failed) return retval; 
+				char_literal140=(IToken)Match(input,61,Follow._61_in_call1898); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_61.Add(char_literal140);
 
 				DebugLocation(178, 11);
-				PushFollow(Follow._params__in_call1902);
+				PushFollow(Follow._params__in_call1900);
 				params_141=params_();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_params_.Add(params_141.Tree);
 				DebugLocation(178, 19);
-				char_literal142=(IToken)Match(input,62,Follow._62_in_call1904); if (state.failed) return retval; 
+				char_literal142=(IToken)Match(input,62,Follow._62_in_call1902); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_62.Add(char_literal142);
 
 
 
 				{
 				// AST REWRITE
-				// elements: params_, IDENT
+				// elements: IDENT, params_
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -5028,29 +5017,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:179:4: i1= IDENT ASSIGN i2= IDENT '(' params_ ')'
 				{
 				DebugLocation(179, 6);
-				i1=(IToken)Match(input,IDENT,Follow._IDENT_in_call1921); if (state.failed) return retval; 
+				i1=(IToken)Match(input,IDENT,Follow._IDENT_in_call1919); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IDENT.Add(i1);
 
 				DebugLocation(179, 13);
-				ASSIGN143=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_call1923); if (state.failed) return retval; 
+				ASSIGN143=(IToken)Match(input,ASSIGN,Follow._ASSIGN_in_call1921); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_ASSIGN.Add(ASSIGN143);
 
 				DebugLocation(179, 22);
-				i2=(IToken)Match(input,IDENT,Follow._IDENT_in_call1927); if (state.failed) return retval; 
+				i2=(IToken)Match(input,IDENT,Follow._IDENT_in_call1925); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_IDENT.Add(i2);
 
 				DebugLocation(179, 29);
-				char_literal144=(IToken)Match(input,61,Follow._61_in_call1929); if (state.failed) return retval; 
+				char_literal144=(IToken)Match(input,61,Follow._61_in_call1927); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_61.Add(char_literal144);
 
 				DebugLocation(179, 33);
-				PushFollow(Follow._params__in_call1931);
+				PushFollow(Follow._params__in_call1929);
 				params_145=params_();
 				PopFollow();
 				if (state.failed) return retval;
 				if ( state.backtracking == 0 ) stream_params_.Add(params_145.Tree);
 				DebugLocation(179, 41);
-				char_literal146=(IToken)Match(input,62,Follow._62_in_call1933); if (state.failed) return retval; 
+				char_literal146=(IToken)Match(input,62,Follow._62_in_call1931); if (state.failed) return retval; 
 				if ( state.backtracking == 0 ) stream_62.Add(char_literal146);
 
 
@@ -5060,7 +5049,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: i1, params_, i2, ASSIGN
+				// elements: params_, i1, ASSIGN, i2
 				// token labels: i2, i1
 				// rule labels: retval
 				// token list labels: 
@@ -5211,7 +5200,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:183:4: simpleExpr ( ';' )+
 				{
 				DebugLocation(183, 4);
-				PushFollow(Follow._simpleExpr_in_exprList1963);
+				PushFollow(Follow._simpleExpr_in_exprList1961);
 				simpleExpr147=simpleExpr();
 				PopFollow();
 				if (state.failed) return retval;
@@ -5230,7 +5219,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 						int LA36_2 = input.LA(2);
 
-						if ((EvaluatePredicate(synpred61_MathLang_fragment)))
+						if ((EvaluatePredicate(synpred60_MathLang_fragment)))
 						{
 							alt36=1;
 						}
@@ -5247,7 +5236,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:183:16: ';'
 						{
 						DebugLocation(183, 19);
-						char_literal148=(IToken)Match(input,65,Follow._65_in_exprList1966); if (state.failed) return retval;
+						char_literal148=(IToken)Match(input,65,Follow._65_in_exprList1964); if (state.failed) return retval;
 
 						}
 						break;
@@ -5276,7 +5265,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				// MathLang.g:184:3: groupExpr ( ';' )*
 				{
 				DebugLocation(184, 3);
-				PushFollow(Follow._groupExpr_in_exprList1974);
+				PushFollow(Follow._groupExpr_in_exprList1972);
 				groupExpr149=groupExpr();
 				PopFollow();
 				if (state.failed) return retval;
@@ -5294,7 +5283,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 						int LA37_2 = input.LA(2);
 
-						if ((EvaluatePredicate(synpred63_MathLang_fragment)))
+						if ((EvaluatePredicate(synpred62_MathLang_fragment)))
 						{
 							alt37=1;
 						}
@@ -5311,7 +5300,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:184:14: ';'
 						{
 						DebugLocation(184, 17);
-						char_literal150=(IToken)Match(input,65,Follow._65_in_exprList1977); if (state.failed) return retval;
+						char_literal150=(IToken)Match(input,65,Follow._65_in_exprList1975); if (state.failed) return retval;
 
 						}
 						break;
@@ -5406,7 +5395,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(189, 6);
-			BEGIN151=(IToken)Match(input,BEGIN,Follow._BEGIN_in_main_1990); if (state.failed) return retval;
+			BEGIN151=(IToken)Match(input,BEGIN,Follow._BEGIN_in_main_1988); if (state.failed) return retval;
 			if ( state.backtracking == 0 ) {
 			BEGIN151_tree = (object)adaptor.Create(BEGIN151);
 			root_0 = (object)adaptor.BecomeRoot(BEGIN151_tree, root_0);
@@ -5434,7 +5423,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					// MathLang.g:0:0: exprList
 					{
 					DebugLocation(189, 8);
-					PushFollow(Follow._exprList_in_main_1993);
+					PushFollow(Follow._exprList_in_main_1991);
 					exprList152=exprList();
 					PopFollow();
 					if (state.failed) return retval;
@@ -5454,9 +5443,9 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			} finally { DebugExitSubRule(39); }
 
 			DebugLocation(189, 21);
-			END153=(IToken)Match(input,END,Follow._END_in_main_1996); if (state.failed) return retval;
+			END153=(IToken)Match(input,END,Follow._END_in_main_1994); if (state.failed) return retval;
 			DebugLocation(189, 26);
-			char_literal154=(IToken)Match(input,68,Follow._68_in_main_1999); if (state.failed) return retval;
+			char_literal154=(IToken)Match(input,68,Follow._68_in_main_1997); if (state.failed) return retval;
 
 			}
 
@@ -5582,7 +5571,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: func_decl
 						{
 						DebugLocation(192, 12);
-						PushFollow(Follow._func_decl_in_program2010);
+						PushFollow(Follow._func_decl_in_program2008);
 						func_decl155=func_decl();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5624,7 +5613,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: proc_decl
 						{
 						DebugLocation(192, 23);
-						PushFollow(Follow._proc_decl_in_program2013);
+						PushFollow(Follow._proc_decl_in_program2011);
 						proc_decl156=proc_decl();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5683,7 +5672,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: const_
 						{
 						DebugLocation(193, 3);
-						PushFollow(Follow._const__in_program2019);
+						PushFollow(Follow._const__in_program2017);
 						const_157=const_();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5716,7 +5705,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					{
 						int LA43_3 = input.LA(2);
 
-						if ((EvaluatePredicate(synpred69_MathLang_fragment)))
+						if ((EvaluatePredicate(synpred68_MathLang_fragment)))
 						{
 							alt43=1;
 						}
@@ -5733,7 +5722,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: vars
 						{
 						DebugLocation(193, 11);
-						PushFollow(Follow._vars_in_program2022);
+						PushFollow(Follow._vars_in_program2020);
 						vars158=vars();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5785,7 +5774,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:193:19: func_decl
 						{
 						DebugLocation(193, 19);
-						PushFollow(Follow._func_decl_in_program2027);
+						PushFollow(Follow._func_decl_in_program2025);
 						func_decl159=func_decl();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5798,7 +5787,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:193:29: proc_decl
 						{
 						DebugLocation(193, 29);
-						PushFollow(Follow._proc_decl_in_program2029);
+						PushFollow(Follow._proc_decl_in_program2027);
 						proc_decl160=proc_decl();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5840,7 +5829,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						// MathLang.g:0:0: vars
 						{
 						DebugLocation(193, 41);
-						PushFollow(Follow._vars_in_program2033);
+						PushFollow(Follow._vars_in_program2031);
 						vars161=vars();
 						PopFollow();
 						if (state.failed) return retval;
@@ -5860,7 +5849,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				} finally { DebugExitSubRule(45); }
 
 				DebugLocation(193, 47);
-				PushFollow(Follow._main__in_program2036);
+				PushFollow(Follow._main__in_program2034);
 				main_162=main_();
 				PopFollow();
 				if (state.failed) return retval;
@@ -5938,13 +5927,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:196:9: program EOF
 			{
 			DebugLocation(196, 9);
-			PushFollow(Follow._program_in_result2045);
+			PushFollow(Follow._program_in_result2043);
 			program163=program();
 			PopFollow();
 			if (state.failed) return retval;
 			if ( state.backtracking == 0 ) stream_program.Add(program163.Tree);
 			DebugLocation(196, 17);
-			EOF164=(IToken)Match(input,EOF,Follow._EOF_in_result2047); if (state.failed) return retval; 
+			EOF164=(IToken)Match(input,EOF,Follow._EOF_in_result2045); if (state.failed) return retval; 
 			if ( state.backtracking == 0 ) stream_EOF.Add(EOF164);
 
 
@@ -6049,7 +6038,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			root_0 = (object)adaptor.Nil();
 
 			DebugLocation(199, 3);
-			PushFollow(Follow._result_in_execute2066);
+			PushFollow(Follow._result_in_execute2064);
 			result165=result();
 			PopFollow();
 			if (state.failed) return retval;
@@ -6085,18 +6074,18 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	}
 	// $ANTLR end "execute"
 
-	partial void Enter_synpred28_MathLang_fragment();
-	partial void Leave_synpred28_MathLang_fragment();
+	partial void Enter_synpred27_MathLang_fragment();
+	partial void Leave_synpred27_MathLang_fragment();
 
-	// $ANTLR start synpred28_MathLang
-	public void synpred28_MathLang_fragment()
+	// $ANTLR start synpred27_MathLang
+	public void synpred27_MathLang_fragment()
 	{
 		MathLangParser.term_return t2 = default(MathLangParser.term_return);
 		MathLangParser.exprList_return lst2 = default(MathLangParser.exprList_return);
 
-		Enter_synpred28_MathLang_fragment();
-		EnterRule("synpred28_MathLang_fragment", 57);
-		TraceIn("synpred28_MathLang_fragment", 57);
+		Enter_synpred27_MathLang_fragment();
+		EnterRule("synpred27_MathLang_fragment", 56);
+		TraceIn("synpred27_MathLang_fragment", 56);
 		try
 		{
 			// MathLang.g:128:42: ( ELSIF t2= term THEN lst2= exprList )
@@ -6104,17 +6093,54 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:128:42: ELSIF t2= term THEN lst2= exprList
 			{
 			DebugLocation(128, 42);
-			Match(input,ELSIF,Follow._ELSIF_in_synpred28_MathLang1379); if (state.failed) return;
+			Match(input,ELSIF,Follow._ELSIF_in_synpred27_MathLang1377); if (state.failed) return;
 			DebugLocation(128, 50);
-			PushFollow(Follow._term_in_synpred28_MathLang1383);
+			PushFollow(Follow._term_in_synpred27_MathLang1381);
 			t2=term();
 			PopFollow();
 			if (state.failed) return;
 			DebugLocation(128, 56);
-			Match(input,THEN,Follow._THEN_in_synpred28_MathLang1385); if (state.failed) return;
+			Match(input,THEN,Follow._THEN_in_synpred27_MathLang1383); if (state.failed) return;
 			DebugLocation(128, 65);
-			PushFollow(Follow._exprList_in_synpred28_MathLang1389);
+			PushFollow(Follow._exprList_in_synpred27_MathLang1387);
 			lst2=exprList();
+			PopFollow();
+			if (state.failed) return;
+
+			}
+
+		}
+		finally
+		{
+			TraceOut("synpred27_MathLang_fragment", 56);
+			LeaveRule("synpred27_MathLang_fragment", 56);
+			Leave_synpred27_MathLang_fragment();
+		}
+	}
+	// $ANTLR end synpred27_MathLang
+
+	partial void Enter_synpred28_MathLang_fragment();
+	partial void Leave_synpred28_MathLang_fragment();
+
+	// $ANTLR start synpred28_MathLang
+	public void synpred28_MathLang_fragment()
+	{
+		MathLangParser.exprList_return lst3 = default(MathLangParser.exprList_return);
+
+		Enter_synpred28_MathLang_fragment();
+		EnterRule("synpred28_MathLang_fragment", 57);
+		TraceIn("synpred28_MathLang_fragment", 57);
+		try
+		{
+			// MathLang.g:128:78: ( ELSE lst3= exprList )
+			DebugEnterAlt(1);
+			// MathLang.g:128:78: ELSE lst3= exprList
+			{
+			DebugLocation(128, 78);
+			Match(input,ELSE,Follow._ELSE_in_synpred28_MathLang1392); if (state.failed) return;
+			DebugLocation(128, 87);
+			PushFollow(Follow._exprList_in_synpred28_MathLang1396);
+			lst3=exprList();
 			PopFollow();
 			if (state.failed) return;
 
@@ -6130,52 +6156,15 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	}
 	// $ANTLR end synpred28_MathLang
 
-	partial void Enter_synpred29_MathLang_fragment();
-	partial void Leave_synpred29_MathLang_fragment();
+	partial void Enter_synpred51_MathLang_fragment();
+	partial void Leave_synpred51_MathLang_fragment();
 
-	// $ANTLR start synpred29_MathLang
-	public void synpred29_MathLang_fragment()
+	// $ANTLR start synpred51_MathLang
+	public void synpred51_MathLang_fragment()
 	{
-		MathLangParser.exprList_return lst3 = default(MathLangParser.exprList_return);
-
-		Enter_synpred29_MathLang_fragment();
-		EnterRule("synpred29_MathLang_fragment", 58);
-		TraceIn("synpred29_MathLang_fragment", 58);
-		try
-		{
-			// MathLang.g:128:78: ( ELSE lst3= exprList )
-			DebugEnterAlt(1);
-			// MathLang.g:128:78: ELSE lst3= exprList
-			{
-			DebugLocation(128, 78);
-			Match(input,ELSE,Follow._ELSE_in_synpred29_MathLang1394); if (state.failed) return;
-			DebugLocation(128, 87);
-			PushFollow(Follow._exprList_in_synpred29_MathLang1398);
-			lst3=exprList();
-			PopFollow();
-			if (state.failed) return;
-
-			}
-
-		}
-		finally
-		{
-			TraceOut("synpred29_MathLang_fragment", 58);
-			LeaveRule("synpred29_MathLang_fragment", 58);
-			Leave_synpred29_MathLang_fragment();
-		}
-	}
-	// $ANTLR end synpred29_MathLang
-
-	partial void Enter_synpred52_MathLang_fragment();
-	partial void Leave_synpred52_MathLang_fragment();
-
-	// $ANTLR start synpred52_MathLang
-	public void synpred52_MathLang_fragment()
-	{
-		Enter_synpred52_MathLang_fragment();
-		EnterRule("synpred52_MathLang_fragment", 81);
-		TraceIn("synpred52_MathLang_fragment", 81);
+		Enter_synpred51_MathLang_fragment();
+		EnterRule("synpred51_MathLang_fragment", 80);
+		TraceIn("synpred51_MathLang_fragment", 80);
 		try
 		{
 			// MathLang.g:166:33: ( ';' type_decl )
@@ -6183,9 +6172,9 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:166:33: ';' type_decl
 			{
 			DebugLocation(166, 33);
-			Match(input,65,Follow._65_in_synpred52_MathLang1798); if (state.failed) return;
+			Match(input,65,Follow._65_in_synpred51_MathLang1796); if (state.failed) return;
 			DebugLocation(166, 37);
-			PushFollow(Follow._type_decl_in_synpred52_MathLang1800);
+			PushFollow(Follow._type_decl_in_synpred51_MathLang1798);
 			type_decl();
 			PopFollow();
 			if (state.failed) return;
@@ -6195,24 +6184,24 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("synpred52_MathLang_fragment", 81);
-			LeaveRule("synpred52_MathLang_fragment", 81);
-			Leave_synpred52_MathLang_fragment();
+			TraceOut("synpred51_MathLang_fragment", 80);
+			LeaveRule("synpred51_MathLang_fragment", 80);
+			Leave_synpred51_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred52_MathLang
+	// $ANTLR end synpred51_MathLang
 
-	partial void Enter_synpred54_MathLang_fragment();
-	partial void Leave_synpred54_MathLang_fragment();
+	partial void Enter_synpred53_MathLang_fragment();
+	partial void Leave_synpred53_MathLang_fragment();
 
-	// $ANTLR start synpred54_MathLang
-	public void synpred54_MathLang_fragment()
+	// $ANTLR start synpred53_MathLang
+	public void synpred53_MathLang_fragment()
 	{
 		MathLangParser.type_decl_return t2 = default(MathLangParser.type_decl_return);
 
-		Enter_synpred54_MathLang_fragment();
-		EnterRule("synpred54_MathLang_fragment", 83);
-		TraceIn("synpred54_MathLang_fragment", 83);
+		Enter_synpred53_MathLang_fragment();
+		EnterRule("synpred53_MathLang_fragment", 82);
+		TraceIn("synpred53_MathLang_fragment", 82);
 		try
 		{
 			// MathLang.g:166:61: (t2= type_decl )
@@ -6220,7 +6209,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:166:61: t2= type_decl
 			{
 			DebugLocation(166, 61);
-			PushFollow(Follow._type_decl_in_synpred54_MathLang1812);
+			PushFollow(Follow._type_decl_in_synpred53_MathLang1810);
 			t2=type_decl();
 			PopFollow();
 			if (state.failed) return;
@@ -6230,22 +6219,22 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("synpred54_MathLang_fragment", 83);
-			LeaveRule("synpred54_MathLang_fragment", 83);
-			Leave_synpred54_MathLang_fragment();
+			TraceOut("synpred53_MathLang_fragment", 82);
+			LeaveRule("synpred53_MathLang_fragment", 82);
+			Leave_synpred53_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred54_MathLang
+	// $ANTLR end synpred53_MathLang
 
-	partial void Enter_synpred61_MathLang_fragment();
-	partial void Leave_synpred61_MathLang_fragment();
+	partial void Enter_synpred60_MathLang_fragment();
+	partial void Leave_synpred60_MathLang_fragment();
 
-	// $ANTLR start synpred61_MathLang
-	public void synpred61_MathLang_fragment()
+	// $ANTLR start synpred60_MathLang
+	public void synpred60_MathLang_fragment()
 	{
-		Enter_synpred61_MathLang_fragment();
-		EnterRule("synpred61_MathLang_fragment", 90);
-		TraceIn("synpred61_MathLang_fragment", 90);
+		Enter_synpred60_MathLang_fragment();
+		EnterRule("synpred60_MathLang_fragment", 89);
+		TraceIn("synpred60_MathLang_fragment", 89);
 		try
 		{
 			// MathLang.g:183:16: ( ';' )
@@ -6253,29 +6242,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:183:16: ';'
 			{
 			DebugLocation(183, 16);
-			Match(input,65,Follow._65_in_synpred61_MathLang1966); if (state.failed) return;
+			Match(input,65,Follow._65_in_synpred60_MathLang1964); if (state.failed) return;
 
 			}
 
 		}
 		finally
 		{
-			TraceOut("synpred61_MathLang_fragment", 90);
-			LeaveRule("synpred61_MathLang_fragment", 90);
-			Leave_synpred61_MathLang_fragment();
+			TraceOut("synpred60_MathLang_fragment", 89);
+			LeaveRule("synpred60_MathLang_fragment", 89);
+			Leave_synpred60_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred61_MathLang
+	// $ANTLR end synpred60_MathLang
 
-	partial void Enter_synpred63_MathLang_fragment();
-	partial void Leave_synpred63_MathLang_fragment();
+	partial void Enter_synpred62_MathLang_fragment();
+	partial void Leave_synpred62_MathLang_fragment();
 
-	// $ANTLR start synpred63_MathLang
-	public void synpred63_MathLang_fragment()
+	// $ANTLR start synpred62_MathLang
+	public void synpred62_MathLang_fragment()
 	{
-		Enter_synpred63_MathLang_fragment();
-		EnterRule("synpred63_MathLang_fragment", 92);
-		TraceIn("synpred63_MathLang_fragment", 92);
+		Enter_synpred62_MathLang_fragment();
+		EnterRule("synpred62_MathLang_fragment", 91);
+		TraceIn("synpred62_MathLang_fragment", 91);
 		try
 		{
 			// MathLang.g:184:14: ( ';' )
@@ -6283,29 +6272,29 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:184:14: ';'
 			{
 			DebugLocation(184, 14);
-			Match(input,65,Follow._65_in_synpred63_MathLang1977); if (state.failed) return;
+			Match(input,65,Follow._65_in_synpred62_MathLang1975); if (state.failed) return;
 
 			}
 
 		}
 		finally
 		{
-			TraceOut("synpred63_MathLang_fragment", 92);
-			LeaveRule("synpred63_MathLang_fragment", 92);
-			Leave_synpred63_MathLang_fragment();
+			TraceOut("synpred62_MathLang_fragment", 91);
+			LeaveRule("synpred62_MathLang_fragment", 91);
+			Leave_synpred62_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred63_MathLang
+	// $ANTLR end synpred62_MathLang
 
-	partial void Enter_synpred69_MathLang_fragment();
-	partial void Leave_synpred69_MathLang_fragment();
+	partial void Enter_synpred68_MathLang_fragment();
+	partial void Leave_synpred68_MathLang_fragment();
 
-	// $ANTLR start synpred69_MathLang
-	public void synpred69_MathLang_fragment()
+	// $ANTLR start synpred68_MathLang
+	public void synpred68_MathLang_fragment()
 	{
-		Enter_synpred69_MathLang_fragment();
-		EnterRule("synpred69_MathLang_fragment", 98);
-		TraceIn("synpred69_MathLang_fragment", 98);
+		Enter_synpred68_MathLang_fragment();
+		EnterRule("synpred68_MathLang_fragment", 97);
+		TraceIn("synpred68_MathLang_fragment", 97);
 		try
 		{
 			// MathLang.g:193:11: ( vars )
@@ -6313,7 +6302,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 			// MathLang.g:193:11: vars
 			{
 			DebugLocation(193, 11);
-			PushFollow(Follow._vars_in_synpred69_MathLang2022);
+			PushFollow(Follow._vars_in_synpred68_MathLang2020);
 			vars();
 			PopFollow();
 			if (state.failed) return;
@@ -6323,12 +6312,12 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("synpred69_MathLang_fragment", 98);
-			LeaveRule("synpred69_MathLang_fragment", 98);
-			Leave_synpred69_MathLang_fragment();
+			TraceOut("synpred68_MathLang_fragment", 97);
+			LeaveRule("synpred68_MathLang_fragment", 97);
+			Leave_synpred68_MathLang_fragment();
 		}
 	}
-	// $ANTLR end synpred69_MathLang
+	// $ANTLR end synpred68_MathLang
 	#endregion Rules
 
 	#region Synpreds
@@ -6442,7 +6431,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		public static readonly BitSet _NUMBER_in_group1071 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _IDENT_in_group1075 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _IDENT_in_group1080 = new BitSet(new ulong[]{0x8000000000000000UL});
-		public static readonly BitSet _63_in_group1082 = new BitSet(new ulong[]{0x1800000000000UL});
+		public static readonly BitSet _63_in_group1082 = new BitSet(new ulong[]{0x2001800000000030UL});
 		public static readonly BitSet _index__in_group1084 = new BitSet(new ulong[]{0x0UL,0x1UL});
 		public static readonly BitSet _64_in_group1085 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _group_in_mult1105 = new BitSet(new ulong[]{0x18000000000002UL});
@@ -6466,165 +6455,165 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		public static readonly BitSet _or_logic_in_term1244 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _set_in_logic_value0 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _set_in_type0 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _set_in_index_0 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENT_in_simpleExpr1293 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _ASSIGN_in_simpleExpr1295 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_simpleExpr1298 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PRINT_in_simpleExpr1302 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_simpleExpr1305 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PRINTSTR_in_simpleExpr1309 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_simpleExpr1312 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENT_in_simpleExpr1317 = new BitSet(new ulong[]{0x8000000000000000UL});
-		public static readonly BitSet _63_in_simpleExpr1319 = new BitSet(new ulong[]{0x1800000000000UL});
-		public static readonly BitSet _index__in_simpleExpr1321 = new BitSet(new ulong[]{0x0UL,0x1UL});
-		public static readonly BitSet _64_in_simpleExpr1322 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _ASSIGN_in_simpleExpr1324 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_simpleExpr1326 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _call_in_simpleExpr1351 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IF_in_groupExpr1362 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _61_in_groupExpr1364 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_groupExpr1368 = new BitSet(new ulong[]{0x4000000000000000UL});
-		public static readonly BitSet _62_in_groupExpr1370 = new BitSet(new ulong[]{0x8000UL});
-		public static readonly BitSet _THEN_in_groupExpr1372 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1376 = new BitSet(new ulong[]{0x30002UL});
-		public static readonly BitSet _ELSIF_in_groupExpr1379 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_groupExpr1383 = new BitSet(new ulong[]{0x8000UL});
-		public static readonly BitSet _THEN_in_groupExpr1385 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1389 = new BitSet(new ulong[]{0x30002UL});
-		public static readonly BitSet _ELSE_in_groupExpr1394 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1398 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _FOR_in_groupExpr1439 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _IDENT_in_groupExpr1441 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _ASSIGN_in_groupExpr1443 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_groupExpr1447 = new BitSet(new ulong[]{0x200000UL});
-		public static readonly BitSet _TO_in_groupExpr1449 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_groupExpr1453 = new BitSet(new ulong[]{0x800000UL});
-		public static readonly BitSet _DO_in_groupExpr1455 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1457 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WHILE_in_groupExpr1486 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _61_in_groupExpr1489 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_groupExpr1491 = new BitSet(new ulong[]{0x4000000000000000UL});
-		public static readonly BitSet _62_in_groupExpr1492 = new BitSet(new ulong[]{0x800000UL});
-		public static readonly BitSet _DO_in_groupExpr1495 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1498 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _REPEAT_in_groupExpr1502 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1505 = new BitSet(new ulong[]{0x10010C1407104000UL});
-		public static readonly BitSet _UNTIL_in_groupExpr1508 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_groupExpr1511 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _BEGIN_in_groupExpr1515 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_groupExpr1517 = new BitSet(new ulong[]{0x10010C1C03104000UL});
-		public static readonly BitSet _END_in_groupExpr1520 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_groupExpr1522 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _func_decl_in_groupExpr1534 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _proc_decl_in_groupExpr1537 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENT_in_const_decl1547 = new BitSet(new ulong[]{0x200000000000000UL});
-		public static readonly BitSet _EQUALS_in_const_decl1550 = new BitSet(new ulong[]{0x1800000000000UL});
-		public static readonly BitSet _set_in_const_decl1553 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_const_decl1560 = new BitSet(new ulong[]{0x2UL,0x2UL});
-		public static readonly BitSet _CONST__in_const_1571 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _const_decl_in_const_1574 = new BitSet(new ulong[]{0x1000000000002UL});
-		public static readonly BitSet _IDENT_in_type_decl1587 = new BitSet(new ulong[]{0x1000000000000UL,0xCUL});
-		public static readonly BitSet _66_in_type_decl1590 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _IDENT_in_type_decl1592 = new BitSet(new ulong[]{0x1000000000000UL,0xCUL});
-		public static readonly BitSet _67_in_type_decl1598 = new BitSet(new ulong[]{0x78000000UL});
-		public static readonly BitSet _type_in_type_decl1600 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENT_in_type_decl1612 = new BitSet(new ulong[]{0x0UL,0xCUL});
-		public static readonly BitSet _66_in_type_decl1615 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _IDENT_in_type_decl1617 = new BitSet(new ulong[]{0x0UL,0xCUL});
-		public static readonly BitSet _67_in_type_decl1620 = new BitSet(new ulong[]{0x8000000000UL});
-		public static readonly BitSet _ARRAY_in_type_decl1622 = new BitSet(new ulong[]{0x8000000000000000UL});
-		public static readonly BitSet _63_in_type_decl1624 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _group_in_type_decl1626 = new BitSet(new ulong[]{0x0UL,0x10UL});
-		public static readonly BitSet _68_in_type_decl1628 = new BitSet(new ulong[]{0x0UL,0x10UL});
-		public static readonly BitSet _68_in_type_decl1629 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _group_in_type_decl1630 = new BitSet(new ulong[]{0x0UL,0x1UL});
-		public static readonly BitSet _64_in_type_decl1632 = new BitSet(new ulong[]{0x10000000000UL});
-		public static readonly BitSet _OF_in_type_decl1634 = new BitSet(new ulong[]{0x78000000UL});
-		public static readonly BitSet _type_in_type_decl1636 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _VAR_in_vars1661 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _type_decl_in_vars1665 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_vars1667 = new BitSet(new ulong[]{0x1000000000002UL});
-		public static readonly BitSet _term_in_param1678 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _param_in_params_1687 = new BitSet(new ulong[]{0x2UL,0x4UL});
-		public static readonly BitSet _66_in_params_1689 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _param_in_params_1691 = new BitSet(new ulong[]{0x2UL,0x4UL});
-		public static readonly BitSet _FUNC_in_func_sign1713 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _IDENT_in_func_sign1715 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _61_in_func_sign1717 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
-		public static readonly BitSet _type_decl_in_func_sign1723 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
-		public static readonly BitSet _65_in_func_sign1726 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _type_decl_in_func_sign1728 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
-		public static readonly BitSet _65_in_func_sign1734 = new BitSet(new ulong[]{0x200000000UL});
-		public static readonly BitSet _VAR_in_func_sign1736 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
-		public static readonly BitSet _type_decl_in_func_sign1740 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
-		public static readonly BitSet _62_in_func_sign1744 = new BitSet(new ulong[]{0x0UL,0x8UL});
-		public static readonly BitSet _67_in_func_sign1746 = new BitSet(new ulong[]{0x78000000UL});
-		public static readonly BitSet _type_in_func_sign1748 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_func_sign1750 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _PROC_in_proc_sign1785 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _IDENT_in_proc_sign1787 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _61_in_proc_sign1789 = new BitSet(new ulong[]{0x4001000200000000UL});
-		public static readonly BitSet _type_decl_in_proc_sign1795 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_proc_sign1798 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _type_decl_in_proc_sign1800 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_proc_sign1804 = new BitSet(new ulong[]{0x1000200000000UL});
-		public static readonly BitSet _VAR_in_proc_sign1808 = new BitSet(new ulong[]{0x4001000200000000UL});
-		public static readonly BitSet _type_decl_in_proc_sign1812 = new BitSet(new ulong[]{0x4001000200000000UL});
-		public static readonly BitSet _62_in_proc_sign1816 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_proc_sign1818 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _func_sign_in_func_decl1852 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_func_decl1855 = new BitSet(new ulong[]{0x10010E1603104000UL});
-		public static readonly BitSet _const__in_func_decl1858 = new BitSet(new ulong[]{0x10010E1603104000UL});
-		public static readonly BitSet _vars_in_func_decl1861 = new BitSet(new ulong[]{0x10010C1603104000UL});
-		public static readonly BitSet _groupExpr_in_func_decl1864 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_func_decl1866 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _proc_sign_in_proc_decl1875 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_proc_decl1878 = new BitSet(new ulong[]{0x10010E1603104000UL});
-		public static readonly BitSet _const__in_proc_decl1881 = new BitSet(new ulong[]{0x10010E1603104000UL});
-		public static readonly BitSet _vars_in_proc_decl1884 = new BitSet(new ulong[]{0x10010C1603104000UL});
-		public static readonly BitSet _groupExpr_in_proc_decl1887 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_proc_decl1889 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENT_in_call1898 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _61_in_call1900 = new BitSet(new ulong[]{0x6001800000000030UL});
-		public static readonly BitSet _params__in_call1902 = new BitSet(new ulong[]{0x4000000000000000UL});
-		public static readonly BitSet _62_in_call1904 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _IDENT_in_call1921 = new BitSet(new ulong[]{0x20000000000000UL});
-		public static readonly BitSet _ASSIGN_in_call1923 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _IDENT_in_call1927 = new BitSet(new ulong[]{0x2000000000000000UL});
-		public static readonly BitSet _61_in_call1929 = new BitSet(new ulong[]{0x6001800000000030UL});
-		public static readonly BitSet _params__in_call1931 = new BitSet(new ulong[]{0x4000000000000000UL});
-		public static readonly BitSet _62_in_call1933 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _simpleExpr_in_exprList1963 = new BitSet(new ulong[]{0x0UL,0x2UL});
-		public static readonly BitSet _65_in_exprList1966 = new BitSet(new ulong[]{0x2UL,0x2UL});
-		public static readonly BitSet _groupExpr_in_exprList1974 = new BitSet(new ulong[]{0x2UL,0x2UL});
-		public static readonly BitSet _65_in_exprList1977 = new BitSet(new ulong[]{0x2UL,0x2UL});
-		public static readonly BitSet _BEGIN_in_main_1990 = new BitSet(new ulong[]{0x10010C1C03104000UL});
-		public static readonly BitSet _exprList_in_main_1993 = new BitSet(new ulong[]{0x10010C1C03104000UL});
-		public static readonly BitSet _END_in_main_1996 = new BitSet(new ulong[]{0x0UL,0x10UL});
-		public static readonly BitSet _68_in_main_1999 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _func_decl_in_program2010 = new BitSet(new ulong[]{0x10010C1403104002UL});
-		public static readonly BitSet _proc_decl_in_program2013 = new BitSet(new ulong[]{0x10010C1403104002UL});
-		public static readonly BitSet _const__in_program2019 = new BitSet(new ulong[]{0x20200000000UL});
-		public static readonly BitSet _vars_in_program2022 = new BitSet(new ulong[]{0x10010C1603104000UL});
-		public static readonly BitSet _func_decl_in_program2027 = new BitSet(new ulong[]{0x10010C1603104000UL});
-		public static readonly BitSet _proc_decl_in_program2029 = new BitSet(new ulong[]{0x10010C1603104000UL});
-		public static readonly BitSet _vars_in_program2033 = new BitSet(new ulong[]{0x10010C1603104000UL});
-		public static readonly BitSet _main__in_program2036 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _program_in_result2045 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_result2047 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _result_in_execute2066 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ELSIF_in_synpred28_MathLang1379 = new BitSet(new ulong[]{0x2001800000000030UL});
-		public static readonly BitSet _term_in_synpred28_MathLang1383 = new BitSet(new ulong[]{0x8000UL});
-		public static readonly BitSet _THEN_in_synpred28_MathLang1385 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_synpred28_MathLang1389 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ELSE_in_synpred29_MathLang1394 = new BitSet(new ulong[]{0x10010C1403104000UL});
-		public static readonly BitSet _exprList_in_synpred29_MathLang1398 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _65_in_synpred52_MathLang1798 = new BitSet(new ulong[]{0x1000000000000UL});
-		public static readonly BitSet _type_decl_in_synpred52_MathLang1800 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _type_decl_in_synpred54_MathLang1812 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _65_in_synpred61_MathLang1966 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _65_in_synpred63_MathLang1977 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _vars_in_synpred69_MathLang2022 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _term_in_index_1281 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_simpleExpr1291 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _ASSIGN_in_simpleExpr1293 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_simpleExpr1296 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PRINT_in_simpleExpr1300 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_simpleExpr1303 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PRINTSTR_in_simpleExpr1307 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_simpleExpr1310 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_simpleExpr1315 = new BitSet(new ulong[]{0x8000000000000000UL});
+		public static readonly BitSet _63_in_simpleExpr1317 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _index__in_simpleExpr1319 = new BitSet(new ulong[]{0x0UL,0x1UL});
+		public static readonly BitSet _64_in_simpleExpr1320 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _ASSIGN_in_simpleExpr1322 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_simpleExpr1324 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _call_in_simpleExpr1349 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IF_in_groupExpr1360 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _61_in_groupExpr1362 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_groupExpr1366 = new BitSet(new ulong[]{0x4000000000000000UL});
+		public static readonly BitSet _62_in_groupExpr1368 = new BitSet(new ulong[]{0x8000UL});
+		public static readonly BitSet _THEN_in_groupExpr1370 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1374 = new BitSet(new ulong[]{0x30002UL});
+		public static readonly BitSet _ELSIF_in_groupExpr1377 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_groupExpr1381 = new BitSet(new ulong[]{0x8000UL});
+		public static readonly BitSet _THEN_in_groupExpr1383 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1387 = new BitSet(new ulong[]{0x30002UL});
+		public static readonly BitSet _ELSE_in_groupExpr1392 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1396 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _FOR_in_groupExpr1437 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _IDENT_in_groupExpr1439 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _ASSIGN_in_groupExpr1441 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_groupExpr1445 = new BitSet(new ulong[]{0x200000UL});
+		public static readonly BitSet _TO_in_groupExpr1447 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_groupExpr1451 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _DO_in_groupExpr1453 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1455 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WHILE_in_groupExpr1484 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _61_in_groupExpr1487 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_groupExpr1489 = new BitSet(new ulong[]{0x4000000000000000UL});
+		public static readonly BitSet _62_in_groupExpr1490 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _DO_in_groupExpr1493 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1496 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _REPEAT_in_groupExpr1500 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1503 = new BitSet(new ulong[]{0x10010C1407104000UL});
+		public static readonly BitSet _UNTIL_in_groupExpr1506 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_groupExpr1509 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BEGIN_in_groupExpr1513 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_groupExpr1515 = new BitSet(new ulong[]{0x10010C1C03104000UL});
+		public static readonly BitSet _END_in_groupExpr1518 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_groupExpr1520 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _func_decl_in_groupExpr1532 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _proc_decl_in_groupExpr1535 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_const_decl1545 = new BitSet(new ulong[]{0x200000000000000UL});
+		public static readonly BitSet _EQUALS_in_const_decl1548 = new BitSet(new ulong[]{0x1800000000000UL});
+		public static readonly BitSet _set_in_const_decl1551 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_const_decl1558 = new BitSet(new ulong[]{0x2UL,0x2UL});
+		public static readonly BitSet _CONST__in_const_1569 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _const_decl_in_const_1572 = new BitSet(new ulong[]{0x1000000000002UL});
+		public static readonly BitSet _IDENT_in_type_decl1585 = new BitSet(new ulong[]{0x1000000000000UL,0xCUL});
+		public static readonly BitSet _66_in_type_decl1588 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _IDENT_in_type_decl1590 = new BitSet(new ulong[]{0x1000000000000UL,0xCUL});
+		public static readonly BitSet _67_in_type_decl1596 = new BitSet(new ulong[]{0x78000000UL});
+		public static readonly BitSet _type_in_type_decl1598 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_type_decl1610 = new BitSet(new ulong[]{0x0UL,0xCUL});
+		public static readonly BitSet _66_in_type_decl1613 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _IDENT_in_type_decl1615 = new BitSet(new ulong[]{0x0UL,0xCUL});
+		public static readonly BitSet _67_in_type_decl1618 = new BitSet(new ulong[]{0x8000000000UL});
+		public static readonly BitSet _ARRAY_in_type_decl1620 = new BitSet(new ulong[]{0x8000000000000000UL});
+		public static readonly BitSet _63_in_type_decl1622 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _group_in_type_decl1624 = new BitSet(new ulong[]{0x0UL,0x10UL});
+		public static readonly BitSet _68_in_type_decl1626 = new BitSet(new ulong[]{0x0UL,0x10UL});
+		public static readonly BitSet _68_in_type_decl1627 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _group_in_type_decl1628 = new BitSet(new ulong[]{0x0UL,0x1UL});
+		public static readonly BitSet _64_in_type_decl1630 = new BitSet(new ulong[]{0x10000000000UL});
+		public static readonly BitSet _OF_in_type_decl1632 = new BitSet(new ulong[]{0x78000000UL});
+		public static readonly BitSet _type_in_type_decl1634 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _VAR_in_vars1659 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _type_decl_in_vars1663 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_vars1665 = new BitSet(new ulong[]{0x1000000000002UL});
+		public static readonly BitSet _term_in_param1676 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _param_in_params_1685 = new BitSet(new ulong[]{0x2UL,0x4UL});
+		public static readonly BitSet _66_in_params_1687 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _param_in_params_1689 = new BitSet(new ulong[]{0x2UL,0x4UL});
+		public static readonly BitSet _FUNC_in_func_sign1711 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _IDENT_in_func_sign1713 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _61_in_func_sign1715 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
+		public static readonly BitSet _type_decl_in_func_sign1721 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
+		public static readonly BitSet _65_in_func_sign1724 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _type_decl_in_func_sign1726 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
+		public static readonly BitSet _65_in_func_sign1732 = new BitSet(new ulong[]{0x200000000UL});
+		public static readonly BitSet _VAR_in_func_sign1734 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
+		public static readonly BitSet _type_decl_in_func_sign1738 = new BitSet(new ulong[]{0x4001000000000000UL,0x2UL});
+		public static readonly BitSet _62_in_func_sign1742 = new BitSet(new ulong[]{0x0UL,0x8UL});
+		public static readonly BitSet _67_in_func_sign1744 = new BitSet(new ulong[]{0x78000000UL});
+		public static readonly BitSet _type_in_func_sign1746 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_func_sign1748 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PROC_in_proc_sign1783 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _IDENT_in_proc_sign1785 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _61_in_proc_sign1787 = new BitSet(new ulong[]{0x4001000200000000UL});
+		public static readonly BitSet _type_decl_in_proc_sign1793 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_proc_sign1796 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _type_decl_in_proc_sign1798 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_proc_sign1802 = new BitSet(new ulong[]{0x1000200000000UL});
+		public static readonly BitSet _VAR_in_proc_sign1806 = new BitSet(new ulong[]{0x4001000200000000UL});
+		public static readonly BitSet _type_decl_in_proc_sign1810 = new BitSet(new ulong[]{0x4001000200000000UL});
+		public static readonly BitSet _62_in_proc_sign1814 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_proc_sign1816 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _func_sign_in_func_decl1850 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_func_decl1853 = new BitSet(new ulong[]{0x10010E1603104000UL});
+		public static readonly BitSet _const__in_func_decl1856 = new BitSet(new ulong[]{0x10010E1603104000UL});
+		public static readonly BitSet _vars_in_func_decl1859 = new BitSet(new ulong[]{0x10010C1603104000UL});
+		public static readonly BitSet _groupExpr_in_func_decl1862 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_func_decl1864 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _proc_sign_in_proc_decl1873 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_proc_decl1876 = new BitSet(new ulong[]{0x10010E1603104000UL});
+		public static readonly BitSet _const__in_proc_decl1879 = new BitSet(new ulong[]{0x10010E1603104000UL});
+		public static readonly BitSet _vars_in_proc_decl1882 = new BitSet(new ulong[]{0x10010C1603104000UL});
+		public static readonly BitSet _groupExpr_in_proc_decl1885 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_proc_decl1887 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_call1896 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _61_in_call1898 = new BitSet(new ulong[]{0x6001800000000030UL});
+		public static readonly BitSet _params__in_call1900 = new BitSet(new ulong[]{0x4000000000000000UL});
+		public static readonly BitSet _62_in_call1902 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _IDENT_in_call1919 = new BitSet(new ulong[]{0x20000000000000UL});
+		public static readonly BitSet _ASSIGN_in_call1921 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _IDENT_in_call1925 = new BitSet(new ulong[]{0x2000000000000000UL});
+		public static readonly BitSet _61_in_call1927 = new BitSet(new ulong[]{0x6001800000000030UL});
+		public static readonly BitSet _params__in_call1929 = new BitSet(new ulong[]{0x4000000000000000UL});
+		public static readonly BitSet _62_in_call1931 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _simpleExpr_in_exprList1961 = new BitSet(new ulong[]{0x0UL,0x2UL});
+		public static readonly BitSet _65_in_exprList1964 = new BitSet(new ulong[]{0x2UL,0x2UL});
+		public static readonly BitSet _groupExpr_in_exprList1972 = new BitSet(new ulong[]{0x2UL,0x2UL});
+		public static readonly BitSet _65_in_exprList1975 = new BitSet(new ulong[]{0x2UL,0x2UL});
+		public static readonly BitSet _BEGIN_in_main_1988 = new BitSet(new ulong[]{0x10010C1C03104000UL});
+		public static readonly BitSet _exprList_in_main_1991 = new BitSet(new ulong[]{0x10010C1C03104000UL});
+		public static readonly BitSet _END_in_main_1994 = new BitSet(new ulong[]{0x0UL,0x10UL});
+		public static readonly BitSet _68_in_main_1997 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _func_decl_in_program2008 = new BitSet(new ulong[]{0x10010C1403104002UL});
+		public static readonly BitSet _proc_decl_in_program2011 = new BitSet(new ulong[]{0x10010C1403104002UL});
+		public static readonly BitSet _const__in_program2017 = new BitSet(new ulong[]{0x20200000000UL});
+		public static readonly BitSet _vars_in_program2020 = new BitSet(new ulong[]{0x10010C1603104000UL});
+		public static readonly BitSet _func_decl_in_program2025 = new BitSet(new ulong[]{0x10010C1603104000UL});
+		public static readonly BitSet _proc_decl_in_program2027 = new BitSet(new ulong[]{0x10010C1603104000UL});
+		public static readonly BitSet _vars_in_program2031 = new BitSet(new ulong[]{0x10010C1603104000UL});
+		public static readonly BitSet _main__in_program2034 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _program_in_result2043 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_result2045 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _result_in_execute2064 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ELSIF_in_synpred27_MathLang1377 = new BitSet(new ulong[]{0x2001800000000030UL});
+		public static readonly BitSet _term_in_synpred27_MathLang1381 = new BitSet(new ulong[]{0x8000UL});
+		public static readonly BitSet _THEN_in_synpred27_MathLang1383 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_synpred27_MathLang1387 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ELSE_in_synpred28_MathLang1392 = new BitSet(new ulong[]{0x10010C1403104000UL});
+		public static readonly BitSet _exprList_in_synpred28_MathLang1396 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _65_in_synpred51_MathLang1796 = new BitSet(new ulong[]{0x1000000000000UL});
+		public static readonly BitSet _type_decl_in_synpred51_MathLang1798 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _type_decl_in_synpred53_MathLang1810 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _65_in_synpred60_MathLang1964 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _65_in_synpred62_MathLang1975 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _vars_in_synpred68_MathLang2020 = new BitSet(new ulong[]{0x2UL});
 
 	}
 	#endregion Follow sets

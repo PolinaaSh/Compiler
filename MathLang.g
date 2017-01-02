@@ -113,7 +113,7 @@ logic_value: TRUE|FALSE ;
 type: INT | REAL | BOOL |CHAR 
 ;
 
-index_: IDENT|NUMBER
+index_: term
 ;
 
 simpleExpr:

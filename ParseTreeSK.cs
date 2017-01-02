@@ -153,7 +153,8 @@ namespace MathLang
                     else if(node.ChildCount>0 && node.GetChild(0).Text=="INDEX")
                     {
                         node.IdentDescription = AddScopeInNode(scope, node);
-                        AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
+                       // AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
+                        FillVars(node.GetChild(0).GetChild(0).Cast(),scope);
                     }
                     else
                         node.IdentDescription = AddScopeInNode(scope, node);

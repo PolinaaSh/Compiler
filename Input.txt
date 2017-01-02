@@ -1,5 +1,5 @@
 var n,r,m:integer;
-
+    arr:array [1 .. 10] of integer;
 function Year(d:integer;var k:integer):integer; 
 begin 
 k:=500; 
@@ -7,6 +7,7 @@ result:=d*d;
 end;
 
 begin
+arr[1+n]:=15;
 n:=3;
 m:=2;
 r:=Year(4,n);
