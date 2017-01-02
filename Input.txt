@@ -1,6 +1,8 @@
 var n,r,m:integer;
     arr:array [1 .. 10] of integer;
 function Year(d:integer;var k:integer):integer; 
+var pp,j:real;
+   t:integer;
 begin 
 k:=500; 
 result:=d*d; 

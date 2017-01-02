@@ -9,7 +9,8 @@ namespace MathLang
     {
 
         private  int lineNum = 0;
-        private int resNum = 0;
+       // private int resNum = 0;
+        private NodeData curFunc;
         private StringBuilder arr = new StringBuilder();
 
         public static string ToMsilType(String type)
@@ -60,8 +61,6 @@ namespace MathLang
                     num = GetVarNum((NodeData)node.GetChild(1));
                     sb.Append(string.Format("      [{0}] {1},\n", num, type));
                 }
-                if(node.Parent.Text=="function")
-                resNum++;
             }
             else
                 for (int i = 0; i < node.ChildCount; i++)
@@ -289,26 +288,29 @@ namespace MathLang
             GenParams(node.GetChild(2).Cast(),sb);//параметры
             sb.Append(" cil managed {\n");
             bool haveVar=false;
+            curFunc = node.GetChild(0).Cast();
             StringBuilder sb0 = new StringBuilder();
             for (int i = 3; i < node.ChildCount;i++)
             {
-                Gen((NodeData)node.GetChild(i), sb0);
-                if(node.GetChild(i).Text=="var")
+                 if(node.GetChild(i).Text=="var" && !haveVar)
                 {
-                    sb0.Append(string.Format("      [{0}] {1},\n", resNum, ToMsilType(node.GetChild(0).Text)));
+                    Gen((NodeData)node.GetChild(i), sb0);
+                    sb0.Append(string.Format("      [{0}] {1},\n", resNum(), ToMsilType(node.GetChild(0).Text)));
                     sb0[sb0.Length - 2] = ' ';
                     sb0.Append(")\n");
                     haveVar = true;
                 }
+                 else if (node.GetChild(i).Text != "var")
+                     Gen((NodeData)node.GetChild(i), sb0);
             }
             if (!haveVar)
             {
                 sb.Append("    .locals init (\n");
-                sb.Append(string.Format("      [{0}] {1}\n", resNum, ToMsilType(node.GetChild(0).Text)));
+                sb.Append(string.Format("      [{0}] {1}\n", resNum(), ToMsilType(node.GetChild(0).Text)));
                 sb.Append("    )\n");
             }
             sb.Append(sb0);
-            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,resNum));
+            sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++,resNum()));
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n");
                 /*if (node.GetChild(3).Text == "var" || node.GetChild(3).Text == "const")
@@ -344,7 +346,7 @@ namespace MathLang
             string returnType = ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower());
             string funName = ToMsilType(node.GetChild(0).Text);
             StringBuilder sb0 = new StringBuilder();
-
+            curFunc = node.GetChild(0).Cast();
             sb0.Append(string.Format("("));
             for (int i = 0; i < node.GetChild(1).ChildCount; i++)
             {
@@ -479,7 +481,7 @@ namespace MathLang
             else if (node.GetChild(0).Text == "result")
             {
                 Gen((NodeData)node.GetChild(1), sb);
-                sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, resNum));
+                sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, resNum()));
             }
             else
             {
@@ -758,6 +760,16 @@ namespace MathLang
                 }
             }
             return false;
+        }
+        public int resNum()
+        {
+            int res=0;
+           for(int i=0;i< curFunc.Parent.ChildCount;i++)
+           {
+               if (curFunc.Parent.GetChild(i).Text == "var")
+                   res++;
+           }
+           return res;
         }
     }
 }
