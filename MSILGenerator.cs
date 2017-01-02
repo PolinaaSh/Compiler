@@ -368,7 +368,11 @@ namespace MathLang
                 sb0.Append(string.Format("{0},", type));
                 if (!CheckVar(node.GetChild(0).Cast(), i))
                 {
-                    if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local"))
+                    if(node.GetChild(1).GetChild(i).ChildCount==0)
+                    {
+                        Gen(node.GetChild(1).GetChild(i).Cast(),sb);
+                    }
+                    else if (node.GetChild(1).GetChild(i).GetChild(0).Text.Contains("Local"))
                     {
                         sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node.GetChild(1).GetChild(i).Cast())));
                     }

@@ -28,7 +28,7 @@
     L_000010: stsfld      int32 Program::n
     L_000011: ldc.i4 2
     L_000012: stsfld      int32 Program::m
-    L_000013: ldsfld      int32 Program::m
+    L_000013: ldc.i4 4
     L_000014: ldsflda      int32 Program::n
     L_000015: call        int32 Program::Year(int32,int32& )
     L_000016: stsfld      int32 Program::r

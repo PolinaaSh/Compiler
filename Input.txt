@@ -9,7 +9,7 @@ end;
 begin
 n:=3;
 m:=2;
-r:=Year(m,n);
+r:=Year(4,n);
 print r;
 print n;
 end.

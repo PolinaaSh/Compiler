@@ -632,24 +632,32 @@ namespace MathLang
                 }
                 else
                 {
+                    string calldataType;
                     for (int k = 0; k < identFun.Node.GetChild(2).GetChild(i).ChildCount; k++)
                     {
-                        IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
-                        string calldataType = idescr.TypeData.ToString().ToLower();
-                        if (funDataType != calldataType)
+                        if (!IsNum(node.GetChild(1).GetChild(parNum).Text))
                         {
-                            if ((funDataType == "real") && (calldataType == "integer"))
-                            {
-                                ConvertTo(node.GetChild(1).GetChild(parNum).Cast(), DataType.Real);
-                            }
-                            else
-                            {
-                                throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
-                            }
+                            IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
+                            calldataType = idescr.TypeData.ToString().ToLower();
+                            AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                         }
-                        AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
-                        parNum++;
-                    }
+                        else
+                        {
+                            calldataType = ParseConstType(node.GetChild(1).GetChild(parNum).Text);
+                        }
+                            if (funDataType != calldataType)
+                            {
+                                if ((funDataType == "real") && (calldataType == "integer"))
+                                {
+                                    ConvertTo(node.GetChild(1).GetChild(parNum).Cast(), DataType.Real);
+                                }
+                                else
+                                {
+                                    throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, funDataType));
+                                }
+                            }
+                         parNum++;
+                        }                    
                 }
             }
 
@@ -708,10 +716,19 @@ namespace MathLang
                 }
                 else
                 {
+                    string calldataType;
                     for (int k = 0; k < identProc.Node.GetChild(1).GetChild(i).ChildCount; k++)
                     {
-                        IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
-                        string calldataType = idescr.TypeData.ToString().ToLower();
+                        if (!IsNum(node.GetChild(1).GetChild(parNum).Text))
+                        {
+                            IdentDescription idescr = scope.GetContainVar(node.GetChild(1).GetChild(parNum).Text);
+                            calldataType = idescr.TypeData.ToString().ToLower();
+                            AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
+                        }
+                        else
+                        {
+                            calldataType = ParseConstType(node.GetChild(1).GetChild(parNum).Text);
+                        }
                         if (procDataType != calldataType)
                         {
                             if ((procDataType == "real") && (calldataType == "integer"))
@@ -723,7 +740,6 @@ namespace MathLang
                                 throw new ApplicationException(string.Format("SSKA. Cant convert {1} to {0}", calldataType, procDataType));
                             }
                         }
-                        AddScopeInNode(scope, node.GetChild(1).GetChild(parNum).Cast());
                         parNum++;
                     }
                 }
