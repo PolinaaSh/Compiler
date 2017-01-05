@@ -517,6 +517,8 @@ namespace MathLang
                     return DataType.Void;
                 case "integer":
                     return DataType.Integer;
+                case "char":
+                    return DataType.Char;
                 default:
                     throw new ApplicationException(string.Format("SSKA. Unknown type {0}", name));
             }
@@ -603,8 +605,8 @@ namespace MathLang
                 throw new ApplicationException(string.Format("SSKA. Not equals params count in function '{0}'", identFun.NameAttribut));
 
             // Определить тип переменных и распределить по параметрам.
-            for (int i = 1; i < node.ChildCount; i++)
-                FillVars(node.GetChild(i).Cast(), scope);
+            //for (int i = 1; i < node.ChildCount; i++)
+             //   FillVars(node.GetChild(i).Cast(), scope);
 
             // К этому моменту все типы определены.
             // Сравнить типы.
@@ -687,8 +689,8 @@ namespace MathLang
                 throw new ApplicationException(string.Format("SSKA. Not equals params count in function '{0}'", identProc.NameAttribut));
 
             // Определить тип переменных и распределить по параметрам.
-            for (int i = 1; i < node.ChildCount; i++)
-                FillVars(node.GetChild(i).Cast(), scope);
+           // for (int i = 1; i < node.ChildCount; i++)
+               // FillVars(node.GetChild(i).Cast(), scope);
 
             // К этому моменту все типы определены.
             // Сравнить типы.

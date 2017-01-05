@@ -79,6 +79,7 @@ IDENT:  ( 'a'..'z' | 'A'..'Z' | '_' )
         ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' )*
 ;
 
+
 ADD:    '+'     ;
 SUB:    '-'     ;
 MUL:    '*'     ;
@@ -116,8 +117,14 @@ type: INT | REAL | BOOL |CHAR
 index_: term
 ;
 
+
+charValue:
+'+' |'-'|'*'|'/'|'!'|'?'|'@'|'<'|'>'|':'|';'|'#'|'$'|'%'|'^'|'&'|'('|')'|'{'|'}'|'['|']'|'~'|'.'|','|'_' 
+;
+
 simpleExpr:
-  IDENT ASSIGN^ term
+ IDENT ASSIGN^ term
+| IDENT ASSIGN^ '\'' charValue '\''
 | PRINT^ term
 | PRINTSTR^ term
 |( IDENT '[' index_']' ASSIGN term)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) term)
