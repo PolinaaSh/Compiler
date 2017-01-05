@@ -8,17 +8,17 @@ result:=d*d;
 end;
 
 begin
-ch:='*';
+//ch:='*';
 n:=0;
 arr[1+n]:=15;
 n:=3;
 m:=2;
-r:=Year(arr[1],n);
+r:=Year(8,n);
 print r;
 print n;
+for m:=1 to 10 do
+print arr[m];
 end.
-
-
 
 
 

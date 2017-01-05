@@ -60,6 +60,6 @@ C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\bin\Debug\Antlr3.Ru
 C:\Users\Полина\Desktop\MathLangTree_Antlr для MSIL\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
 C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.exe
 C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.pdb
-C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
 C:\Users\Полина\Source\Repos\Compiler\bin\Debug\MathLang.exe
 C:\Users\Полина\Source\Repos\Compiler\bin\Debug\MathLang.pdb
+C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.csprojResolveAssemblyReference.cache

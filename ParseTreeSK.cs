@@ -314,7 +314,11 @@ namespace MathLang
                     {
                         // Проверяю используемые переменные и определяю их тип.
                         for (int i = 0; i < node.ChildCount; i++)
+                        {
                             FillVars(node.GetChild(i).Cast(), scope);
+                            if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4)
+                                return;
+                        }
 
                         DataType first = node.GetChild(0).Cast().TypeData;
                         DataType second;
