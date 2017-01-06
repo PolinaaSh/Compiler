@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -9,9 +10,9 @@ namespace MathLang
     {
 
         private  int lineNum = 0;
-       // private int resNum = 0;
         private NodeData curFunc;
         private StringBuilder arr = new StringBuilder();
+       private static  Dictionary<char, string> charValue = new Dictionary<char, string>();
 
         public static string ToMsilType(String type)
         {
@@ -22,6 +23,7 @@ namespace MathLang
 
         public static string Gen(NodeData program)
         {
+            FullDict();
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
 .assembly program
@@ -421,18 +423,6 @@ namespace MathLang
         {
             if (node.GetChild(0).Text.ToLower() == "index")
             {                
-               /* if (node.GetChild(1).Text.Contains("Local"))
-                {
-                    sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node)));
-                }
-                else if (node.GetChild(1).Text.Contains("Param"))
-                {
-                    sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum(node)));
-                }
-                else if (node.GetChild(1).Text.Contains("Global"))
-                {
-                    sb.Append(string.Format("    L_{0:D6}: ldsfld     {1}[] Program::{2}\n", lineNum++, ToMsilType(node.TypeData.ToString().ToLower()),node.Text));
-                 }*/
                 LoadIdent(node,sb);
                 Gen(node.GetChild(0).GetChild(0).Cast(),sb);
                 sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
@@ -441,17 +431,7 @@ namespace MathLang
             }
             else
             {
-                /*if (node.GetChild(0).Text.Contains("Local"))
-                    sb.Append(string.Format("    L_{0:D6}: ldloc {1}\n", lineNum++, GetVarNum(node)));
-                else if (node.GetChild(0).Text.Contains("Param"))
-                {
-                    sb.Append(string.Format("    L_{0:D6}: ldarg {1}\n", lineNum++, GetVarNum(node)));
-                }
-                else if (node.GetChild(0).Text.Contains("Global"))
-                {
-                    sb.Append(string.Format("    L_{0:D6}: ldsfld      {1} Program::{2}\n", lineNum++, ToMsilType(node.TypeData.ToString().ToLower()), node.Text);
-                }*/
-                LoadIdent(node,sb);
+                 LoadIdent(node,sb);
             }
         }
         public void GenNumber(NodeData node, StringBuilder sb)
@@ -462,7 +442,8 @@ namespace MathLang
         {
             if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4)
             {
-                sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
+                sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(2).Text)));
+                StIdent(node.GetChild(0).Cast(), sb);
                 return;
             }
             if (node.GetChild(0).GetChild(0).Text.ToLower() == "index")//если массив
@@ -691,7 +672,7 @@ namespace MathLang
         public void GenPrint(NodeData node, StringBuilder sb)
         {
             Gen((NodeData)node.GetChild(0), sb);
-            sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine(int32)\n", lineNum++));
+            sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine({1})\n", lineNum++, ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower())));
         }
         public void GenPrintStr(NodeData node, StringBuilder sb)
         {
@@ -773,5 +754,34 @@ namespace MathLang
                 }
             }
         }
+        public void StIdent(NodeData node, StringBuilder sb)
+        {
+            if (node.GetChild(0).Text.Contains("Local"))
+                sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum(node)));
+            else if (node.GetChild(0).Text.Contains("Param"))
+            {
+                sb.Append(string.Format("    L_{0:D6}: starg {1}\n", lineNum++, GetVarNum(node)));
+            }
+            else if (node.GetChild(0).Text.Contains("Global"))
+            {
+                sb.Append(string.Format("    L_{0:D6}: stsfld      {1} Program::{2}\n", lineNum++,ToMsilType(node.TypeData.ToString().ToLower()), node.Text));
+            }
+        }
+        public string GenCharCode(string charText)
+        {
+            if (charText.Length > 1)
+                throw new ApplicationException(string.Format("{0} не является символом", charText));
+            return charValue.ContainsKey(Convert.ToChar(charText)) ? charValue[Convert.ToChar(charText)] : null;
+        }
+        public static void FullDict()
+        {
+            String[] readCodes = File.ReadAllLines("CharCode.txt");
+            for(int i=0;i< readCodes.Length;i++)
+            {
+                String[] splitRead = readCodes[i].Split(' ','\t');
+                charValue.Add(Convert.ToChar(splitRead[2]),splitRead[1]);
+            }
+        }
+       
     }
 }

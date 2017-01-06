@@ -72,7 +72,6 @@ ML_COMMENT:
 ;
 
 
-
 NUMBER: ('0'..'9')+ ('.' ('0'..'9')+)?
 ;
 IDENT:  ( 'a'..'z' | 'A'..'Z' | '_' )
@@ -117,11 +116,6 @@ type: INT | REAL | BOOL |CHAR
 index_: term
 ;
 
-
-charValue:
-'+' |'-'|'*'|'/'|'!'|'?'|'@'|'<'|'>'|':'|';'|'#'|'$'|'%'|'^'|'&'|'('|')'|'{'|'}'|'['|']'|'~'|'.'|','|'_' 
-;
-
 simpleExpr:
  IDENT ASSIGN^ term
 | IDENT ASSIGN^ '\'' charValue '\''
@@ -130,6 +124,12 @@ simpleExpr:
 |( IDENT '[' index_']' ASSIGN term)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) term)
 | call
 ;
+
+charValue:
+'+' |'-'|'*'|'/'|'!'|'?'|'@'|'<'|'>'|':'|';'|'#'|'$'|'%'|'^'|'&'|'('|')'|'{'|'}'|'['|']'|'~'|'.'|','|'_' 
+|IDENT | NUMBER
+;
+
 
 groupExpr:
  ( IF '(' t1=term ')' THEN lst=exprList (ELSIF t2=term THEN lst2=exprList)* (ELSE lst3=exprList)?)->^(IF $t1 $lst (^(ELSIF $t2 $lst2))* (^(ELSE $lst3))?)

@@ -29,45 +29,26 @@
     L_000000: ldc.i4 10
     L_000001: newarr     [mscorlib]System.Int32
     L_000002: stsfld     int32[] Program::arr
-    L_000012: ldc.i4 0
-    L_000013: stsfld      int32 Program::n
-    L_000014: ldsfld     int32[] Program::arr
-    L_000015: ldc.i4 1
-    L_000016: ldsfld     int32 Program::n
-    L_000017: add
-    L_000018: ldc.i4 1
-    L_000019: sub
-    L_000020: ldc.i4 15
-    L_000021: stelem.i4 
-    L_000022: ldc.i4 3
-    L_000023: stsfld      int32 Program::n
-    L_000024: ldc.i4 2
-    L_000025: stsfld      int32 Program::m
-    L_000026: ldc.i4 8
-    L_000027: ldsflda      int32 Program::n
-    L_000028: call        int32 Program::Year(int32,int32& )
-    L_000029: stsfld      int32 Program::r
-    L_000030: ldsfld     int32 Program::r
-    L_000031: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000032: ldsfld     int32 Program::n
-    L_000033: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000034: ldc.i4 1
-    L_000035: stsfld      int32 Program::m
-    L_000036: ldsfld     int32 Program::m
-    L_000037: ldc.i4 10
-    L_000038: clt
-    L_000039: brfalse L_000051
-    L_000040: ldsfld     int32[] Program::arr
-    L_000041: ldsfld     int32 Program::m
-    L_000042: ldc.i4 1
-    L_000043: sub
-    L_000044: ldelem.i4 
-    L_000045: call void [mscorlib]System.Console::WriteLine(int32)
-    L_000046: ldc.i4 1
-    L_000047: ldsfld     int32 Program::m
-    L_000048: add
-    L_000049: stsfld      int32 Program::m
-    L_000050: br L_000036
-    L_000051: ret
+    L_000012: ldc.i4.s 0x68
+    L_000013: stsfld      char Program::ch
+    L_000014: ldsfld     char Program::ch
+    L_000015: call void [mscorlib]System.Console::WriteLine(char)
+    L_000016: ldc.i4.s 0x65
+    L_000017: stsfld      char Program::ch
+    L_000018: ldsfld     char Program::ch
+    L_000019: call void [mscorlib]System.Console::WriteLine(char)
+    L_000020: ldc.i4.s 0x6C
+    L_000021: stsfld      char Program::ch
+    L_000022: ldsfld     char Program::ch
+    L_000023: call void [mscorlib]System.Console::WriteLine(char)
+    L_000024: ldc.i4.s 0x6C
+    L_000025: stsfld      char Program::ch
+    L_000026: ldsfld     char Program::ch
+    L_000027: call void [mscorlib]System.Console::WriteLine(char)
+    L_000028: ldc.i4.s 0x6F
+    L_000029: stsfld      char Program::ch
+    L_000030: ldsfld     char Program::ch
+    L_000031: call void [mscorlib]System.Console::WriteLine(char)
+    L_000032: ret
   }
 }
