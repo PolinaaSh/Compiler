@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2017-01-06 21:44:34
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2017-01-06 23:27:26
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -19,6 +19,7 @@ namespace  MathLang
 public partial class MathLangLexer : Antlr.Runtime.Lexer
 {
 	public const int EOF=-1;
+	public const int T__60=60;
 	public const int T__61=61;
 	public const int T__62=62;
 	public const int T__63=63;
@@ -39,7 +40,6 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 	public const int T__78=78;
 	public const int T__79=79;
 	public const int T__80=80;
-	public const int T__81=81;
 	public const int TRUE=4;
 	public const int FALSE=5;
 	public const int AND=6;
@@ -96,7 +96,6 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 	public const int EQUALS=57;
 	public const int GT=58;
 	public const int LT=59;
-	public const int PRINTSTR=60;
 
     // delegates
     // delegators
@@ -1279,19 +1278,19 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 	}
 	// $ANTLR end "PROC"
 
-	partial void Enter_T__61();
-	partial void Leave_T__61();
+	partial void Enter_T__60();
+	partial void Leave_T__60();
 
-	// $ANTLR start "T__61"
-	[GrammarRule("T__61")]
-	private void mT__61()
+	// $ANTLR start "T__60"
+	[GrammarRule("T__60")]
+	private void mT__60()
 	{
-		Enter_T__61();
-		EnterRule("T__61", 33);
-		TraceIn("T__61", 33);
+		Enter_T__60();
+		EnterRule("T__60", 33);
+		TraceIn("T__60", 33);
 		try
 		{
-			int _type = T__61;
+			int _type = T__60;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:41:7: ( '(' )
 			DebugEnterAlt(1);
@@ -1307,26 +1306,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__61", 33);
-			LeaveRule("T__61", 33);
-			Leave_T__61();
+			TraceOut("T__60", 33);
+			LeaveRule("T__60", 33);
+			Leave_T__60();
 		}
 	}
-	// $ANTLR end "T__61"
+	// $ANTLR end "T__60"
 
-	partial void Enter_T__62();
-	partial void Leave_T__62();
+	partial void Enter_T__61();
+	partial void Leave_T__61();
 
-	// $ANTLR start "T__62"
-	[GrammarRule("T__62")]
-	private void mT__62()
+	// $ANTLR start "T__61"
+	[GrammarRule("T__61")]
+	private void mT__61()
 	{
-		Enter_T__62();
-		EnterRule("T__62", 34);
-		TraceIn("T__62", 34);
+		Enter_T__61();
+		EnterRule("T__61", 34);
+		TraceIn("T__61", 34);
 		try
 		{
-			int _type = T__62;
+			int _type = T__61;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:42:7: ( ')' )
 			DebugEnterAlt(1);
@@ -1342,26 +1341,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__62", 34);
-			LeaveRule("T__62", 34);
-			Leave_T__62();
+			TraceOut("T__61", 34);
+			LeaveRule("T__61", 34);
+			Leave_T__61();
 		}
 	}
-	// $ANTLR end "T__62"
+	// $ANTLR end "T__61"
 
-	partial void Enter_T__63();
-	partial void Leave_T__63();
+	partial void Enter_T__62();
+	partial void Leave_T__62();
 
-	// $ANTLR start "T__63"
-	[GrammarRule("T__63")]
-	private void mT__63()
+	// $ANTLR start "T__62"
+	[GrammarRule("T__62")]
+	private void mT__62()
 	{
-		Enter_T__63();
-		EnterRule("T__63", 35);
-		TraceIn("T__63", 35);
+		Enter_T__62();
+		EnterRule("T__62", 35);
+		TraceIn("T__62", 35);
 		try
 		{
-			int _type = T__63;
+			int _type = T__62;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:43:7: ( '[' )
 			DebugEnterAlt(1);
@@ -1377,26 +1376,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__63", 35);
-			LeaveRule("T__63", 35);
-			Leave_T__63();
+			TraceOut("T__62", 35);
+			LeaveRule("T__62", 35);
+			Leave_T__62();
 		}
 	}
-	// $ANTLR end "T__63"
+	// $ANTLR end "T__62"
 
-	partial void Enter_T__64();
-	partial void Leave_T__64();
+	partial void Enter_T__63();
+	partial void Leave_T__63();
 
-	// $ANTLR start "T__64"
-	[GrammarRule("T__64")]
-	private void mT__64()
+	// $ANTLR start "T__63"
+	[GrammarRule("T__63")]
+	private void mT__63()
 	{
-		Enter_T__64();
-		EnterRule("T__64", 36);
-		TraceIn("T__64", 36);
+		Enter_T__63();
+		EnterRule("T__63", 36);
+		TraceIn("T__63", 36);
 		try
 		{
-			int _type = T__64;
+			int _type = T__63;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:44:7: ( ']' )
 			DebugEnterAlt(1);
@@ -1412,26 +1411,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__64", 36);
-			LeaveRule("T__64", 36);
-			Leave_T__64();
+			TraceOut("T__63", 36);
+			LeaveRule("T__63", 36);
+			Leave_T__63();
 		}
 	}
-	// $ANTLR end "T__64"
+	// $ANTLR end "T__63"
 
-	partial void Enter_T__65();
-	partial void Leave_T__65();
+	partial void Enter_T__64();
+	partial void Leave_T__64();
 
-	// $ANTLR start "T__65"
-	[GrammarRule("T__65")]
-	private void mT__65()
+	// $ANTLR start "T__64"
+	[GrammarRule("T__64")]
+	private void mT__64()
 	{
-		Enter_T__65();
-		EnterRule("T__65", 37);
-		TraceIn("T__65", 37);
+		Enter_T__64();
+		EnterRule("T__64", 37);
+		TraceIn("T__64", 37);
 		try
 		{
-			int _type = T__65;
+			int _type = T__64;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:45:7: ( '\\'' )
 			DebugEnterAlt(1);
@@ -1447,26 +1446,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__65", 37);
-			LeaveRule("T__65", 37);
-			Leave_T__65();
+			TraceOut("T__64", 37);
+			LeaveRule("T__64", 37);
+			Leave_T__64();
 		}
 	}
-	// $ANTLR end "T__65"
+	// $ANTLR end "T__64"
 
-	partial void Enter_T__66();
-	partial void Leave_T__66();
+	partial void Enter_T__65();
+	partial void Leave_T__65();
 
-	// $ANTLR start "T__66"
-	[GrammarRule("T__66")]
-	private void mT__66()
+	// $ANTLR start "T__65"
+	[GrammarRule("T__65")]
+	private void mT__65()
 	{
-		Enter_T__66();
-		EnterRule("T__66", 38);
-		TraceIn("T__66", 38);
+		Enter_T__65();
+		EnterRule("T__65", 38);
+		TraceIn("T__65", 38);
 		try
 		{
-			int _type = T__66;
+			int _type = T__65;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:46:7: ( '!' )
 			DebugEnterAlt(1);
@@ -1482,26 +1481,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__66", 38);
-			LeaveRule("T__66", 38);
-			Leave_T__66();
+			TraceOut("T__65", 38);
+			LeaveRule("T__65", 38);
+			Leave_T__65();
 		}
 	}
-	// $ANTLR end "T__66"
+	// $ANTLR end "T__65"
 
-	partial void Enter_T__67();
-	partial void Leave_T__67();
+	partial void Enter_T__66();
+	partial void Leave_T__66();
 
-	// $ANTLR start "T__67"
-	[GrammarRule("T__67")]
-	private void mT__67()
+	// $ANTLR start "T__66"
+	[GrammarRule("T__66")]
+	private void mT__66()
 	{
-		Enter_T__67();
-		EnterRule("T__67", 39);
-		TraceIn("T__67", 39);
+		Enter_T__66();
+		EnterRule("T__66", 39);
+		TraceIn("T__66", 39);
 		try
 		{
-			int _type = T__67;
+			int _type = T__66;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:47:7: ( '?' )
 			DebugEnterAlt(1);
@@ -1517,26 +1516,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__67", 39);
-			LeaveRule("T__67", 39);
-			Leave_T__67();
+			TraceOut("T__66", 39);
+			LeaveRule("T__66", 39);
+			Leave_T__66();
 		}
 	}
-	// $ANTLR end "T__67"
+	// $ANTLR end "T__66"
 
-	partial void Enter_T__68();
-	partial void Leave_T__68();
+	partial void Enter_T__67();
+	partial void Leave_T__67();
 
-	// $ANTLR start "T__68"
-	[GrammarRule("T__68")]
-	private void mT__68()
+	// $ANTLR start "T__67"
+	[GrammarRule("T__67")]
+	private void mT__67()
 	{
-		Enter_T__68();
-		EnterRule("T__68", 40);
-		TraceIn("T__68", 40);
+		Enter_T__67();
+		EnterRule("T__67", 40);
+		TraceIn("T__67", 40);
 		try
 		{
-			int _type = T__68;
+			int _type = T__67;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:48:7: ( '@' )
 			DebugEnterAlt(1);
@@ -1552,26 +1551,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__68", 40);
-			LeaveRule("T__68", 40);
-			Leave_T__68();
+			TraceOut("T__67", 40);
+			LeaveRule("T__67", 40);
+			Leave_T__67();
 		}
 	}
-	// $ANTLR end "T__68"
+	// $ANTLR end "T__67"
 
-	partial void Enter_T__69();
-	partial void Leave_T__69();
+	partial void Enter_T__68();
+	partial void Leave_T__68();
 
-	// $ANTLR start "T__69"
-	[GrammarRule("T__69")]
-	private void mT__69()
+	// $ANTLR start "T__68"
+	[GrammarRule("T__68")]
+	private void mT__68()
 	{
-		Enter_T__69();
-		EnterRule("T__69", 41);
-		TraceIn("T__69", 41);
+		Enter_T__68();
+		EnterRule("T__68", 41);
+		TraceIn("T__68", 41);
 		try
 		{
-			int _type = T__69;
+			int _type = T__68;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:49:7: ( ':' )
 			DebugEnterAlt(1);
@@ -1587,26 +1586,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__69", 41);
-			LeaveRule("T__69", 41);
-			Leave_T__69();
+			TraceOut("T__68", 41);
+			LeaveRule("T__68", 41);
+			Leave_T__68();
 		}
 	}
-	// $ANTLR end "T__69"
+	// $ANTLR end "T__68"
 
-	partial void Enter_T__70();
-	partial void Leave_T__70();
+	partial void Enter_T__69();
+	partial void Leave_T__69();
 
-	// $ANTLR start "T__70"
-	[GrammarRule("T__70")]
-	private void mT__70()
+	// $ANTLR start "T__69"
+	[GrammarRule("T__69")]
+	private void mT__69()
 	{
-		Enter_T__70();
-		EnterRule("T__70", 42);
-		TraceIn("T__70", 42);
+		Enter_T__69();
+		EnterRule("T__69", 42);
+		TraceIn("T__69", 42);
 		try
 		{
-			int _type = T__70;
+			int _type = T__69;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:50:7: ( ';' )
 			DebugEnterAlt(1);
@@ -1622,26 +1621,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__70", 42);
-			LeaveRule("T__70", 42);
-			Leave_T__70();
+			TraceOut("T__69", 42);
+			LeaveRule("T__69", 42);
+			Leave_T__69();
 		}
 	}
-	// $ANTLR end "T__70"
+	// $ANTLR end "T__69"
 
-	partial void Enter_T__71();
-	partial void Leave_T__71();
+	partial void Enter_T__70();
+	partial void Leave_T__70();
 
-	// $ANTLR start "T__71"
-	[GrammarRule("T__71")]
-	private void mT__71()
+	// $ANTLR start "T__70"
+	[GrammarRule("T__70")]
+	private void mT__70()
 	{
-		Enter_T__71();
-		EnterRule("T__71", 43);
-		TraceIn("T__71", 43);
+		Enter_T__70();
+		EnterRule("T__70", 43);
+		TraceIn("T__70", 43);
 		try
 		{
-			int _type = T__71;
+			int _type = T__70;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:51:7: ( '#' )
 			DebugEnterAlt(1);
@@ -1657,26 +1656,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__71", 43);
-			LeaveRule("T__71", 43);
-			Leave_T__71();
+			TraceOut("T__70", 43);
+			LeaveRule("T__70", 43);
+			Leave_T__70();
 		}
 	}
-	// $ANTLR end "T__71"
+	// $ANTLR end "T__70"
 
-	partial void Enter_T__72();
-	partial void Leave_T__72();
+	partial void Enter_T__71();
+	partial void Leave_T__71();
 
-	// $ANTLR start "T__72"
-	[GrammarRule("T__72")]
-	private void mT__72()
+	// $ANTLR start "T__71"
+	[GrammarRule("T__71")]
+	private void mT__71()
 	{
-		Enter_T__72();
-		EnterRule("T__72", 44);
-		TraceIn("T__72", 44);
+		Enter_T__71();
+		EnterRule("T__71", 44);
+		TraceIn("T__71", 44);
 		try
 		{
-			int _type = T__72;
+			int _type = T__71;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:52:7: ( '$' )
 			DebugEnterAlt(1);
@@ -1692,26 +1691,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__72", 44);
-			LeaveRule("T__72", 44);
-			Leave_T__72();
+			TraceOut("T__71", 44);
+			LeaveRule("T__71", 44);
+			Leave_T__71();
 		}
 	}
-	// $ANTLR end "T__72"
+	// $ANTLR end "T__71"
 
-	partial void Enter_T__73();
-	partial void Leave_T__73();
+	partial void Enter_T__72();
+	partial void Leave_T__72();
 
-	// $ANTLR start "T__73"
-	[GrammarRule("T__73")]
-	private void mT__73()
+	// $ANTLR start "T__72"
+	[GrammarRule("T__72")]
+	private void mT__72()
 	{
-		Enter_T__73();
-		EnterRule("T__73", 45);
-		TraceIn("T__73", 45);
+		Enter_T__72();
+		EnterRule("T__72", 45);
+		TraceIn("T__72", 45);
 		try
 		{
-			int _type = T__73;
+			int _type = T__72;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:53:7: ( '%' )
 			DebugEnterAlt(1);
@@ -1727,26 +1726,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__73", 45);
-			LeaveRule("T__73", 45);
-			Leave_T__73();
+			TraceOut("T__72", 45);
+			LeaveRule("T__72", 45);
+			Leave_T__72();
 		}
 	}
-	// $ANTLR end "T__73"
+	// $ANTLR end "T__72"
 
-	partial void Enter_T__74();
-	partial void Leave_T__74();
+	partial void Enter_T__73();
+	partial void Leave_T__73();
 
-	// $ANTLR start "T__74"
-	[GrammarRule("T__74")]
-	private void mT__74()
+	// $ANTLR start "T__73"
+	[GrammarRule("T__73")]
+	private void mT__73()
 	{
-		Enter_T__74();
-		EnterRule("T__74", 46);
-		TraceIn("T__74", 46);
+		Enter_T__73();
+		EnterRule("T__73", 46);
+		TraceIn("T__73", 46);
 		try
 		{
-			int _type = T__74;
+			int _type = T__73;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:54:7: ( '^' )
 			DebugEnterAlt(1);
@@ -1762,26 +1761,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__74", 46);
-			LeaveRule("T__74", 46);
-			Leave_T__74();
+			TraceOut("T__73", 46);
+			LeaveRule("T__73", 46);
+			Leave_T__73();
 		}
 	}
-	// $ANTLR end "T__74"
+	// $ANTLR end "T__73"
 
-	partial void Enter_T__75();
-	partial void Leave_T__75();
+	partial void Enter_T__74();
+	partial void Leave_T__74();
 
-	// $ANTLR start "T__75"
-	[GrammarRule("T__75")]
-	private void mT__75()
+	// $ANTLR start "T__74"
+	[GrammarRule("T__74")]
+	private void mT__74()
 	{
-		Enter_T__75();
-		EnterRule("T__75", 47);
-		TraceIn("T__75", 47);
+		Enter_T__74();
+		EnterRule("T__74", 47);
+		TraceIn("T__74", 47);
 		try
 		{
-			int _type = T__75;
+			int _type = T__74;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:55:7: ( '&' )
 			DebugEnterAlt(1);
@@ -1797,26 +1796,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__75", 47);
-			LeaveRule("T__75", 47);
-			Leave_T__75();
+			TraceOut("T__74", 47);
+			LeaveRule("T__74", 47);
+			Leave_T__74();
 		}
 	}
-	// $ANTLR end "T__75"
+	// $ANTLR end "T__74"
 
-	partial void Enter_T__76();
-	partial void Leave_T__76();
+	partial void Enter_T__75();
+	partial void Leave_T__75();
 
-	// $ANTLR start "T__76"
-	[GrammarRule("T__76")]
-	private void mT__76()
+	// $ANTLR start "T__75"
+	[GrammarRule("T__75")]
+	private void mT__75()
 	{
-		Enter_T__76();
-		EnterRule("T__76", 48);
-		TraceIn("T__76", 48);
+		Enter_T__75();
+		EnterRule("T__75", 48);
+		TraceIn("T__75", 48);
 		try
 		{
-			int _type = T__76;
+			int _type = T__75;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:56:7: ( '{' )
 			DebugEnterAlt(1);
@@ -1832,26 +1831,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__76", 48);
-			LeaveRule("T__76", 48);
-			Leave_T__76();
+			TraceOut("T__75", 48);
+			LeaveRule("T__75", 48);
+			Leave_T__75();
 		}
 	}
-	// $ANTLR end "T__76"
+	// $ANTLR end "T__75"
 
-	partial void Enter_T__77();
-	partial void Leave_T__77();
+	partial void Enter_T__76();
+	partial void Leave_T__76();
 
-	// $ANTLR start "T__77"
-	[GrammarRule("T__77")]
-	private void mT__77()
+	// $ANTLR start "T__76"
+	[GrammarRule("T__76")]
+	private void mT__76()
 	{
-		Enter_T__77();
-		EnterRule("T__77", 49);
-		TraceIn("T__77", 49);
+		Enter_T__76();
+		EnterRule("T__76", 49);
+		TraceIn("T__76", 49);
 		try
 		{
-			int _type = T__77;
+			int _type = T__76;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:57:7: ( '}' )
 			DebugEnterAlt(1);
@@ -1867,26 +1866,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__77", 49);
-			LeaveRule("T__77", 49);
-			Leave_T__77();
+			TraceOut("T__76", 49);
+			LeaveRule("T__76", 49);
+			Leave_T__76();
 		}
 	}
-	// $ANTLR end "T__77"
+	// $ANTLR end "T__76"
 
-	partial void Enter_T__78();
-	partial void Leave_T__78();
+	partial void Enter_T__77();
+	partial void Leave_T__77();
 
-	// $ANTLR start "T__78"
-	[GrammarRule("T__78")]
-	private void mT__78()
+	// $ANTLR start "T__77"
+	[GrammarRule("T__77")]
+	private void mT__77()
 	{
-		Enter_T__78();
-		EnterRule("T__78", 50);
-		TraceIn("T__78", 50);
+		Enter_T__77();
+		EnterRule("T__77", 50);
+		TraceIn("T__77", 50);
 		try
 		{
-			int _type = T__78;
+			int _type = T__77;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:58:7: ( '~' )
 			DebugEnterAlt(1);
@@ -1902,26 +1901,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__78", 50);
-			LeaveRule("T__78", 50);
-			Leave_T__78();
+			TraceOut("T__77", 50);
+			LeaveRule("T__77", 50);
+			Leave_T__77();
 		}
 	}
-	// $ANTLR end "T__78"
+	// $ANTLR end "T__77"
 
-	partial void Enter_T__79();
-	partial void Leave_T__79();
+	partial void Enter_T__78();
+	partial void Leave_T__78();
 
-	// $ANTLR start "T__79"
-	[GrammarRule("T__79")]
-	private void mT__79()
+	// $ANTLR start "T__78"
+	[GrammarRule("T__78")]
+	private void mT__78()
 	{
-		Enter_T__79();
-		EnterRule("T__79", 51);
-		TraceIn("T__79", 51);
+		Enter_T__78();
+		EnterRule("T__78", 51);
+		TraceIn("T__78", 51);
 		try
 		{
-			int _type = T__79;
+			int _type = T__78;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:59:7: ( '.' )
 			DebugEnterAlt(1);
@@ -1937,26 +1936,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__79", 51);
-			LeaveRule("T__79", 51);
-			Leave_T__79();
+			TraceOut("T__78", 51);
+			LeaveRule("T__78", 51);
+			Leave_T__78();
 		}
 	}
-	// $ANTLR end "T__79"
+	// $ANTLR end "T__78"
 
-	partial void Enter_T__80();
-	partial void Leave_T__80();
+	partial void Enter_T__79();
+	partial void Leave_T__79();
 
-	// $ANTLR start "T__80"
-	[GrammarRule("T__80")]
-	private void mT__80()
+	// $ANTLR start "T__79"
+	[GrammarRule("T__79")]
+	private void mT__79()
 	{
-		Enter_T__80();
-		EnterRule("T__80", 52);
-		TraceIn("T__80", 52);
+		Enter_T__79();
+		EnterRule("T__79", 52);
+		TraceIn("T__79", 52);
 		try
 		{
-			int _type = T__80;
+			int _type = T__79;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:60:7: ( ',' )
 			DebugEnterAlt(1);
@@ -1972,26 +1971,26 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__80", 52);
-			LeaveRule("T__80", 52);
-			Leave_T__80();
+			TraceOut("T__79", 52);
+			LeaveRule("T__79", 52);
+			Leave_T__79();
 		}
 	}
-	// $ANTLR end "T__80"
+	// $ANTLR end "T__79"
 
-	partial void Enter_T__81();
-	partial void Leave_T__81();
+	partial void Enter_T__80();
+	partial void Leave_T__80();
 
-	// $ANTLR start "T__81"
-	[GrammarRule("T__81")]
-	private void mT__81()
+	// $ANTLR start "T__80"
+	[GrammarRule("T__80")]
+	private void mT__80()
 	{
-		Enter_T__81();
-		EnterRule("T__81", 53);
-		TraceIn("T__81", 53);
+		Enter_T__80();
+		EnterRule("T__80", 53);
+		TraceIn("T__80", 53);
 		try
 		{
-			int _type = T__81;
+			int _type = T__80;
 			int _channel = DefaultTokenChannel;
 			// MathLang.g:61:7: ( '_' )
 			DebugEnterAlt(1);
@@ -2007,12 +2006,12 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("T__81", 53);
-			LeaveRule("T__81", 53);
-			Leave_T__81();
+			TraceOut("T__80", 53);
+			LeaveRule("T__80", 53);
+			Leave_T__80();
 		}
 	}
-	// $ANTLR end "T__81"
+	// $ANTLR end "T__80"
 
 	partial void Enter_WS();
 	partial void Leave_WS();
@@ -2951,7 +2950,7 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 
 	public override void mTokens()
 	{
-		// MathLang.g:1:8: ( TRUE | FALSE | AND | OR | IF | THEN | ELSE | ELSIF | DIV | MOD | FOR | TO | DOWNTO | DO | WHILE | REPEAT | UNTIL | INT | REAL | CHAR | BOOL | VAR | BEGIN | END | PRINT | RINTSTR | INPUT | ARRAY | OF | CONST_ | FUNC | PROC | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | WS | SL_COMMENT | ML_COMMENT | NUMBER | IDENT | ADD | SUB | MUL | DIVIDE | ASSIGN | GE | LE | NEQUALS | EQUALS | GT | LT )
+		// MathLang.g:1:8: ( TRUE | FALSE | AND | OR | IF | THEN | ELSE | ELSIF | DIV | MOD | FOR | TO | DOWNTO | DO | WHILE | REPEAT | UNTIL | INT | REAL | CHAR | BOOL | VAR | BEGIN | END | PRINT | RINTSTR | INPUT | ARRAY | OF | CONST_ | FUNC | PROC | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | WS | SL_COMMENT | ML_COMMENT | NUMBER | IDENT | ADD | SUB | MUL | DIVIDE | ASSIGN | GE | LE | NEQUALS | EQUALS | GT | LT )
 		int alt9=69;
 		try { DebugEnterDecision(9, decisionCanBacktrack[9]);
 		try
@@ -3256,190 +3255,190 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 			break;
 		case 33:
 			DebugEnterAlt(33);
-			// MathLang.g:1:170: T__61
+			// MathLang.g:1:170: T__60
 			{
 			DebugLocation(1, 170);
-			mT__61(); 
+			mT__60(); 
 
 			}
 			break;
 		case 34:
 			DebugEnterAlt(34);
-			// MathLang.g:1:176: T__62
+			// MathLang.g:1:176: T__61
 			{
 			DebugLocation(1, 176);
-			mT__62(); 
+			mT__61(); 
 
 			}
 			break;
 		case 35:
 			DebugEnterAlt(35);
-			// MathLang.g:1:182: T__63
+			// MathLang.g:1:182: T__62
 			{
 			DebugLocation(1, 182);
-			mT__63(); 
+			mT__62(); 
 
 			}
 			break;
 		case 36:
 			DebugEnterAlt(36);
-			// MathLang.g:1:188: T__64
+			// MathLang.g:1:188: T__63
 			{
 			DebugLocation(1, 188);
-			mT__64(); 
+			mT__63(); 
 
 			}
 			break;
 		case 37:
 			DebugEnterAlt(37);
-			// MathLang.g:1:194: T__65
+			// MathLang.g:1:194: T__64
 			{
 			DebugLocation(1, 194);
-			mT__65(); 
+			mT__64(); 
 
 			}
 			break;
 		case 38:
 			DebugEnterAlt(38);
-			// MathLang.g:1:200: T__66
+			// MathLang.g:1:200: T__65
 			{
 			DebugLocation(1, 200);
-			mT__66(); 
+			mT__65(); 
 
 			}
 			break;
 		case 39:
 			DebugEnterAlt(39);
-			// MathLang.g:1:206: T__67
+			// MathLang.g:1:206: T__66
 			{
 			DebugLocation(1, 206);
-			mT__67(); 
+			mT__66(); 
 
 			}
 			break;
 		case 40:
 			DebugEnterAlt(40);
-			// MathLang.g:1:212: T__68
+			// MathLang.g:1:212: T__67
 			{
 			DebugLocation(1, 212);
-			mT__68(); 
+			mT__67(); 
 
 			}
 			break;
 		case 41:
 			DebugEnterAlt(41);
-			// MathLang.g:1:218: T__69
+			// MathLang.g:1:218: T__68
 			{
 			DebugLocation(1, 218);
-			mT__69(); 
+			mT__68(); 
 
 			}
 			break;
 		case 42:
 			DebugEnterAlt(42);
-			// MathLang.g:1:224: T__70
+			// MathLang.g:1:224: T__69
 			{
 			DebugLocation(1, 224);
-			mT__70(); 
+			mT__69(); 
 
 			}
 			break;
 		case 43:
 			DebugEnterAlt(43);
-			// MathLang.g:1:230: T__71
+			// MathLang.g:1:230: T__70
 			{
 			DebugLocation(1, 230);
-			mT__71(); 
+			mT__70(); 
 
 			}
 			break;
 		case 44:
 			DebugEnterAlt(44);
-			// MathLang.g:1:236: T__72
+			// MathLang.g:1:236: T__71
 			{
 			DebugLocation(1, 236);
-			mT__72(); 
+			mT__71(); 
 
 			}
 			break;
 		case 45:
 			DebugEnterAlt(45);
-			// MathLang.g:1:242: T__73
+			// MathLang.g:1:242: T__72
 			{
 			DebugLocation(1, 242);
-			mT__73(); 
+			mT__72(); 
 
 			}
 			break;
 		case 46:
 			DebugEnterAlt(46);
-			// MathLang.g:1:248: T__74
+			// MathLang.g:1:248: T__73
 			{
 			DebugLocation(1, 248);
-			mT__74(); 
+			mT__73(); 
 
 			}
 			break;
 		case 47:
 			DebugEnterAlt(47);
-			// MathLang.g:1:254: T__75
+			// MathLang.g:1:254: T__74
 			{
 			DebugLocation(1, 254);
-			mT__75(); 
+			mT__74(); 
 
 			}
 			break;
 		case 48:
 			DebugEnterAlt(48);
-			// MathLang.g:1:260: T__76
+			// MathLang.g:1:260: T__75
 			{
 			DebugLocation(1, 260);
-			mT__76(); 
+			mT__75(); 
 
 			}
 			break;
 		case 49:
 			DebugEnterAlt(49);
-			// MathLang.g:1:266: T__77
+			// MathLang.g:1:266: T__76
 			{
 			DebugLocation(1, 266);
-			mT__77(); 
+			mT__76(); 
 
 			}
 			break;
 		case 50:
 			DebugEnterAlt(50);
-			// MathLang.g:1:272: T__78
+			// MathLang.g:1:272: T__77
 			{
 			DebugLocation(1, 272);
-			mT__78(); 
+			mT__77(); 
 
 			}
 			break;
 		case 51:
 			DebugEnterAlt(51);
-			// MathLang.g:1:278: T__79
+			// MathLang.g:1:278: T__78
 			{
 			DebugLocation(1, 278);
-			mT__79(); 
+			mT__78(); 
 
 			}
 			break;
 		case 52:
 			DebugEnterAlt(52);
-			// MathLang.g:1:284: T__80
+			// MathLang.g:1:284: T__79
 			{
 			DebugLocation(1, 284);
-			mT__80(); 
+			mT__79(); 
 
 			}
 			break;
 		case 53:
 			DebugEnterAlt(53);
-			// MathLang.g:1:290: T__81
+			// MathLang.g:1:290: T__80
 			{
 			DebugLocation(1, 290);
-			mT__81(); 
+			mT__80(); 
 
 			}
 			break;
@@ -3901,7 +3900,7 @@ public partial class MathLangLexer : Antlr.Runtime.Lexer
 			this.transition = DFA9_transition;
 		}
 
-		public override string Description { get { return "1:1: Tokens : ( TRUE | FALSE | AND | OR | IF | THEN | ELSE | ELSIF | DIV | MOD | FOR | TO | DOWNTO | DO | WHILE | REPEAT | UNTIL | INT | REAL | CHAR | BOOL | VAR | BEGIN | END | PRINT | RINTSTR | INPUT | ARRAY | OF | CONST_ | FUNC | PROC | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | WS | SL_COMMENT | ML_COMMENT | NUMBER | IDENT | ADD | SUB | MUL | DIVIDE | ASSIGN | GE | LE | NEQUALS | EQUALS | GT | LT );"; } }
+		public override string Description { get { return "1:1: Tokens : ( TRUE | FALSE | AND | OR | IF | THEN | ELSE | ELSIF | DIV | MOD | FOR | TO | DOWNTO | DO | WHILE | REPEAT | UNTIL | INT | REAL | CHAR | BOOL | VAR | BEGIN | END | PRINT | RINTSTR | INPUT | ARRAY | OF | CONST_ | FUNC | PROC | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | WS | SL_COMMENT | ML_COMMENT | NUMBER | IDENT | ADD | SUB | MUL | DIVIDE | ASSIGN | GE | LE | NEQUALS | EQUALS | GT | LT );"; } }
 
 		public override void Error(NoViableAltException nvae)
 		{

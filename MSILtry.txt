@@ -6,49 +6,65 @@
        extends [mscorlib]System.Object
 {
   .field public static int32 n
-  .field public static int32 r
-  .field public static int32 m
-  .field public static char ch
+  .field public static char[] ch
   .field public static int32[] arr
-  .method public static int32 Year ( int32 d,int32& k ) cil managed {
-    .locals init (
-      [0] int32
-    )
-    L_000003: ldarg 1
-    L_000004: ldc.i4 500
-    L_000005: stind.i4 
-    L_000006: ldarg 0
-    L_000007: ldarg 0
-    L_000008: mul
-    L_000009: stloc 0
-    L_000010: ldloc 0
-    L_000011: ret
-  }
   .method public hidebysig static void main() cil managed {
     .entrypoint
     L_000000: ldc.i4 10
-    L_000001: newarr     [mscorlib]System.Int32
-    L_000002: stsfld     int32[] Program::arr
-    L_000012: ldc.i4.s 0x68
-    L_000013: stsfld      char Program::ch
-    L_000014: ldsfld     char Program::ch
-    L_000015: call void [mscorlib]System.Console::WriteLine(char)
+    L_000001: newarr     [mscorlib]System.Char
+    L_000002: stsfld     char[] Program::ch
+    L_000003: ldc.i4 10
+    L_000004: newarr     [mscorlib]System.Int32
+    L_000005: stsfld     int32[] Program::arr
+    L_000006: ldsfld     char[] Program::ch
+    L_000007: ldc.i4 1
+    L_000008: ldc.i4 1
+    L_000009: sub
+    L_000010: ldc.i4.s 0x68
+    L_000011: stelem.i4 
+    L_000012: ldsfld     char[] Program::ch
+    L_000013: ldc.i4 2
+    L_000014: ldc.i4 1
+    L_000015: sub
     L_000016: ldc.i4.s 0x65
-    L_000017: stsfld      char Program::ch
-    L_000018: ldsfld     char Program::ch
-    L_000019: call void [mscorlib]System.Console::WriteLine(char)
-    L_000020: ldc.i4.s 0x6C
-    L_000021: stsfld      char Program::ch
-    L_000022: ldsfld     char Program::ch
-    L_000023: call void [mscorlib]System.Console::WriteLine(char)
-    L_000024: ldc.i4.s 0x6C
-    L_000025: stsfld      char Program::ch
-    L_000026: ldsfld     char Program::ch
-    L_000027: call void [mscorlib]System.Console::WriteLine(char)
-    L_000028: ldc.i4.s 0x6F
-    L_000029: stsfld      char Program::ch
-    L_000030: ldsfld     char Program::ch
-    L_000031: call void [mscorlib]System.Console::WriteLine(char)
-    L_000032: ret
+    L_000017: stelem.i4 
+    L_000018: ldsfld     char[] Program::ch
+    L_000019: ldc.i4 3
+    L_000020: ldc.i4 1
+    L_000021: sub
+    L_000022: ldc.i4.s 0x6C
+    L_000023: stelem.i4 
+    L_000024: ldsfld     char[] Program::ch
+    L_000025: ldc.i4 4
+    L_000026: ldc.i4 1
+    L_000027: sub
+    L_000028: ldc.i4.s 0x6C
+    L_000029: stelem.i4 
+    L_000030: ldsfld     char[] Program::ch
+    L_000031: ldc.i4 5
+    L_000032: ldc.i4 1
+    L_000033: sub
+    L_000034: ldc.i4.s 0x6F
+    L_000035: stelem.i4 
+    L_000036: ldc.i4 1
+    L_000037: stsfld      int32 Program::n
+    L_000038: ldsfld     int32 Program::n
+    L_000039: ldc.i4 5
+    L_000040: cgt
+    L_000041: ldc.i4 0
+    L_000042: ceq
+    L_000043: brfalse L_000055
+    L_000044: ldsfld     char[] Program::ch
+    L_000045: ldsfld     int32 Program::n
+    L_000046: ldc.i4 1
+    L_000047: sub
+    L_000048: ldelem.i4 
+    L_000049: call void [mscorlib]System.Console::WriteLine(char)
+    L_000050: ldc.i4 1
+    L_000051: ldsfld     int32 Program::n
+    L_000052: add
+    L_000053: stsfld      int32 Program::n
+    L_000054: br L_000038
+    L_000055: ret
   }
 }

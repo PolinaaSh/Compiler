@@ -1,23 +1,21 @@
-var n,r,m:integer;
-    ch:char;
-    arr:array [1 .. 10] of integer;
-function Year(d:integer;var k:integer):integer; 
+var n:integer;
+    ch:array [1 .. 10] of char;
+   arr:array [1 .. 10] of integer;
+/*function Year(d:integer;var k:integer):integer; 
 begin 
 k:=500; 
 result:=d*d; 
-end;
+end;*/
 
 begin
-ch:='h';
-print ch;
-ch:='e';
-print ch;
-ch:='l';
-print ch;
-ch:='l';
-print ch;
-ch:='o';
-print ch;
+ch[1]:='h';
+ch[2]:='e';
+ch[3]:='l';
+ch[4]:='l';
+ch[5]:='o';
+for n:=1 to 5 do
+print ch[n];
+
 /*n:=0;
 arr[1+n]:=15;
 n:=3;
