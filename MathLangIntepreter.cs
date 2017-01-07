@@ -55,7 +55,7 @@ namespace MathLang
           varTable[node.GetChild(0).Text] = ExecuteNode(node.GetChild(1));
           break;
 
-        case AstNodeType.PRINT:
+        case AstNodeType.WRITE:
           Console.WriteLine(ExecuteNode(node.GetChild(0)).ToString(NFI));
           break;
 

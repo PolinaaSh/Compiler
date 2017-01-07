@@ -8,13 +8,22 @@ result:=d*d;
 end;*/
 
 begin
-ch[1]:='h';
+ch[1]:='o';
+ch[2]:='f';
+writeln ch[1];
+writeln ch[2];
+/*ch[1]:='h';
 ch[2]:='e';
 ch[3]:='l';
 ch[4]:='l';
 ch[5]:='o';
 for n:=1 to 5 do
-print ch[n];
+write ch[n];
+arr[1]:=arr[2];*/
+
+ch[1]:=ch[2];
+writeln ch[1];
+writeln ch[2];
 
 /*n:=0;
 arr[1+n]:=15;

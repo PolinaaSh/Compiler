@@ -40,8 +40,8 @@ tokens {
   VAR     = 'var'      ;
   BEGIN   = 'begin'    ;
   END     = 'end'      ;
-  PRINT   = 'print'    ;
-  RINTSTR = 'printStr' ;
+  WRITE   = 'write'    ;
+  WRITELN = 'writeln'  ;
   INPUT   = 'input'    ;
   ARRAY   = 'array'    ;
   OF      = 'of'       ;
@@ -119,7 +119,8 @@ index_: term
 
 simpleExpr:
  IDENT ASSIGN^ term
-| PRINT^ term
+| WRITE^ term
+| WRITELN^ term
 |( IDENT '[' index_']' ASSIGN term)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) term)
 | call
 ;

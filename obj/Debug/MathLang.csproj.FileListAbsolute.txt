@@ -62,4 +62,3 @@ C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.exe
 C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.pdb
 C:\Users\Полина\Source\Repos\Compiler\bin\Debug\MathLang.exe
 C:\Users\Полина\Source\Repos\Compiler\bin\Debug\MathLang.pdb
-C:\Users\Полина\Source\Repos\Compiler\obj\Debug\MathLang.csprojResolveAssemblyReference.cache
