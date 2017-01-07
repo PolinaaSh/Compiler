@@ -157,6 +157,7 @@ namespace MathLang
                         FillVars(node.GetChild(0).GetChild(0).Cast(),scope);
                     }
                     else
+                        if(node.Parent.Text == ":=" && node.Parent.ChildCount==2)
                         node.IdentDescription = AddScopeInNode(scope, node);
                     #endregion
                     return;

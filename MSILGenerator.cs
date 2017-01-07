@@ -220,6 +220,14 @@ namespace MathLang
                     GenWriteln(node, sb);
                     break;
 
+                case MathLangLexer.READ:
+                    GenRead(node, sb);
+                    break;
+
+                case MathLangLexer.READLN:
+                    GenReadln(node, sb);
+                    break;
+
                 case MathLangLexer.ELSIF:
                     GenElsif(node, sb);
                     break;
@@ -480,16 +488,6 @@ namespace MathLang
                 {
                     Gen((NodeData)node.GetChild(1), sb);
                     StIdent(node.GetChild(0).Cast(),sb);
-                   /* if (node.GetChild(0).GetChild(0).Text.Contains("Local"))
-                        sb.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0))));
-                    else if (node.GetChild(0).GetChild(0).Text.Contains("Param"))
-                    {
-                        sb.Append(string.Format("    L_{0:D6}: starg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0))));
-                    }
-                    else if (node.GetChild(0).GetChild(0).Text.Contains("Global"))
-                    {
-                        sb.Append(string.Format("    L_{0:D6}: stsfld       Program::{1}\n", lineNum++, node.GetChild(0).Text));
-                    }*/
                 }
             }
         }
@@ -642,15 +640,6 @@ namespace MathLang
                 sb0.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
             }
               StIdent(node.GetChild(0).GetChild(0).Cast(),sb0);
-            /*if (node.GetChild(0).GetChild(0).GetChild(0).Text.Contains("Local"))
-                sb0.Append(string.Format("    L_{0:D6}: stloc {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
-            else if (node.GetChild(0).Text.Contains("Param"))
-            {
-                sb.Append(string.Format("    L_{0:D6}: starg {1}\n", lineNum++, GetVarNum((NodeData)node.GetChild(0).GetChild(0))));
-            }
-            else
-                sb0.Append(string.Format("    L_{0:D6}: stsfld      int32 Program::{1}\n", lineNum++, (NodeData)node.GetChild(0).GetChild(0)));
-            */
             sb0.Append(string.Format("    L_{0:D6}: br L_{1:D6}\n", lineNum++, line1));
             sb.Append(string.Format("    L_{0:D6}: brfalse L_{1:D6}\n", line2, lineNum));
             sb.Append(sb0);
@@ -680,13 +669,42 @@ namespace MathLang
         }
         public void GenWrite(NodeData node, StringBuilder sb)
         {
-            Gen((NodeData)node.GetChild(0), sb);
-            sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::Write({1})\n", lineNum++, ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower())));
+            if (node.ChildCount == 3)
+            {
+                if (node.ChildCount == 3)
+                {
+                    sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(1).Text)));
+                    sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::Write({1})\n", lineNum++, "char"));
+                }
+            }
+            else
+            {
+                Gen((NodeData)node.GetChild(0), sb);
+                sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::Write({1})\n", lineNum++, ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower())));
+            }
         }
         public void GenWriteln(NodeData node, StringBuilder sb)
         {
-            Gen((NodeData)node.GetChild(0), sb);
-            sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine({1})\n", lineNum++, ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower())));
+            if (node.ChildCount == 3)
+            {
+                sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(1).Text)));
+                sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine({1})\n", lineNum++, "char"));
+            }
+            else
+            {
+                Gen((NodeData)node.GetChild(0), sb);
+                sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine({1})\n", lineNum++, ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower())));
+            }
+        }
+        public void GenRead(NodeData node, StringBuilder sb)
+        {
+            sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::Read()\n", lineNum++));
+       
+        }
+        public void GenReadln(NodeData node, StringBuilder sb)
+        {
+            sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
+            sb.Append(string.Format("    L_{0:D6}: pop\n", lineNum++));    
         }
         public bool CheckVar(NodeData node,int n)//передаю узел с параметрами
         {

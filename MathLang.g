@@ -40,8 +40,10 @@ tokens {
   VAR     = 'var'      ;
   BEGIN   = 'begin'    ;
   END     = 'end'      ;
-  WRITE   = 'write'    ;
-  WRITELN = 'writeln'  ;
+  WRITE   = 'Write'    ;
+  WRITELN = 'Writeln'  ;
+  READ    = 'Read'     ;
+  READLN  = 'Readln'   ;
   INPUT   = 'input'    ;
   ARRAY   = 'array'    ;
   OF      = 'of'       ;
@@ -55,7 +57,7 @@ tokens {
 
 
 WS:
-  ( ' ' | '\t' |  '\f' | '\r' | '\n' )+ {
+  (  ' ' |'\t' | '\f' | '\r' | '\n' )+ {
     $channel=Hidden;
   }
 ;
@@ -119,8 +121,6 @@ index_: term
 
 simpleExpr:
  IDENT ASSIGN^ term
-| WRITE^ term
-| WRITELN^ term
 |( IDENT '[' index_']' ASSIGN term)-> ^(ASSIGN ^( IDENT ^(INDEX  index_) ) term)
 | call
 ;
@@ -184,6 +184,10 @@ proc_sign^ ';'! const_* vars* groupExpr ';'!
 call:
 IDENT '(' params_ ')' -> ^(CALL IDENT params_)
 | (i1=IDENT ASSIGN i2=IDENT '(' params_ ')') ->^(ASSIGN $i1 ^(CALL $i2 params_))
+| WRITE^ term
+| WRITELN^ term
+| READ '('! ')'!
+| READLN '('! ')'!
 ;
 
 exprList: 

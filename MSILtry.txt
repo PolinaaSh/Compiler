@@ -17,51 +17,37 @@
     L_000004: newarr     [mscorlib]System.Int32
     L_000005: stsfld     int32[] Program::arr
     L_000006: ldsfld     char[] Program::ch
-    L_000007: ldc.i4 1
+    L_000007: ldc.i4 2
     L_000008: ldc.i4 1
     L_000009: sub
-    L_000010: ldc.i4.s 0x6F
+    L_000010: ldc.i4.s 0x2F
     L_000011: stelem.i4 
     L_000012: ldsfld     char[] Program::ch
-    L_000013: ldc.i4 2
+    L_000013: ldc.i4 1
     L_000014: ldc.i4 1
     L_000015: sub
-    L_000016: ldc.i4.s 0x66
-    L_000017: stelem.i4 
-    L_000018: ldsfld     char[] Program::ch
-    L_000019: ldc.i4 1
-    L_000020: ldc.i4 1
-    L_000021: sub
-    L_000022: ldelem.i4 
-    L_000023: call void [mscorlib]System.Console::WriteLine(char)
-    L_000024: ldsfld     char[] Program::ch
-    L_000025: ldc.i4 2
-    L_000026: ldc.i4 1
-    L_000027: sub
-    L_000028: ldelem.i4 
-    L_000029: call void [mscorlib]System.Console::WriteLine(char)
-    L_000030: ldsfld     char[] Program::ch
-    L_000031: ldc.i4 1
-    L_000032: ldc.i4 1
-    L_000033: sub
-    L_000034: ldsfld     char[] Program::ch
-    L_000035: ldc.i4 2
-    L_000036: ldc.i4 1
-    L_000037: sub
-    L_000038: ldelem.i4 
-    L_000039: stelem.i4 
-    L_000040: ldsfld     char[] Program::ch
-    L_000041: ldc.i4 1
-    L_000042: ldc.i4 1
-    L_000043: sub
-    L_000044: ldelem.i4 
-    L_000045: call void [mscorlib]System.Console::WriteLine(char)
-    L_000046: ldsfld     char[] Program::ch
-    L_000047: ldc.i4 2
-    L_000048: ldc.i4 1
-    L_000049: sub
-    L_000050: ldelem.i4 
-    L_000051: call void [mscorlib]System.Console::WriteLine(char)
-    L_000052: ret
+    L_000016: ldsfld     char[] Program::ch
+    L_000017: ldc.i4 2
+    L_000018: ldc.i4 1
+    L_000019: sub
+    L_000020: ldelem.i4 
+    L_000021: stelem.i4 
+    L_000022: ldsfld     char[] Program::ch
+    L_000023: ldc.i4 1
+    L_000024: ldc.i4 1
+    L_000025: sub
+    L_000026: ldelem.i4 
+    L_000027: call void [mscorlib]System.Console::Write(char)
+    L_000028: ldsfld     char[] Program::ch
+    L_000029: ldc.i4 2
+    L_000030: ldc.i4 1
+    L_000031: sub
+    L_000032: ldelem.i4 
+    L_000033: call void [mscorlib]System.Console::Write(char)
+    L_000034: ldc.i4.s 0x67
+    L_000035: call void [mscorlib]System.Console::WriteLine(char)
+    L_000036: call string [mscorlib]System.Console::ReadLine()
+    L_000037: pop
+    L_000038: ret
   }
 }
