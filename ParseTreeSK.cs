@@ -150,15 +150,18 @@ namespace MathLang
                         NodeData splitedNode = new NodeData(new TokenSs(MathLangLexer.UNKNOWN, "Local"));
                         node.AddChild(splitedNode);
                     }
-                    else if(node.ChildCount>0 && node.GetChild(0).Text=="INDEX")
+                    else if (node.ChildCount > 0 && node.GetChild(0).Text == "INDEX")
                     {
                         node.IdentDescription = AddScopeInNode(scope, node);
-                       // AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
-                        FillVars(node.GetChild(0).GetChild(0).Cast(),scope);
+                        // AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
+                        FillVars(node.GetChild(0).GetChild(0).Cast(), scope);
                     }
                     else
-                        if(node.Parent.Text == ":=" && node.Parent.ChildCount==2)
+                    {
+                        if (node.Parent.Text == ":=" && node.Parent.ChildCount == 4)
+                            return;
                         node.IdentDescription = AddScopeInNode(scope, node);
+                    }
                     #endregion
                     return;
                 case MathLangLexer.VAR:
@@ -269,6 +272,10 @@ namespace MathLang
                 case MathLangLexer.LE:
                     #region logicOperation
                     {
+                        if ((node.Parent.Text == "Write" || node.Parent.Text == "Writeln") && node.Parent.ChildCount == 3)
+                        {
+                            return;
+                        }
                         // Проверяю используемые переменные и определяю их тип.
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), scope);
@@ -398,7 +405,7 @@ namespace MathLang
                         for (int i = 0; i < node.ChildCount; i++)
                             FillVars(node.GetChild(i).Cast(), newScopeVar);
 
-                        if (node.GetChild(1).ChildCount != 0 && node.GetChild(1)./*GetChild(0).*/TypeData() != DataType.Boolean)
+                        if (node.GetChild(1).Text != "LE" && node.GetChild(1).Text != "LT")
                             throw new ApplicationException(string.Format("SSKA. In for condition type is {0}", node.GetChild(1).GetChild(0).TypeData()));
                     }
                     #endregion
@@ -504,7 +511,7 @@ namespace MathLang
             NodeData castToType = new NodeData(new TokenSs(MathLangLexer.UNKNOWN, type.ToString()));
             castToType.TypeData = type;
 
-            NodeData convert = new NodeData(new TokenSs(MathLangLexer.UNKNOWN, "CONVERT"));
+            NodeData convert = new NodeData(new TokenSs(MathLangLexer.CONVERT, "CONVERT"));
             node.Parent.SetChild(node.ChildIndex, convert);
             convert.TypeData = type;
             convert.AddChild(node);

@@ -80,7 +80,7 @@ namespace MathLang
                         if(node.GetChild(0).Text=="integer")
                             arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Int32\n", lineNum++));
                         else if(node.GetChild(0).Text=="real")
-                            arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Float32\n", lineNum++));
+                            arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Single\n", lineNum++));
                         else if(node.GetChild(0).Text=="char")
                             arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Char\n", lineNum++));
                          arr.Append(string.Format("    L_{0:D6}: stsfld     {1}[] Program::{2}\n", lineNum++, ToMsilType(node.GetChild(0).Text), node.GetChild(2).Text));
@@ -154,6 +154,10 @@ namespace MathLang
 
                 case MathLangLexer.ASSIGN:
                     GenAssign(node, sb);                   
+                    break;
+
+                case MathLangLexer.CONVERT:
+                    GenConvert(node, sb);
                     break;
 
                 case MathLangLexer.EQUALS:
@@ -293,7 +297,9 @@ namespace MathLang
                 Gen((NodeData)node.GetChild(i), sb);
             sb.Append(string.Format("    L_{0:D6}: ret\n", lineNum++));
             sb.Append("  }\n}\n");
-            System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());
+           // System.IO.File.WriteAllText(@"C:\Users\Полина\Source\Repos\Compiler\MSILtry.txt", sb.ToString());
+            System.IO.File.WriteAllText(@"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSILtry.txt", sb.ToString());
+               
         }
         public void GenFunc(NodeData node, StringBuilder sb)
         {
@@ -440,7 +446,10 @@ namespace MathLang
                 Gen(node.GetChild(0).GetChild(0).Cast(),sb);
                 sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
                 sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
+                if(node.IdentDescription.TypeData == DataType.Integer)
                 sb.Append(string.Format("    L_{0:D6}: ldelem.i4 \n", lineNum++));
+                else if (node.IdentDescription.TypeData == DataType.Real)
+                    sb.Append(string.Format("    L_{0:D6}: ldelem.r4 \n", lineNum++));
             }
             else
             {
@@ -490,6 +499,14 @@ namespace MathLang
                     StIdent(node.GetChild(0).Cast(),sb);
                 }
             }
+        }
+        public void GenConvert(NodeData node, StringBuilder sb)
+        {
+            Gen((NodeData)node.GetChild(0), sb);
+            if(node.GetChild(1).Text =="Real")
+                sb.Append(string.Format("    L_{0:D6}: conv.r4 \n", lineNum++));
+            else if (node.GetChild(1).Text == "Integer")
+                sb.Append(string.Format("    L_{0:D6}:  conv.i4 \n", lineNum++));               
         }
         public void GenEquals(NodeData node, StringBuilder sb)
         {
@@ -693,6 +710,7 @@ namespace MathLang
             else
             {
                 Gen((NodeData)node.GetChild(0), sb);
+                //TryConvert(node.GetChild(0).Cast(),sb);
                 sb.Append(string.Format("    L_{0:D6}: call void [mscorlib]System.Console::WriteLine({1})\n", lineNum++, ToMsilType(node.GetChild(0).Cast().TypeData.ToString().ToLower())));
             }
         }

@@ -1,37 +1,16 @@
 var n:integer;
-    ch:array [1 .. 10] of char;
-   arr:array [1 .. 10] of integer;
-/*function Year(d:integer;var k:integer):integer; 
-begin 
-k:=500; 
-result:=d*d; 
-end;*/
+    r:array [1 .. 10] of real;
 
 begin
-/*ch[1]:='h';
-ch[2]:='e';
-ch[3]:='l';
-ch[4]:='l';
-ch[5]:='o';
-for n:=1 to 5 do
-write ch[n];
-arr[1]:=arr[2];*/
-ch[2]:='/';
-ch[1]:=ch[2];
-Write ch[1];
-Write ch[2];
-Writeln 'g';
-Readln();
-
-/*n:=0;
-arr[1+n]:=15;
-n:=3;
-m:=2;
-r:=Year(8,n);
-print r;
-print n;
-for m:=1 to 10 do
-print arr[m];*/
+r[1]:=45;
+Writeln r[1];
+r[2]:=2;
+Writeln r[2];
+if r[1]>r[2] then begin
+Write r[1];
+Write '>';
+Write r[2];
+end;
 end.
 
 

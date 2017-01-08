@@ -26,7 +26,6 @@ namespace MathLang
                 Scope globalScope = new ParseTreeSk().Run(program);
                AstNodePrinter.Print(program);
                 Console.WriteLine();
-                //MathLangIntepreter.Execute(program);
                 Console.WriteLine(MSILGenerator.Gen(program));
                
             }
