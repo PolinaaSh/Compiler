@@ -1,17 +1,17 @@
 const N=10;
-var n:integer;
-c:char;
+var// n:integer;
+//c:char;
     r:array [1 .. 10] of real;
 
 begin
-c:='k';
-Writeln(c);
+/*c:='k';
+Writeln(c);*/
 Writeln N;
-/*r[1]:=45;
+r[1]:=45.1;
 Writeln r[1];
-r[2]:=2;
+r[2]:=2.4;
 Writeln r[2];
-if r[1]>r[2] then begin
+/*if r[1]>r[2] then begin
 Write r[1];
 Write '>';
 Write r[2];

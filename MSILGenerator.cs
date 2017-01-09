@@ -473,7 +473,10 @@ namespace MathLang
         }
         public void GenNumber(NodeData node, StringBuilder sb)
         {
-            sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, node.Text));
+            if(!node.Text.Contains('.'))
+                sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, node.Text));
+            else
+                sb.Append(string.Format("    L_{0:D6}: ldc.r4 {1}\n", lineNum++, node.Text));
         }
         public void GenAssign(NodeData node, StringBuilder sb)
         {
@@ -483,18 +486,20 @@ namespace MathLang
                 StIdent(node.GetChild(0).Cast(), sb);
                 return;
             }
-            if (node.GetChild(0).GetChild(0).Text.ToLower() == "index")//если массив
+            if (node.GetChild(0).Cast().IdentDescription.IsArray/*GetChild(0).Text.ToLower() == "index"*/)//если массив
             {
                 LoadIdent(node.GetChild(0).Cast(),sb);
                 Gen(node.GetChild(0).GetChild(0).GetChild(0).Cast(),sb);
                 sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
                 sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
                 if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4)
-                    sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++,
-                sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++,  GenCharCode(node.GetChild(2).Text)))));
+                    sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(2).Text)));
                 else //if (node.GetChild(0).Cast().TypeData != DataType.Char )
                 Gen((NodeData)node.GetChild(1), sb);
+                if(node.GetChild(0).Cast().IdentDescription.TypeData==DataType.Integer)
                 sb.Append(string.Format("    L_{0:D6}: stelem.i4 \n", lineNum++));
+                else if (node.GetChild(0).Cast().IdentDescription.TypeData == DataType.Real)
+                    sb.Append(string.Format("    L_{0:D6}: stelem.r4 \n", lineNum++));
             }
             else if (node.GetChild(0).Text == "result")//если возвр значение
             {
