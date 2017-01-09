@@ -77,12 +77,18 @@ namespace MathLang
                     {
                         sb.Append(string.Format("  .field public static {0}[] {1}\n", type, node.GetChild(2).Text));
                         arr.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, node.GetChild(4).Text));
-                        if(node.GetChild(0).Text=="integer")
+                        if (node.GetChild(0).Text == "integer")
+                        {
                             arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Int32\n", lineNum++));
-                        else if(node.GetChild(0).Text=="real")
+                        }
+                        else if (node.GetChild(0).Text == "real")
+                        {
                             arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Single\n", lineNum++));
-                        else if(node.GetChild(0).Text=="char")
+                        }
+                        else if (node.GetChild(0).Text == "char")
+                        {
                             arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Char\n", lineNum++));
+                        }
                          arr.Append(string.Format("    L_{0:D6}: stsfld     {1}[] Program::{2}\n", lineNum++, ToMsilType(node.GetChild(0).Text), node.GetChild(2).Text));
                     }
                     else
@@ -99,19 +105,12 @@ namespace MathLang
             if (node.Type == MathLangLexer.CONST_)
             {
                 string type = ToMsilType(node.GetChild(0).Text);
-                int num;
-                num = GetVarNum((NodeData)node.GetChild(1));
-                sb.Append(string.Format("    .field public static [{0}] {1},\n", type, num));
-                sb.Append(string.Format("    .method private hidebysig specialname rtspecialname static void .cctor() cil managed {.maxstack 8 \n"));
-                sb.Append(String.Format("    L_{0:D6}: ldc.i4.{1}\n ",lineNum++,num));
-                sb.Append(String.Format("    L_{0:D6}: stsfld int32 commands.Program::a\n }\n ",lineNum++));
+                string val = node.GetChild(1).GetChild(0).Text;
+                sb.Append(string.Format("  .field public static {0} {1}\n", type, node.GetChild(1).Text));
             }
         }
-
         private void Gen(NodeData node, StringBuilder sb)
         {
-            //StringBuilder sb0;
-
             if (node == null)
                 return;
 
@@ -263,12 +262,16 @@ namespace MathLang
         {
             for (int i = 0; i < node.ChildCount; i++)
             {
-                if (node.GetChild(i).Text == "var" || node.GetChild(i).Text == "const")
+                if (node.GetChild(i).Text == "var")
                 {
                     GenGlobalVars((NodeData)node.GetChild(i), sb);
                 }
+                else if(node.GetChild(i).Text=="const")
+                {
+                    GenGlobalConst((NodeData)node.GetChild(i), sb);
+                }
                 else
-                    Gen((NodeData)node.GetChild(i), sb);
+                Gen((NodeData)node.GetChild(i), sb);
             }
         }
         public void GenBlock(NodeData node, StringBuilder sb)
@@ -313,6 +316,10 @@ namespace MathLang
             StringBuilder sb0 = new StringBuilder();
             for (int i = 3; i < node.ChildCount;i++)
             {
+                if (node.GetChild(i).Text == "const" /*&& !haveVar*/)
+                {
+                    //GenLocalConst();
+                }
                  if(node.GetChild(i).Text=="var" && !haveVar)
                 {
                     Gen((NodeData)node.GetChild(i), sb0);
@@ -440,7 +447,7 @@ namespace MathLang
         }
         public void GenIdent(NodeData node, StringBuilder sb)
         {
-            if (node.GetChild(0).Text.ToLower() == "index")
+            if (node.IdentDescription.IsArray/*node.GetChild(0).Text.ToLower() == "index"*/)
             {                
                 LoadIdent(node,sb);
                 Gen(node.GetChild(0).GetChild(0).Cast(),sb);
@@ -450,6 +457,14 @@ namespace MathLang
                 sb.Append(string.Format("    L_{0:D6}: ldelem.i4 \n", lineNum++));
                 else if (node.IdentDescription.TypeData == DataType.Real)
                     sb.Append(string.Format("    L_{0:D6}: ldelem.r4 \n", lineNum++));
+            }
+            else if(node.IdentDescription.IsConst)
+            {
+                string value = node.IdentDescription.Node.GetChild(1).GetChild(0).Text;
+                if(node.IdentDescription.TypeData==DataType.Integer)
+                sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, value));
+                else if (node.IdentDescription.TypeData==DataType.Real)
+                    sb.Append(string.Format("    L_{0:D6}: ldc.r4 {1}\n", lineNum++, value));
             }
             else
             {
@@ -464,7 +479,7 @@ namespace MathLang
         {
             if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4 && !node.GetChild(0).Cast().IdentDescription.IsArray)
             {
-                sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(2).Text)));
+                sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++,GenCharCode(node.GetChild(2).Text)));
                 StIdent(node.GetChild(0).Cast(), sb);
                 return;
             }
@@ -475,7 +490,8 @@ namespace MathLang
                 sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
                 sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
                 if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4)
-                    sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(2).Text)));
+                    sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++,
+                sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++,  GenCharCode(node.GetChild(2).Text)))));
                 else //if (node.GetChild(0).Cast().TypeData != DataType.Char )
                 Gen((NodeData)node.GetChild(1), sb);
                 sb.Append(string.Format("    L_{0:D6}: stelem.i4 \n", lineNum++));

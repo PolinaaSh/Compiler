@@ -100,7 +100,7 @@ group:
 | NUMBER
 | IDENT
 | (IDENT '[' index_']') ->^(IDENT ^(INDEX index_))
-| '\'' charValue '\''
+| '\'' . '\''
 ;
 
 mult: group ( ( MUL | DIVIDE )^ group )*  ;

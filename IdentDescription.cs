@@ -25,13 +25,15 @@ namespace MathLang
         private IdentType typeIdent;
         private DataType dataType;
         private bool isArray;
+        private bool isConst;
         private ITree node;
         private int indexVar;// для глобальных своя для лок своя, для парам своя. для локальных если встречается дважды кинуть в разные.
 
-        public IdentDescription(ITree node, DataType dataType, IdentType typeIdent, bool isArray)
+        public IdentDescription(ITree node, DataType dataType, IdentType typeIdent, bool isArray, bool isConst)
         {
             this.node = node;
             this.isArray = isArray;
+            this.isConst = isConst;
             this.dataType = dataType;
             this.typeIdent = typeIdent;
         }
@@ -50,6 +52,12 @@ namespace MathLang
         {
             get { return isArray; }
         }
+
+        public bool IsConst
+        {
+            get { return isConst; }
+        }
+
         public ITree Node
         {
             get { return node; }

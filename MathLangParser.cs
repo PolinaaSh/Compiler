@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2017-01-07 14:48:13
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 MathLang.g 2017-01-09 14:19:17
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -175,7 +175,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 	partial void Leave_group();
 
 	// $ANTLR start "group"
-	// MathLang.g:97:1: group : ( '(' term ')' | logic_value | NUMBER | IDENT | ( IDENT '[' index_ ']' ) -> ^( IDENT ^( INDEX index_ ) ) | '\\'' charValue '\\'' );
+	// MathLang.g:97:1: group : ( '(' term ')' | logic_value | NUMBER | IDENT | ( IDENT '[' index_ ']' ) -> ^( IDENT ^( INDEX index_ ) ) | '\\'' . '\\'' );
 	[GrammarRule("group")]
 	private MathLangParser.group_return group()
 	{
@@ -195,11 +195,11 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		IToken char_literal8=null;
 		IToken char_literal10=null;
 		IToken char_literal11=null;
+		IToken wildcard12=null;
 		IToken char_literal13=null;
 		MathLangParser.term_return term2 = default(MathLangParser.term_return);
 		MathLangParser.logic_value_return logic_value4 = default(MathLangParser.logic_value_return);
 		MathLangParser.index__return index_9 = default(MathLangParser.index__return);
-		MathLangParser.charValue_return charValue12 = default(MathLangParser.charValue_return);
 
 		object char_literal1_tree=null;
 		object char_literal3_tree=null;
@@ -209,6 +209,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		object char_literal8_tree=null;
 		object char_literal10_tree=null;
 		object char_literal11_tree=null;
+		object wildcard12_tree=null;
 		object char_literal13_tree=null;
 		RewriteRuleITokenStream stream_IDENT=new RewriteRuleITokenStream(adaptor,"token IDENT");
 		RewriteRuleITokenStream stream_64=new RewriteRuleITokenStream(adaptor,"token 64");
@@ -218,7 +219,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		DebugLocation(97, 0);
 		try
 		{
-			// MathLang.g:97:6: ( '(' term ')' | logic_value | NUMBER | IDENT | ( IDENT '[' index_ ']' ) -> ^( IDENT ^( INDEX index_ ) ) | '\\'' charValue '\\'' )
+			// MathLang.g:97:6: ( '(' term ')' | logic_value | NUMBER | IDENT | ( IDENT '[' index_ ']' ) -> ^( IDENT ^( INDEX index_ ) ) | '\\'' . '\\'' )
 			int alt1=6;
 			try { DebugEnterDecision(1, decisionCanBacktrack[1]);
 			switch (input.LA(1))
@@ -377,7 +378,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: IDENT, index_
+				// elements: index_, IDENT
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -423,7 +424,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				break;
 			case 6:
 				DebugEnterAlt(6);
-				// MathLang.g:103:3: '\\'' charValue '\\''
+				// MathLang.g:103:3: '\\'' . '\\''
 				{
 				root_0 = (object)adaptor.Nil();
 
@@ -434,12 +435,13 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				adaptor.AddChild(root_0, char_literal11_tree);
 				}
 				DebugLocation(103, 8);
-				PushFollow(Follow._charValue_in_group1133);
-				charValue12=charValue();
-				PopFollow();
-				if (state.failed) return retval;
-				if ( state.backtracking == 0 ) adaptor.AddChild(root_0, charValue12.Tree);
-				DebugLocation(103, 18);
+				wildcard12=(IToken)input.LT(1);
+				MatchAny(input); if (state.failed) return retval;
+				if ( state.backtracking == 0 ) {
+				wildcard12_tree = (object)adaptor.Create(wildcard12);
+				adaptor.AddChild(root_0, wildcard12_tree);
+				}
+				DebugLocation(103, 10);
 				char_literal13=(IToken)Match(input,66,Follow._66_in_group1135); if (state.failed) return retval;
 				if ( state.backtracking==0 ) {
 				char_literal13_tree = (object)adaptor.Create(char_literal13);
@@ -1763,7 +1765,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: term, IDENT, ASSIGN, index_
+				// elements: term, index_, ASSIGN, IDENT
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -2245,7 +2247,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: IF, t2, ELSIF, lst3, lst, ELSE, lst2, t1
+				// elements: ELSIF, lst3, lst, ELSE, t1, lst2, t2, IF
 				// token labels: 
 				// rule labels: lst3, t2, retval, t1, lst2, lst
 				// token list labels: 
@@ -2276,7 +2278,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					adaptor.AddChild(root_1, stream_lst.NextTree());
 					DebugLocation(135, 115);
 					// MathLang.g:135:115: ( ^( ELSIF $t2 $lst2) )*
-					while ( stream_t2.HasNext||stream_ELSIF.HasNext||stream_lst2.HasNext )
+					while ( stream_ELSIF.HasNext||stream_lst2.HasNext||stream_t2.HasNext )
 					{
 						DebugLocation(135, 116);
 						// MathLang.g:135:116: ^( ELSIF $t2 $lst2)
@@ -2294,9 +2296,9 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 						}
 
 					}
-					stream_t2.Reset();
 					stream_ELSIF.Reset();
 					stream_lst2.Reset();
+					stream_t2.Reset();
 					DebugLocation(135, 137);
 					// MathLang.g:135:137: ( ^( ELSE $lst3) )?
 					if ( stream_lst3.HasNext||stream_ELSE.HasNext )
@@ -2383,7 +2385,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: IDENT, IDENT, t2, exprList, ASSIGN, FOR, t1
+				// elements: t1, exprList, ASSIGN, IDENT, t2, FOR, IDENT
 				// token labels: 
 				// rule labels: t2, retval, t1
 				// token list labels: 
@@ -3191,7 +3193,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: type, IDENT
+				// elements: IDENT, type
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -3337,7 +3339,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: type, ARRAY, IDENT, group
+				// elements: group, type, ARRAY, IDENT
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -4104,7 +4106,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: t2, FUNC, VAR, t1, IDENT, type
+			// elements: VAR, t1, IDENT, type, t2, FUNC
 			// token labels: 
 			// rule labels: t2, retval, t1
 			// token list labels: 
@@ -4148,7 +4150,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 				stream_t1.Reset();
 				DebugLocation(169, 126);
 				// MathLang.g:169:126: ( ^( VAR $t2) )*
-				while ( stream_t2.HasNext||stream_VAR.HasNext )
+				while ( stream_VAR.HasNext||stream_t2.HasNext )
 				{
 					DebugLocation(169, 126);
 					// MathLang.g:169:126: ^( VAR $t2)
@@ -4164,8 +4166,8 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 					}
 
 				}
-				stream_t2.Reset();
 				stream_VAR.Reset();
+				stream_t2.Reset();
 
 				adaptor.AddChild(root_1, root_2);
 				}
@@ -4486,7 +4488,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 			{
 			// AST REWRITE
-			// elements: IDENT, PROC, t2, VAR, t1
+			// elements: PROC, t2, VAR, t1, IDENT
 			// token labels: 
 			// rule labels: t2, retval, t1
 			// token list labels: 
@@ -5089,7 +5091,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: params_, IDENT
+				// elements: IDENT, params_
 				// token labels: 
 				// rule labels: retval
 				// token list labels: 
@@ -5167,7 +5169,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 
 				{
 				// AST REWRITE
-				// elements: i1, ASSIGN, params_, i2
+				// elements: ASSIGN, i2, i1, params_
 				// token labels: i2, i1
 				// rule labels: retval
 				// token list labels: 
@@ -6632,8 +6634,7 @@ public partial class MathLangParser : Antlr.Runtime.Parser
 		public static readonly BitSet _64_in_group1112 = new BitSet(new ulong[]{0x4006000000000030UL,0x4UL});
 		public static readonly BitSet _index__in_group1114 = new BitSet(new ulong[]{0x0UL,0x2UL});
 		public static readonly BitSet _65_in_group1115 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _66_in_group1131 = new BitSet(new ulong[]{0xF07E000000000000UL,0x7FFFBUL});
-		public static readonly BitSet _charValue_in_group1133 = new BitSet(new ulong[]{0x0UL,0x4UL});
+		public static readonly BitSet _66_in_group1131 = new BitSet(new ulong[]{0xFFFFFFFFFFFFFFF0UL,0x7FFFFUL});
 		public static readonly BitSet _66_in_group1135 = new BitSet(new ulong[]{0x2UL});
 		public static readonly BitSet _group_in_mult1143 = new BitSet(new ulong[]{0x60000000000002UL});
 		public static readonly BitSet _set_in_mult1147 = new BitSet(new ulong[]{0x4006000000000030UL,0x4UL});

@@ -1,8 +1,13 @@
+const N=10;
 var n:integer;
+c:char;
     r:array [1 .. 10] of real;
 
 begin
-r[1]:=45;
+c:='k';
+Writeln(c);
+Writeln N;
+/*r[1]:=45;
 Writeln r[1];
 r[2]:=2;
 Writeln r[2];
@@ -10,7 +15,7 @@ if r[1]>r[2] then begin
 Write r[1];
 Write '>';
 Write r[2];
-end;
+end;*/
 end.
 
 

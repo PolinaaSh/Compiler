@@ -153,12 +153,11 @@ namespace MathLang
                     else if (node.ChildCount > 0 && node.GetChild(0).Text == "INDEX")
                     {
                         node.IdentDescription = AddScopeInNode(scope, node);
-                        // AddScopeInNode(scope, node.GetChild(0).GetChild(0).Cast());
                         FillVars(node.GetChild(0).GetChild(0).Cast(), scope);
                     }
                     else
                     {
-                        if (node.Parent.Text == ":=" && node.Parent.ChildCount == 4)
+                        if (node.Parent.Text == ":=" && node.Parent.ChildCount == 4 && node.ChildIndex==2)
                             return;
                         node.IdentDescription = AddScopeInNode(scope, node);
                     }
@@ -189,6 +188,16 @@ namespace MathLang
                          }
                     }
                     #endregion
+                   return;
+
+                case MathLangLexer.CONST_:
+                #region const_
+                    ITree nodeVarId;
+                                nodeVarId = node.GetChild(1);
+                                IdentType idt = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
+                                RegistrationVar(scope, node.Cast(), nodeVarId.Cast(), idt, node.GetChild(0).Text);
+                                AddScopeInNode(scope, node.GetChild(1).Cast());
+                #endregion
                    return;
                 case MathLangLexer.PARAMS:
                     // Зарегать парметры функции и добавить зону видимости
@@ -327,7 +336,8 @@ namespace MathLang
                             if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4)
                                 return;
                         }
-
+                        if (node.GetChild(0).Cast().IdentDescription.IsConst)
+                            throw new ApplicationException(string.Format("An attempt to change the constant {0}",node.GetChild(0).Text));
                         DataType first = node.GetChild(0).Cast().TypeData;
                         DataType second;
                         if (node.GetChild(1).Text == "CALL" && node.GetChild(1).GetChild(0).GetChild(0).Text.Contains("Procedure"))
@@ -461,6 +471,7 @@ namespace MathLang
         {
             string dataType;
             bool isArray;
+            bool isConst = nodeVar.Text == "const" ? true : false;
             if (nodeVar.ChildCount > 1 && nodeVar.GetChild(1).Text == "array")
             {
                 isArray = true;
@@ -475,10 +486,8 @@ namespace MathLang
             IdentDescription ident = scope.GetContainVarRecursive(nodeVarIdent.Text);
             if (ident != null && ident.TypeIdent != IdentType.Global)
                 throw new ApplicationException(string.Format("SSKA. Identifier '{0}' already exists", nodeVarIdent.Text));
-
-
-
-            ident = new IdentDescription(nodeVar, ParseDataType(dataType), typeIdent, isArray);
+            
+            ident = new IdentDescription(nodeVar, ParseDataType(dataType), typeIdent, isArray,isConst);
             nodeVarIdent.TypeData = ident.TypeData;
 
             scope.RegisterIdent(nodeVarIdent.Text, ident);
@@ -498,6 +507,7 @@ namespace MathLang
                 nodeFun,
                 dt,
                 it,
+                false,
                 false
                 );
             scope.RegisterIdent(nodeVarIdent.Text, newIdentFun);
