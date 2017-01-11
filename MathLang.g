@@ -186,8 +186,13 @@ IDENT '(' params_ ')' -> ^(CALL IDENT params_)
 | (i1=IDENT ASSIGN i2=IDENT '(' params_ ')') ->^(ASSIGN $i1 ^(CALL $i2 params_))
 | WRITE^ term
 | WRITELN^ term
-| READ^ '('! IDENT* ')'!
-| READLN^ '('! IDENT*')'!
+| READ^ '('! identOrArr* ')'!
+| READLN^ '('! identOrArr*')'!
+;
+
+identOrArr:
+IDENT 
+|(IDENT '[' index_']') ->^(IDENT ^(INDEX index_)) 
 ;
 
 exprList: 

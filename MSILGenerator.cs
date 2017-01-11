@@ -76,7 +76,7 @@ namespace MathLang
                     if (node.GetChild(1).Text == "array")
                     {
                         sb.Append(string.Format("  .field public static {0}[] {1}\n", type, node.GetChild(2).Text));
-                        arr.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, node.GetChild(4).Text));
+                        arr.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, ParseConst(node.GetChild(4).Cast())/*node.GetChild(4).Text*/));
                         if (node.GetChild(0).Text == "integer")
                         {
                             arr.Append(string.Format("    L_{0:D6}: newarr     [mscorlib]System.Int32\n", lineNum++));
@@ -447,7 +447,7 @@ namespace MathLang
         }
         public void GenIdent(NodeData node, StringBuilder sb)
         {
-            if (node.IdentDescription.IsArray/*node.GetChild(0).Text.ToLower() == "index"*/)
+            if (node.IdentDescription.IsArray)
             {                
                 LoadIdent(node,sb);
                 Gen(node.GetChild(0).GetChild(0).Cast(),sb);
@@ -457,6 +457,8 @@ namespace MathLang
                 sb.Append(string.Format("    L_{0:D6}: ldelem.i4 \n", lineNum++));
                 else if (node.IdentDescription.TypeData == DataType.Real)
                     sb.Append(string.Format("    L_{0:D6}: ldelem.r4 \n", lineNum++));
+                else if (node.IdentDescription.TypeData == DataType.Char)
+                    sb.Append(string.Format("    L_{0:D6}: ldelem.u2 \n", lineNum++));
             }
             else if(node.IdentDescription.IsConst)
             {
@@ -486,7 +488,7 @@ namespace MathLang
                 StIdent(node.GetChild(0).Cast(), sb);
                 return;
             }
-            if (node.GetChild(0).Cast().IdentDescription.IsArray/*GetChild(0).Text.ToLower() == "index"*/)//если массив
+            if (node.GetChild(0).Cast().IdentDescription.IsArray)//если массив
             {
                 LoadIdent(node.GetChild(0).Cast(),sb);
                 Gen(node.GetChild(0).GetChild(0).GetChild(0).Cast(),sb);
@@ -494,10 +496,12 @@ namespace MathLang
                 sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
                 if (node.GetChild(0).Cast().TypeData == DataType.Char && node.ChildCount == 4)
                     sb.Append(string.Format("    L_{0:D6}: ldc.i4.s 0x{1}\n", lineNum++, GenCharCode(node.GetChild(2).Text)));
-                else //if (node.GetChild(0).Cast().TypeData != DataType.Char )
+                else if (node.GetChild(0).Cast().TypeData != DataType.Char )
                 Gen((NodeData)node.GetChild(1), sb);
-                if(node.GetChild(0).Cast().IdentDescription.TypeData==DataType.Integer)
+                if (node.GetChild(0).Cast().IdentDescription.TypeData == DataType.Integer)
                 sb.Append(string.Format("    L_{0:D6}: stelem.i4 \n", lineNum++));
+                else if (node.GetChild(0).Cast().IdentDescription.TypeData == DataType.Char)
+                    sb.Append(string.Format("    L_{0:D6}: stelem.i2 \n", lineNum++));
                 else if (node.GetChild(0).Cast().IdentDescription.TypeData == DataType.Real)
                     sb.Append(string.Format("    L_{0:D6}: stelem.r4 \n", lineNum++));
             }
@@ -737,32 +741,82 @@ namespace MathLang
         }
         public void GenRead(NodeData node, StringBuilder sb)
         {
-            sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Console::Read()\n", lineNum++));
+           // sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Console::Read()\n", lineNum++));
             if(node.ChildCount>0)
             {
-                if(node.GetChild(0).Cast().TypeData==DataType.Integer)
+                if (!node.GetChild(0).Cast().IdentDescription.IsArray)
                 {
-                    sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Convert::ToString(char)\n", lineNum++));
-                    sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                    sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Console::Read()\n", lineNum++));
+                    if (node.GetChild(0).Cast().TypeData == DataType.Integer)
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Convert::ToString(char)\n", lineNum++));
+                        sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                    }
+                    StIdent(node.GetChild(0).Cast(), sb);
                 }
-                StIdent(node.GetChild(0).Cast(),sb);
+                else
+                {
+                   // Gen((NodeData)node.GetChild(0), sb);
+                    LoadIdent(node.GetChild(0).Cast(), sb);
+                    Gen(node.GetChild(0).GetChild(0).GetChild(0).Cast(), sb);
+                    sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
+                    sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
+                    sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Console::Read()\n", lineNum++));
+                    if (node.GetChild(0).Cast().TypeData == DataType.Integer)
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Convert::ToString(char)\n", lineNum++));
+                        sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                       // sb.Append(string.Format("    L_{0:D6}: stelem.i4 \n", lineNum++));
+                        Gen((NodeData)node.GetChild(1), sb);
+                    }
+                    else if (node.GetChild(0).Cast().TypeData == DataType.Char)
+                        sb.Append(string.Format("    L_{0:D6}: stelem.i2 \n", lineNum++));
+                    
+                }
             }
             else
             {
+                sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Console::Read()\n", lineNum++));
                 sb.Append(string.Format("    L_{0:D6}: pop\n", lineNum++));
             }
        
         }
         public void GenReadln(NodeData node, StringBuilder sb)
         {
-            sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
+            //sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
             if (node.ChildCount > 0)
             {
-                sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
-                StIdent(node.GetChild(0).Cast(), sb);
+                if (!node.GetChild(0).Cast().IdentDescription.IsArray)
+                {
+                    sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
+                    if (node.GetChild(0).Cast().TypeData == DataType.Integer)
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                    }
+                    StIdent(node.GetChild(0).Cast(), sb);
+                }
+                else
+                {
+                    LoadIdent(node.GetChild(0).Cast(), sb);
+                    Gen(node.GetChild(0).GetChild(0).GetChild(0).Cast(), sb);
+                    sb.Append(string.Format("    L_{0:D6}: ldc.i4 {1}\n", lineNum++, 1));
+                    sb.Append(string.Format("    L_{0:D6}: sub\n", lineNum++));
+                    sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
+                    if (node.GetChild(0).Cast().TypeData == DataType.Integer)
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                        Gen((NodeData)node.GetChild(1), sb);
+                    }
+                    else if (node.GetChild(0).Cast().TypeData == DataType.Char)
+                    {
+                        sb.Append(string.Format("    L_{0:D6}: call char [mscorlib]System.Convert::ToChar(string)\n", lineNum++));
+                        sb.Append(string.Format("    L_{0:D6}: stelem.i2 \n", lineNum++));
+                    }
+                }
             }
             else
             {
+                sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
                 sb.Append(string.Format("    L_{0:D6}: pop\n", lineNum++));
             } 
         }
@@ -884,6 +938,11 @@ namespace MathLang
                 charValue.Add(Convert.ToChar(splitRead[2]),splitRead[1]);
             }
         }
-       
+        public string ParseConst(NodeData node)
+        {
+            if (node.IdentDescription.IsConst)
+                return node.IdentDescription.Node.GetChild(1).GetChild(0).Text;
+            return node.Text;
+        }
     }
 }

@@ -1,13 +1,19 @@
-const N=10;
-var n:integer;
-    c,b:char;
-
+const N=11;
+var i,n:integer;
+c:char;
+	ch: array[1 .. N] of char;
 begin
-
-Readln(n);
-Write('n');
-Write('=');
-Writeln (n);
+for i:= 1 to N do
+begin
+Write 'c';
+Write '[';
+Write i;
+Write ']';
+Writeln '=';
+Readln ch[i];
+end;
+for i:= 1 to N do
+Write(ch[i]);
 end.
 
 

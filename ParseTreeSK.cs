@@ -180,10 +180,12 @@ namespace MathLang
                             else
                             {
                                 nodeVarIdent = node.GetChild(2);
-                                // IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : (node.Parent.Text.Equals("PARAMS") ?IdentType.Param:IdentType.Local);
                                 IdentType it = node.Parent.Text.Equals("PROGRAM") ? IdentType.Global : IdentType.Local;
                                 RegistrationVar(scope, node.Cast(), nodeVarIdent.Cast(), it, node.GetChild(0).Text);
                                 AddScopeInNode(scope, node.GetChild(2).Cast());
+                                for (int i = 3; i < 5;i++)
+                                    FillVars(node.GetChild(i).Cast(),scope);
+                               
                             }
                          }
                     }
