@@ -737,13 +737,34 @@ namespace MathLang
         }
         public void GenRead(NodeData node, StringBuilder sb)
         {
-            sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::Read()\n", lineNum++));
+            sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Console::Read()\n", lineNum++));
+            if(node.ChildCount>0)
+            {
+                if(node.GetChild(0).Cast().TypeData==DataType.Integer)
+                {
+                    sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Convert::ToString(char)\n", lineNum++));
+                    sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                }
+                StIdent(node.GetChild(0).Cast(),sb);
+            }
+            else
+            {
+                sb.Append(string.Format("    L_{0:D6}: pop\n", lineNum++));
+            }
        
         }
         public void GenReadln(NodeData node, StringBuilder sb)
         {
             sb.Append(string.Format("    L_{0:D6}: call string [mscorlib]System.Console::ReadLine()\n", lineNum++));
-            sb.Append(string.Format("    L_{0:D6}: pop\n", lineNum++));    
+            if (node.ChildCount > 0)
+            {
+                sb.Append(string.Format("    L_{0:D6}: call int32 [mscorlib]System.Int32::Parse(string)\n", lineNum++));
+                StIdent(node.GetChild(0).Cast(), sb);
+            }
+            else
+            {
+                sb.Append(string.Format("    L_{0:D6}: pop\n", lineNum++));
+            } 
         }
         public bool CheckVar(NodeData node,int n)//передаю узел с параметрами
         {
